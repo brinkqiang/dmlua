@@ -1,6 +1,6 @@
-rm -rf unix_build
-mkdir unix_build
-cd unix_build
+rm -rf build
+mkdir build
+cd build
 cmake -DCMAKE_BUILD_TYPE=relwithdebinfo ..
-make
+make -j
 cd ..
