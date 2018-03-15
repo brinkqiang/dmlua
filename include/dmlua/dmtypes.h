@@ -29,6 +29,8 @@
 // Other compilers should have this.
 #include <stdint.h>
 #include <inttypes.h>
+#include <sys/time.h>
+
 #endif
 
 #endif // __DMTYPES_H_INCLUDE__
