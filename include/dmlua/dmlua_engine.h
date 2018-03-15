@@ -1,4 +1,24 @@
 
+// Copyright (c) 2018 brinkqiang
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 #ifndef __DMLUA_ENGINE_H_INCLUDE__
 #define __DMLUA_ENGINE_H_INCLUDE__
 
@@ -18,7 +38,7 @@
 #include "dmlua_typeid.h"
 #include "dmlua_luaresult.h"
 
-#include "safesingleton.h"
+#include "dmsingleton.h"
 
 TOLUA_API int tolua_interface_open (lua_State* tolua_S);
 
@@ -292,9 +312,9 @@ private:
 
 // tolua_begin
 // tolua_end
-class CDMLuaEngine : public HSafeSingleton<CDMLuaEngine>
+class CDMLuaEngine : public CDMSafeSingleton<CDMLuaEngine>
 {
-    friend class HSafeSingleton<CDMLuaEngine>;
+    friend class CDMSafeSingleton<CDMLuaEngine>;
 public:
 
     typedef struct tagFileInfo
@@ -333,9 +353,6 @@ public:
         std::swap(m_strSrcPath, oEngine.m_strSrcPath);
         std::swap(m_strCwd, oEngine.m_strCwd);
         std::swap(m_dwStartTime, oEngine.m_dwStartTime);
-
-        //RegisterEvent(*this);
-        //RegisterEvent(oEngine);
     }
 
     void RunLuagc()
