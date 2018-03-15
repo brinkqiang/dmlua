@@ -109,6 +109,8 @@ namespace std
 #include <ncurses.h>
 #include <signal.h>
 #include <netdb.h>
+#include <limits.h>
+#include <unistd.h>
 
 #ifndef MAX_PATH
 #define MAX_PATH    PATH_MAX
