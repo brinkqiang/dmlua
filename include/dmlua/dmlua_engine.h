@@ -463,6 +463,11 @@ FAIL:
         else{ tolua_pushuserdata(luaS, (void*)(t));OnUserError(luaS, typeid(T).name());}
     }
 
+    static inline void PushLuaParam(lua_State *luaS, std::string &t)
+    {
+        tolua_pushstring(luaS, t.c_str());
+    }
+
     static inline void PushLuaParam(lua_State *luaS, const std::string &t)
     {
         tolua_pushstring(luaS, t.c_str());

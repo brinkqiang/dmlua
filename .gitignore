@@ -11,3 +11,4 @@ CTestTestfile.cmake
 !/bin/script/*.lua
 !/bin/data/*.csv
 /lib/*
+/build/*
