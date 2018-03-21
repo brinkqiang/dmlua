@@ -23,7 +23,7 @@
 #define __DMLUA_LUARESULT_H_INCLUDE__
 
 #include <string>
-#include <stdint.h>
+#include "dmtypes.h"
 
 template<typename T>
 struct LuaResult
@@ -43,26 +43,26 @@ struct LuaResult<std::string>
 };
 
 template<>
-struct LuaResult<long long>
+struct LuaResult<int64_t>
 {
     LuaResult() : value(0) {}
-    LuaResult(const long long& t) : value(t) {}
-    operator long long() { return value; }
+    LuaResult(const int64_t& t) : value(t) {}
+    operator int64_t() { return value; }
     int64_t value;
 };
 
 template<>
-struct LuaResult<unsigned long long>
+struct LuaResult<uint64_t>
 {
     LuaResult() : value(0) {}
-    LuaResult(const unsigned long long& t) : value(t) {}
-    operator unsigned long long() { return value; }
-    unsigned long long value;
+    LuaResult(const uint64_t& t) : value(t) {}
+    operator uint64_t() { return value; }
+    uint64_t value;
 };
 
 typedef LuaResult<int>                  LResultINT;
-typedef LuaResult<long long>            LResultINT64;
-typedef LuaResult<unsigned long long>   LResultUINT64;
+typedef LuaResult<int64_t>            LResultINT64;
+typedef LuaResult<uint64_t>   LResultUINT64;
 typedef LuaResult<double>               LResultDOUBLE;
 
 typedef LuaResult<std::string>          LResultSTRING;
