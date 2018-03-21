@@ -8,11 +8,10 @@ function AcceptTask(role, taskid, ret)
 
     if role:AcceptTask(taskid) then
         ret.value = 0
-    	print("AcceptTask ret = " .. ret.value)
-
+    	print("AcceptTask ret = " .. math.ceil(ret.value))
     else
         ret.value = -1
-    	print("AcceptTask ret = " .. ret.value)
+    	print("AcceptTask ret = " .. math.ceil(ret.value))
     end
 
     print("###################################")
