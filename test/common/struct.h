@@ -9,16 +9,14 @@
 struct STaskInfo
 {
     STaskInfo()
-    : nTaskID(0),
-    nTaskState(0),
-    nTaskCondition(0)
+        : nTaskID( 0 ),
+          nTaskState( 0 ),
+          nTaskCondition( 0 )
     {
-
     }
 
     ~STaskInfo()
     {
-
     }
 
     int nTaskID;
@@ -32,24 +30,21 @@ typedef TaskInfoMap::iterator       TaskInfoMapIt;
 struct SPos
 {
     SPos()
-    : x(0),
-    y(0),
-    z(0)
+        : x( 0 ),
+          y( 0 ),
+          z( 0 )
     {
-
     }
 
-    SPos(int _x, int _y, int _z)
-    : x(_x),
-    y(_y),
-    z(_z)
+    SPos( int _x, int _y, int _z )
+        : x( _x ),
+          y( _y ),
+          z( _z )
     {
-
     }
 
     ~SPos()
     {
-
     }
 
     int x;
