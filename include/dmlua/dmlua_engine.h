@@ -168,7 +168,7 @@ struct __timeval
 
 typedef union
 {
-    uint64_t ft_scalar;
+    unsigned long long ft_scalar;
     FILETIME ft_struct;
 } FT;
 
@@ -376,9 +376,9 @@ public:
         lua_gc( m_pLuaS, LUA_GCCOLLECT, 0 );
     }
 
-    int64_t GetLuagc()
+    long long GetLuagc()
     {
-        return lua_gc( m_pLuaS, LUA_GCCOUNT, 0 ) * 1024LL + lua_gc( m_pLuaS, LUA_GCCOUNTB, 0 );
+        return lua_gc( m_pLuaS, LUA_GCCOUNT, 0 ) * 1024L + lua_gc( m_pLuaS, LUA_GCCOUNTB, 0 );
     }
 
     lua_State* GetState()
@@ -560,12 +560,12 @@ FAIL:
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const int64_t t )
+    static inline void PushLuaParam( lua_State* luaS, const long long t )
     {
         lua_pushinteger( luaS, t );
     }
 
-	static inline void PushLuaParam(lua_State* luaS, const uint64_t t)
+    static inline void PushLuaParam( lua_State* luaS, const unsigned long long t )
     {
         lua_pushinteger( luaS, t );
     }
