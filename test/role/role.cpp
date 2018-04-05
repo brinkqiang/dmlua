@@ -3,8 +3,9 @@
 
 bool CRole::AcceptTask( int nTaskID )
 {
-    TaskInfoMapIt It = m_TaskInfoMap.find(nTaskID);
-    if (It != m_TaskInfoMap.end())
+    TaskInfoMapIt It = m_TaskInfoMap.find( nTaskID );
+
+    if ( It != m_TaskInfoMap.end() )
     {
         return false;
     }
@@ -13,16 +14,15 @@ bool CRole::AcceptTask( int nTaskID )
     oInfo.nTaskID = nTaskID;
     oInfo.nTaskState = eTaskStateStart;
     oInfo.nTaskCondition = 0;
-
     m_TaskInfoMap[oInfo.nTaskID] = oInfo;
-    
     return true;
 }
 
 void CRole::FinishTask( int nTaskID )
 {
-    TaskInfoMapIt It = m_TaskInfoMap.find(nTaskID);
-    if (It == m_TaskInfoMap.end())
+    TaskInfoMapIt It = m_TaskInfoMap.find( nTaskID );
+
+    if ( It == m_TaskInfoMap.end() )
     {
         return;
     }
@@ -30,7 +30,7 @@ void CRole::FinishTask( int nTaskID )
     It->second.nTaskState = eTaskStateEnd;
 }
 
-void CUser::SetName(const char* name)
+void CUser::SetName( const char* name )
 {
     m_strName = name;
 }

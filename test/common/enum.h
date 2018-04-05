@@ -8,6 +8,6 @@ typedef enum
 {
     eTaskStateStart,
     eTaskStateEnd,
-}ETaskState;
+} ETaskState;
 // tolua_end
 #endif // __ENUM_H_INCLUDE__
