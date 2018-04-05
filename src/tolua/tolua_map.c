@@ -25,7 +25,7 @@
 /* Create metatable
     * Create and register new metatable
 */
-static int tolua_newmetatable( lua_State* L, char* name )
+static int tolua_newmetatable( lua_State* L, const char* name )
 {
     int r = luaL_newmetatable( L, name );
 #ifdef LUA_VERSION_NUM /* only lua 5.1 */
