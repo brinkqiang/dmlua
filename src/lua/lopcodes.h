@@ -164,8 +164,7 @@ enum OpMode {iABC, iABx, iAsBx, iAx};  /* basic instruction format */
 ** grep "ORDER OP" if you change these enums
 */
 
-typedef enum
-{
+typedef enum {
     /*----------------------------------------------------------------------
     name        args    description
     ------------------------------------------------------------------------*/
@@ -272,8 +271,7 @@ typedef enum
 ** bit 7: operator is a test (next instruction must be a jump)
 */
 
-enum OpArgMask
-{
+enum OpArgMask {
     OpArgN,  /* argument is not used */
     OpArgU,  /* argument is used */
     OpArgR,  /* argument is a register or a jump offset */

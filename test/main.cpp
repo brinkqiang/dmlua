@@ -3,12 +3,10 @@
 #include "dmlua/dmlua.h"
 #include "gtest/gtest.h"
 
-TEST( luatest, luatest )
-{
+TEST( luatest, luatest ) {
     CDMLuaEngine oDMLuaEngine;
 
-    if ( !oDMLuaEngine.ReloadScript() )
-    {
+    if ( !oDMLuaEngine.ReloadScript() ) {
         return;
     }
 
@@ -20,14 +18,12 @@ TEST( luatest, luatest )
         "   print(c)\n"
         "end\n" );
     {
-        for ( int i = 0; i < 1; ++i )
-        {
+        for ( int i = 0; i < 1; ++i ) {
             int r = oDMLuaEngine.Call( "addtest" );
         }
     }
 
-    if ( !oDMLuaEngine.ReloadScript() )
-    {
+    if ( !oDMLuaEngine.ReloadScript() ) {
         return;
     }
 
@@ -38,12 +34,10 @@ TEST( luatest, luatest )
     {
         LResultINT64 resAdd( -1 );
 
-        for ( int i = 0; i < 1; ++i )
-        {
+        for ( int i = 0; i < 1; ++i ) {
             int r = oDMLuaEngine.Call( "addex", 100000000LL, 100000000LL, &resAdd );
 
-            if ( r >= 0 )
-            {
+            if ( r >= 0 ) {
                 std::cout << resAdd.value << std::endl;
             }
         }
@@ -58,8 +52,7 @@ TEST( luatest, luatest )
         STaskInfo sInfo;
         int r = oDMLuaEngine.Call( "script.task.taskinfo", &sInfo );
 
-        if ( r >= 0 )
-        {
+        if ( r >= 0 ) {
             std::cout << sInfo.nTaskID << std::endl;
         }
     }
@@ -73,8 +66,7 @@ TEST( luatest, luatest )
         STaskInfo sInfo;
         int r = oDMLuaEngine.Call( "script.task.taskinfo", &sInfo );
 
-        if ( r >= 0 )
-        {
+        if ( r >= 0 ) {
             std::cout << sInfo.nTaskID << std::endl;
         }
     }
@@ -93,15 +85,13 @@ TEST( luatest, luatest )
     CRoleMgr::Instance()->ReleaseRole( poRole );
 }
 
-TEST( luaperformancetest, luaperformancetest )
-{
+TEST( luaperformancetest, luaperformancetest ) {
     CDMLuaEngine oEZLuaEngine;
     oEZLuaEngine.DoString(
         "function performancetest()\n"
         "end\n" );
 
-    for ( int i = 0; i < 1000000; ++i )
-    {
+    for ( int i = 0; i < 1000000; ++i ) {
         oEZLuaEngine.Call( "performancetest" );
     }
 }

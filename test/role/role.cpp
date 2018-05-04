@@ -1,12 +1,10 @@
 #include "role.h"
 #include "rolemgr.h"
 
-bool CRole::AcceptTask( int nTaskID )
-{
+bool CRole::AcceptTask( int nTaskID ) {
     TaskInfoMapIt It = m_TaskInfoMap.find( nTaskID );
 
-    if ( It != m_TaskInfoMap.end() )
-    {
+    if ( It != m_TaskInfoMap.end() ) {
         return false;
     }
 
@@ -18,24 +16,20 @@ bool CRole::AcceptTask( int nTaskID )
     return true;
 }
 
-void CRole::FinishTask( int nTaskID )
-{
+void CRole::FinishTask( int nTaskID ) {
     TaskInfoMapIt It = m_TaskInfoMap.find( nTaskID );
 
-    if ( It == m_TaskInfoMap.end() )
-    {
+    if ( It == m_TaskInfoMap.end() ) {
         return;
     }
 
     It->second.nTaskState = eTaskStateEnd;
 }
 
-void CUser::SetName( const char* name )
-{
+void CUser::SetName( const char* name ) {
     m_strName = name;
 }
 
-const char* CUser::GetName()
-{
+const char* CUser::GetName() {
     return m_strName.c_str();
 }

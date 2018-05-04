@@ -64,8 +64,7 @@ typedef unsigned char lu_byte;
 #if defined(LUAI_USER_ALIGNMENT_T)
 typedef LUAI_USER_ALIGNMENT_T L_Umaxalign;
 #else
-typedef union
-{
+typedef union {
     lua_Number n;
     double u;
     void* s;

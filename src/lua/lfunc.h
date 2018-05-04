@@ -32,14 +32,11 @@
 /*
 ** Upvalues for Lua closures
 */
-struct UpVal
-{
+struct UpVal {
     TValue* v;  /* points to stack or to its own value */
     lu_mem refcount;  /* reference counter */
-    union
-    {
-        struct    /* (when open) */
-        {
+    union {
+        struct {  /* (when open) */
             UpVal* next;  /* linked list */
             int touched;  /* mark to avoid cycles with dead threads */
         } open;

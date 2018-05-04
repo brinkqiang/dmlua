@@ -7,20 +7,19 @@
 #include "dmrapidpool.h"
 #include "test/role/role.h"
 
-class CRoleMgr : public TSingleton<CRoleMgr>
-{
+class CRoleMgr : public TSingleton<CRoleMgr> {
     friend class TSingleton<CRoleMgr>;
 
-protected:
+  protected:
     CRoleMgr();
     ~CRoleMgr();
 
-public:
+  public:
     CRole*   FindRole( long long llID );
     CRole*   CreateRole();                   /// 这里要导出到lua
     void     ReleaseRole( CRole* poRole );    /// 回收Role,要在lua中注销
 
-private:
+  private:
     long long GetNextObjID();
 
     CDynamicRapidPool<CRole, 10000, 100> m_oRolePool;

@@ -55,8 +55,7 @@ struct lua_longjmp;  /* defined in ldo.c */
 #define KGC_EMERGENCY   1   /* gc was forced by an allocation failure */
 
 
-typedef struct stringtable
-{
+typedef struct stringtable {
     TString** hash;
     int nuse;  /* number of elements */
     int size;
@@ -72,20 +71,16 @@ typedef struct stringtable
 ** the function index so that, in case of errors, the continuation
 ** function can be called with the correct top.
 */
-typedef struct CallInfo
-{
+typedef struct CallInfo {
     StkId func;  /* function index in the stack */
     StkId top;  /* top for this function */
     struct CallInfo* previous, *next;  /* dynamic call link */
-    union
-    {
-        struct    /* only for Lua functions */
-        {
+    union {
+        struct {  /* only for Lua functions */
             StkId base;  /* base for this function */
             const Instruction* savedpc;
         } l;
-        struct    /* only for C functions */
-        {
+        struct {  /* only for C functions */
             lua_KFunction k;  /* continuation in case of yields */
             ptrdiff_t old_errfunc;
             lua_KContext ctx;  /* context info. in case of yields */
@@ -121,8 +116,7 @@ typedef struct CallInfo
 /*
 ** 'global state', shared by all threads of this state
 */
-typedef struct global_State
-{
+typedef struct global_State {
     lua_Alloc frealloc;  /* function to reallocate memory */
     void* ud;         /* auxiliary data to 'frealloc' */
     l_mem totalbytes;  /* number of bytes currently allocated - GCdebt */
@@ -163,8 +157,7 @@ typedef struct global_State
 /*
 ** 'per thread' state
 */
-struct lua_State
-{
+struct lua_State {
     CommonHeader;
     unsigned short nci;  /* number of items in 'ci' list */
     lu_byte status;
@@ -197,8 +190,7 @@ struct lua_State
 /*
 ** Union of all collectable objects (only for conversions)
 */
-union GCUnion
-{
+union GCUnion {
     GCObject gc;  /* common header */
     struct TString ts;
     struct Udata u;

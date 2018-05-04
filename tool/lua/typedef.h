@@ -1,8 +1,7 @@
 #ifndef ___TYPEDEF_H___
 #define ___TYPEDEF_H___
 
-static const unsigned char typedef_data[1696] =
-{
+static const unsigned char typedef_data[1696] = {
     0x2D,   0x2D,   0x20,   0x74,   0x6F,
     0x6C,   0x75,   0x61,   0x3A,   0x20,
     0x74,   0x79,   0x70,   0x65,   0x64,

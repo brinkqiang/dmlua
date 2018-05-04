@@ -4,8 +4,7 @@
 
 // tolua_begin
 
-typedef enum
-{
+typedef enum {
     eTaskStateStart,
     eTaskStateEnd,
 } ETaskState;

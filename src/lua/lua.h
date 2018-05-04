@@ -224,7 +224,8 @@ LUA_API int ( lua_compare )( lua_State* L, int idx1, int idx2, int op );
 LUA_API void ( lua_pushnil )( lua_State* L );
 LUA_API void ( lua_pushnumber )( lua_State* L, lua_Number n );
 LUA_API void ( lua_pushinteger )( lua_State* L, lua_Integer n );
-LUA_API const char* ( lua_pushlstring )( lua_State* L, const char* s, size_t len );
+LUA_API const char* ( lua_pushlstring )( lua_State* L, const char* s,
+        size_t len );
 LUA_API const char* ( lua_pushstring )( lua_State* L, const char* s );
 LUA_API const char* ( lua_pushvfstring )( lua_State* L, const char* fmt,
         va_list argp );
@@ -280,7 +281,8 @@ LUA_API int ( lua_pcallk )( lua_State* L, int nargs, int nresults, int errfunc,
 LUA_API int ( lua_load )( lua_State* L, lua_Reader reader, void* dt,
                           const char* chunkname, const char* mode );
 
-LUA_API int ( lua_dump )( lua_State* L, lua_Writer writer, void* data, int strip );
+LUA_API int ( lua_dump )( lua_State* L, lua_Writer writer, void* data,
+                          int strip );
 
 
 /*
@@ -423,8 +425,10 @@ typedef void ( *lua_Hook )( lua_State* L, lua_Debug* ar );
 
 LUA_API int ( lua_getstack )( lua_State* L, int level, lua_Debug* ar );
 LUA_API int ( lua_getinfo )( lua_State* L, const char* what, lua_Debug* ar );
-LUA_API const char* ( lua_getlocal )( lua_State* L, const lua_Debug* ar, int n );
-LUA_API const char* ( lua_setlocal )( lua_State* L, const lua_Debug* ar, int n );
+LUA_API const char* ( lua_getlocal )( lua_State* L, const lua_Debug* ar,
+                                      int n );
+LUA_API const char* ( lua_setlocal )( lua_State* L, const lua_Debug* ar,
+                                      int n );
 LUA_API const char* ( lua_getupvalue )( lua_State* L, int funcindex, int n );
 LUA_API const char* ( lua_setupvalue )( lua_State* L, int funcindex, int n );
 
@@ -432,14 +436,14 @@ LUA_API void* ( lua_upvalueid )( lua_State* L, int fidx, int n );
 LUA_API void ( lua_upvaluejoin )( lua_State* L, int fidx1, int n1,
                                   int fidx2, int n2 );
 
-LUA_API void ( lua_sethook )( lua_State* L, lua_Hook func, int mask, int count );
+LUA_API void ( lua_sethook )( lua_State* L, lua_Hook func, int mask,
+                              int count );
 LUA_API lua_Hook( lua_gethook )( lua_State* L );
 LUA_API int ( lua_gethookmask )( lua_State* L );
 LUA_API int ( lua_gethookcount )( lua_State* L );
 
 
-struct lua_Debug
-{
+struct lua_Debug {
     int event;
     const char* name; /* (n) */
     const char* namewhat; /* (n) 'global', 'local', 'field', 'method' */

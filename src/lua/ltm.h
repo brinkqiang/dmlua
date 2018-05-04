@@ -15,8 +15,7 @@
 * WARNING: if you change the order of this enumeration,
 * grep "ORDER TM" and "ORDER OP"
 */
-typedef enum
-{
+typedef enum {
     TM_INDEX,
     TM_NEWINDEX,
     TM_GC,

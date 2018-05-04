@@ -1,8 +1,7 @@
 #ifndef ___ENUMERATE_H___
 #define ___ENUMERATE_H___
 
-static const unsigned char enumerate_data[2526] =
-{
+static const unsigned char enumerate_data[2526] = {
     0x2D,   0x2D,   0x20,   0x74,   0x6F,
     0x6C,   0x75,   0x61,   0x3A,   0x20,
     0x65,   0x6E,   0x75,   0x6D,   0x65,

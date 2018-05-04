@@ -6,17 +6,14 @@
 #include "macros.h"
 // tolua_begin
 
-struct STaskInfo
-{
+struct STaskInfo {
     STaskInfo()
         : nTaskID( 0 ),
           nTaskState( 0 ),
-          nTaskCondition( 0 )
-    {
+          nTaskCondition( 0 ) {
     }
 
-    ~STaskInfo()
-    {
+    ~STaskInfo() {
     }
 
     int nTaskID;
@@ -27,24 +24,20 @@ struct STaskInfo
 typedef std::map<int, STaskInfo>    TaskInfoMap;
 typedef TaskInfoMap::iterator       TaskInfoMapIt;
 
-struct SPos
-{
+struct SPos {
     SPos()
         : x( 0 ),
           y( 0 ),
-          z( 0 )
-    {
+          z( 0 ) {
     }
 
     SPos( int _x, int _y, int _z )
         : x( _x ),
           y( _y ),
-          z( _z )
-    {
+          z( _z ) {
     }
 
-    ~SPos()
-    {
+    ~SPos() {
     }
 
     int x;

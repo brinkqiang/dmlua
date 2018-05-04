@@ -8,122 +8,103 @@
 
 /// 导出对象模块
 
-class CObj {// tolua_export
-public:
-    void Reset()
-    {
+class CObj { // tolua_export
+  public:
+    void Reset() {
         m_llID = -1;
         memset( m_szName, 0, sizeof( m_szName ) );
     }
 
-private:
+  private:
     long long           m_llID;
     char                m_szName[MAX_NAME_LEN];
 
-public:
-    // tolua_begin
-    CObj()
-    {
+  public:
+// tolua_begin
+    CObj() {
         Reset();
     }
 
-    virtual ~CObj()
-    {
+    virtual ~CObj() {
         Reset();
     }
-    void                SetObjID( long long llID )
-    {
+    void SetObjID( long long llID ) {
         m_llID = llID;
     }
-    long long           GetObjID()
-    {
+    long long GetObjID() {
         return m_llID;
     }
 
-    void                SetName( const char* szName )
-    {
+    void SetName( const char* szName ) {
         strcpy( m_szName, szName );
     }
-    const char*         GetName()
-    {
+    const char* GetName() {
         return m_szName;
     }
 };
 // tolua_end
 
 
-class CRole : public CObj {// tolua_export
-
-public:
-    void Reset()
-    {
+class CRole : public CObj { // tolua_export
+  public:
+    void Reset() {
         m_nHP = 0;
         m_nMP = 0;
     }
-private:
+  private:
     int     m_nHP;
     int     m_nMP;
 
     TaskInfoMap m_TaskInfoMap;
     SPos    m_stPos;
 
-public:
-    // tolua_begin
-    CRole()
-    {
+  public:
+// tolua_begin
+    CRole() {
         Reset();
     }
-    virtual ~CRole()
-    {
+    virtual ~CRole() {
         Reset();
     }
-    void    SetMp( int nMp )
-    {
+    void SetMp( int nMp ) {
         m_nMP = nMp;
     }
-    int     GetMp()
-    {
+    int GetMp() {
         return m_nMP;
     }
 
-    void    SetHp( int nHp )
-    {
+    void SetHp( int nHp ) {
         m_nHP = nHp;
     }
-    int     GetHp()
-    {
+    int GetHp() {
         return m_nHP;
     }
 
-    void    AddMP( int nMp )
-    {
+    void AddMP( int nMp ) {
         m_nMP += nMp;
     }
-    void    AddHP( int nHp )
-    {
+    void AddHP( int nHp ) {
         m_nHP += nHp;
     }
 
 
-    void    SetPos( const SPos& stPos )
-    {
+    void SetPos( const SPos& stPos ) {
         m_stPos = stPos;
     }
-    SPos&   GetPos()
-    {
+    SPos& GetPos() {
         return m_stPos;
     }
 
-    bool    AcceptTask( int nTaskID );
-    void    FinishTask( int nTaskID );
+    bool AcceptTask( int nTaskID );
+    void FinishTask( int nTaskID );
 };
 // tolua_end
 
-class CUser{// tolua_export
-private:
+class CUser { // tolua_export
+  private:
     std::string m_strName;
-public:
-    // tolua_begin
+  public:
+// tolua_begin
 
     void SetName( const char* name );
     const char* GetName();

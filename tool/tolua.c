@@ -23,8 +23,7 @@
 #include <string.h>
 
 
-static void help( void )
-{
+static void help( void ) {
     fprintf( stderr, "\n"
              "usage: tolua++ [options] input_file\n"
              "\n"
@@ -52,20 +51,17 @@ static void help( void )
            );
 }
 
-static void version( void )
-{
+static void version( void ) {
     fprintf( stderr, "%s (written by W. Celes, A. Manzur)\n", TOLUA_VERSION );
 }
 
-static void setfield( lua_State* L, int table, char* f, char* v )
-{
+static void setfield( lua_State* L, int table, char* f, char* v ) {
     lua_pushstring( L, f );
     lua_pushstring( L, v );
     lua_settable( L, table );
 }
 
-static void add_extra( lua_State* L, char* value )
-{
+static void add_extra( lua_State* L, char* value ) {
     int len;
     lua_getglobal( L, "_extra_parameters" );
 #if LUA_VERSION_NUM > 501
@@ -78,15 +74,13 @@ static void add_extra( lua_State* L, char* value )
     lua_pop( L, 1 );
 };
 
-static void error( char* o )
-{
+static void error( char* o ) {
     fprintf( stderr, "tolua: unknown option '%s'\n", o );
     help();
     exit( 1 );
 }
 
-int main( int argc, char* argv[] )
-{
+int main( int argc, char* argv[] ) {
 #if LUA_VERSION_NUM > 501 /* lua 5.1 */
     lua_State* L = luaL_newstate();
     luaL_openlibs( L );
@@ -104,13 +98,11 @@ int main( int argc, char* argv[] )
     lua_pushstring( L, LUA_VERSION );
     lua_setglobal( L, "TOLUA_LUA_VERSION" );
 
-    if ( argc == 1 )
-    {
+    if ( argc == 1 ) {
         help();
         return 0;
     }
-    else
-    {
+    else {
         int i, t;
         lua_newtable( L );
         lua_setglobal( L, "_extra_parameters" );
@@ -119,12 +111,9 @@ int main( int argc, char* argv[] )
         lua_setglobal( L, "flags" );
         t = lua_gettop( L );
 
-        for ( i = 1; i < argc; ++i )
-        {
-            if ( *argv[i] == '-' )
-            {
-                switch ( argv[i][1] )
-                {
+        for ( i = 1; i < argc; ++i ) {
+            if ( *argv[i] == '-' ) {
+                switch ( argv[i][1] ) {
                 case 'v':
                     version();
                     return 0;
@@ -194,8 +183,7 @@ int main( int argc, char* argv[] )
                     break;
                 }
             }
-            else
-            {
+            else {
                 setfield( L, t, "f", argv[i] );
                 break;
             }
@@ -217,8 +205,7 @@ int main( int argc, char* argv[] )
         strcpy( path, argv[0] );
         p = strrchr( path, '/' );
 
-        if ( p == NULL )
-        {
+        if ( p == NULL ) {
             p = strrchr( path, '\\' );
         }
 

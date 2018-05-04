@@ -9,21 +9,18 @@
 #include <pthread.h>
 #endif
 
-class CLockNull
-{
-public:
+class CLockNull {
+  public:
     CLockNull() {}
     ~CLockNull() {}
     inline void Lock( void ) {}
     inline void UnLock( void ) {}
 };
 
-class CLock
-{
-private:
+class CLock {
+  private:
     volatile bool m_bIsSafe;
-    inline void SetIsSafe()
-    {
+    inline void SetIsSafe() {
         m_bIsSafe = true;
     }
 #ifdef WIN32
@@ -31,9 +28,8 @@ private:
 #else
     pthread_mutex_t m_lock;
 #endif
-public:
-    CLock( void )
-    {
+  public:
+    CLock( void ) {
 #ifdef WIN32
         InitializeCriticalSection( &m_lock );
 #else
@@ -42,10 +38,8 @@ public:
         SetIsSafe();
     }
 
-    ~CLock()
-    {
-        if ( m_bIsSafe )
-        {
+    ~CLock() {
+        if ( m_bIsSafe ) {
 #ifdef WIN32
             DeleteCriticalSection( &m_lock );
 #else
@@ -54,10 +48,8 @@ public:
         }
     }
 
-    inline void Lock( void )
-    {
-        if ( m_bIsSafe )
-        {
+    inline void Lock( void ) {
+        if ( m_bIsSafe ) {
 #ifdef WIN32
             EnterCriticalSection( &m_lock );
 #else
@@ -66,10 +58,8 @@ public:
         }
     }
 
-    inline void UnLock( void )
-    {
-        if ( m_bIsSafe )
-        {
+    inline void UnLock( void ) {
+        if ( m_bIsSafe ) {
 #ifdef WIN32
             LeaveCriticalSection( &m_lock );
 #else
@@ -84,18 +74,15 @@ public:
 };
 
 template<typename Mutex>
-class CLockGuard
-{
-private:
+class CLockGuard {
+  private:
     Mutex& m_lock;
-public:
+  public:
     explicit CLockGuard( Mutex& lock )
-        : m_lock( lock )
-    {
+        : m_lock( lock ) {
         m_lock.Lock();
     }
-    ~CLockGuard()
-    {
+    ~CLockGuard() {
         m_lock.UnLock();
     }
 };

@@ -23,8 +23,7 @@
 * WARNING: if you change the order of this enumeration,
 * grep "ORDER RESERVED"
 */
-enum RESERVED
-{
+enum RESERVED {
     /* terminal symbols denoted by reserved words */
     TK_AND = FIRST_RESERVED, TK_BREAK,
     TK_DO, TK_ELSE, TK_ELSEIF, TK_END, TK_FALSE, TK_FOR, TK_FUNCTION,
@@ -41,16 +40,14 @@ enum RESERVED
 #define NUM_RESERVED    (cast(int, TK_WHILE-FIRST_RESERVED+1))
 
 
-typedef union
-{
+typedef union {
     lua_Number r;
     lua_Integer i;
     TString* ts;
 } SemInfo;  /* semantics information */
 
 
-typedef struct Token
-{
+typedef struct Token {
     int token;
     SemInfo seminfo;
 } Token;
@@ -58,8 +55,7 @@ typedef struct Token
 
 /* state of the lexer plus state of the parser when shared by all
    functions */
-typedef struct LexState
-{
+typedef struct LexState {
     int current;  /* current character (charint) */
     int linenumber;  /* input line counter */
     int lastline;  /* line of last token 'consumed' */

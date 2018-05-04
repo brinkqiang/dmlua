@@ -1,20 +1,16 @@
 #include "rolemgr.h"
 #include "role.h"
 
-CRoleMgr::CRoleMgr(): m_llObjID( 10000 )
-{
+CRoleMgr::CRoleMgr(): m_llObjID( 10000 ) {
 }
 
-CRoleMgr::~CRoleMgr()
-{
+CRoleMgr::~CRoleMgr() {
 }
 
-CRole* CRoleMgr::CreateRole()
-{
+CRole* CRoleMgr::CreateRole() {
     CRole* poRole = m_oRolePool.FetchObj();
 
-    if ( NULL == poRole )
-    {
+    if ( NULL == poRole ) {
         return NULL;
     }
 
@@ -23,10 +19,8 @@ CRole* CRoleMgr::CreateRole()
     return poRole;
 }
 
-void CRoleMgr::ReleaseRole( CRole* poRole )
-{
-    if ( NULL == poRole )
-    {
+void CRoleMgr::ReleaseRole( CRole* poRole ) {
+    if ( NULL == poRole ) {
         return;
     }
 
@@ -34,26 +28,21 @@ void CRoleMgr::ReleaseRole( CRole* poRole )
     m_oRolePool.ReleaseObj( poRole );
 }
 
-CRole* CRoleMgr::FindRole( long long llID )
-{
+CRole* CRoleMgr::FindRole( long long llID ) {
     MapRoleIt It = m_mapRole.find( llID );
 
-    if ( It == m_mapRole.end() )
-    {
+    if ( It == m_mapRole.end() ) {
         return NULL;
     }
 
     return It->second;
 }
 
-long long CRoleMgr::GetNextObjID()
-{
-    for ( ;; )
-    {
+long long CRoleMgr::GetNextObjID() {
+    for ( ;; ) {
         CRole* poRole = FindRole( ++m_llObjID );
 
-        if ( poRole )
-        {
+        if ( poRole ) {
             continue;
         }
 

@@ -20,8 +20,7 @@ typedef struct Zio ZIO;
 #define zgetc(z)  (((z)->n--)>0 ?  cast_uchar(*(z)->p++) : luaZ_fill(z))
 
 
-typedef struct Mbuffer
-{
+typedef struct Mbuffer {
     char* buffer;
     size_t n;
     size_t buffsize;
@@ -53,8 +52,7 @@ LUAI_FUNC size_t luaZ_read( ZIO* z, void* b, size_t n ); /* read next n bytes */
 
 /* --------- Private Part ------------------ */
 
-struct Zio
-{
+struct Zio {
     size_t n;         /* bytes still unread */
     const char* p;        /* current position in buffer */
     lua_Reader reader;        /* reader function */

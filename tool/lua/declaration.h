@@ -1,8 +1,7 @@
 #ifndef ___DECLARATION_H___
 #define ___DECLARATION_H___
 
-static const unsigned char declaration_data[15013] =
-{
+static const unsigned char declaration_data[15013] = {
     0x2D,   0x2D,   0x20,   0x74,   0x6F,
     0x6C,   0x75,   0x61,   0x3A,   0x20,
     0x64,   0x65,   0x63,   0x6C,   0x61,

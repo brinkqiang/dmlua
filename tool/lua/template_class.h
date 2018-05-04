@@ -1,8 +1,7 @@
 #ifndef ___TEMPLATE_CLASS_H___
 #define ___TEMPLATE_CLASS_H___
 
-static const unsigned char template_class_data[1774] =
-{
+static const unsigned char template_class_data[1774] = {
     0x0A,   0x5F,   0x67,   0x6C,   0x6F,
     0x62,   0x61,   0x6C,   0x5F,   0x74,
     0x65,   0x6D,   0x70,   0x6C,   0x61,

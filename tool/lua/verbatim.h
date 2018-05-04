@@ -1,8 +1,7 @@
 #ifndef ___VERBATIM_H___
 #define ___VERBATIM_H___
 
-static const unsigned char verbatim_data[1667] =
-{
+static const unsigned char verbatim_data[1667] = {
     0x2D,   0x2D,   0x20,   0x74,   0x6F,
     0x6C,   0x75,   0x61,   0x3A,   0x20,
     0x76,   0x65,   0x72,   0x62,   0x61,

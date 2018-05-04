@@ -1,8 +1,7 @@
 #ifndef ___COMPAT51_H___
 #define ___COMPAT51_H___
 
-static const unsigned char compat51_data[968] =
-{
+static const unsigned char compat51_data[968] = {
     0x69,   0x66,   0x20,   0x73,   0x74,
     0x72,   0x69,   0x6E,   0x67,   0x2E,
     0x66,   0x69,   0x6E,   0x64,   0x28,

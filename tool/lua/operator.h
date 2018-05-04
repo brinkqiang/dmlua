@@ -1,8 +1,7 @@
 #ifndef ___OPERATOR_H___
 #define ___OPERATOR_H___
 
-static const unsigned char operator_data[6043] =
-{
+static const unsigned char operator_data[6043] = {
     0x2D,   0x2D,   0x20,   0x74,   0x6F,
     0x6C,   0x75,   0x61,   0x3A,   0x20,
     0x6F,   0x70,   0x65,   0x72,   0x61,

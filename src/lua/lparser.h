@@ -22,8 +22,7 @@
 */
 
 /* kinds of variables/expressions */
-typedef enum
-{
+typedef enum {
     VVOID,  /* when 'expdesc' describes the last expression a list,
              this kind means an empty list (so, no expression) */
     VNIL,  /* constant nil */
@@ -52,16 +51,13 @@ typedef enum
 #define vkisvar(k)  (VLOCAL <= (k) && (k) <= VINDEXED)
 #define vkisinreg(k)    ((k) == VNONRELOC || (k) == VLOCAL)
 
-typedef struct expdesc
-{
+typedef struct expdesc {
     expkind k;
-    union
-    {
+    union {
         lua_Integer ival;    /* for VKINT */
         lua_Number nval;  /* for VKFLT */
         int info;  /* for generic use */
-        struct    /* for indexed variables (VINDEXED) */
-        {
+        struct {  /* for indexed variables (VINDEXED) */
             short idx;  /* index (R/K) */
             lu_byte t;  /* table (register or upvalue) */
             lu_byte vt;  /* whether 't' is register (VLOCAL) or upvalue (VUPVAL) */
@@ -73,15 +69,13 @@ typedef struct expdesc
 
 
 /* description of active local variable */
-typedef struct Vardesc
-{
+typedef struct Vardesc {
     short idx;  /* variable index in stack */
 } Vardesc;
 
 
 /* description of pending goto statements and label statements */
-typedef struct Labeldesc
-{
+typedef struct Labeldesc {
     TString* name;  /* label identifier */
     int pc;  /* position in code */
     int line;  /* line where it appeared */
@@ -90,8 +84,7 @@ typedef struct Labeldesc
 
 
 /* list of labels or gotos */
-typedef struct Labellist
-{
+typedef struct Labellist {
     Labeldesc* arr;  /* array */
     int n;  /* number of entries in use */
     int size;  /* array size */
@@ -99,10 +92,8 @@ typedef struct Labellist
 
 
 /* dynamic structures used by the parser */
-typedef struct Dyndata
-{
-    struct    /* list of active local variables */
-    {
+typedef struct Dyndata {
+    struct {  /* list of active local variables */
         Vardesc* arr;
         int n;
         int size;
@@ -117,8 +108,7 @@ struct BlockCnt;  /* defined in lparser.c */
 
 
 /* state needed to generate code for a given function */
-typedef struct FuncState
-{
+typedef struct FuncState {
     Proto* f;  /* current function header */
     struct FuncState* prev;  /* enclosing function */
     struct LexState* ls;  /* lexical state */

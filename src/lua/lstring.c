@@ -37,8 +37,7 @@
 /*
 ** equality for long strings
 */
-int luaS_eqlngstr( TString* a, TString* b )
-{
+int luaS_eqlngstr( TString* a, TString* b ) {
     size_t len = a->u.lnglen;
     lua_assert( a->tt == LUA_TLNGSTR && b->tt == LUA_TLNGSTR );
     return ( a == b ) || /* same instance or... */
@@ -47,13 +46,11 @@ int luaS_eqlngstr( TString* a, TString* b )
 }
 
 
-unsigned int luaS_hash( const char* str, size_t l, unsigned int seed )
-{
+unsigned int luaS_hash( const char* str, size_t l, unsigned int seed ) {
     unsigned int h = seed ^ cast( unsigned int, l );
     size_t step = ( l >> LUAI_HASHLIMIT ) + 1;
 
-    for ( ; l >= step; l -= step )
-    {
+    for ( ; l >= step; l -= step ) {
         h ^= ( ( h << 5 ) + ( h >> 2 ) + cast_byte( str[l - 1] ) );
     }
 
@@ -61,12 +58,10 @@ unsigned int luaS_hash( const char* str, size_t l, unsigned int seed )
 }
 
 
-unsigned int luaS_hashlongstr( TString* ts )
-{
+unsigned int luaS_hashlongstr( TString* ts ) {
     lua_assert( ts->tt == LUA_TLNGSTR );
 
-    if ( ts->extra == 0 )   /* no hash? */
-    {
+    if ( ts->extra == 0 ) { /* no hash? */
         ts->hash = luaS_hash( getstr( ts ), ts->u.lnglen, ts->hash );
         ts->extra = 1;  /* now it has its hash */
     }
@@ -78,28 +73,23 @@ unsigned int luaS_hashlongstr( TString* ts )
 /*
 ** resizes the string table
 */
-void luaS_resize( lua_State* L, int newsize )
-{
+void luaS_resize( lua_State* L, int newsize ) {
     int i;
     stringtable* tb = &G( L )->strt;
 
-    if ( newsize > tb->size )   /* grow table if needed */
-    {
+    if ( newsize > tb->size ) { /* grow table if needed */
         luaM_reallocvector( L, tb->hash, tb->size, newsize, TString* );
 
-        for ( i = tb->size; i < newsize; i++ )
-        {
+        for ( i = tb->size; i < newsize; i++ ) {
             tb->hash[i] = NULL;
         }
     }
 
-    for ( i = 0; i < tb->size; i++ )   /* rehash */
-    {
+    for ( i = 0; i < tb->size; i++ ) { /* rehash */
         TString* p = tb->hash[i];
         tb->hash[i] = NULL;
 
-        while ( p )   /* for each node in the list */
-        {
+        while ( p ) { /* for each node in the list */
             TString* hnext = p->u.hnext;  /* save next */
             unsigned int h = lmod( p->hash, newsize ); /* new position */
             p->u.hnext = tb->hash[h];  /* chain it */
@@ -108,8 +98,7 @@ void luaS_resize( lua_State* L, int newsize )
         }
     }
 
-    if ( newsize < tb->size )   /* shrink table if needed */
-    {
+    if ( newsize < tb->size ) { /* shrink table if needed */
         /* vanishing slice should be empty */
         lua_assert( tb->hash[newsize] == NULL && tb->hash[tb->size - 1] == NULL );
         luaM_reallocvector( L, tb->hash, tb->size, newsize, TString* );
@@ -123,15 +112,12 @@ void luaS_resize( lua_State* L, int newsize )
 ** Clear API string cache. (Entries cannot be empty, so fill them with
 ** a non-collectable string.)
 */
-void luaS_clearcache( global_State* g )
-{
+void luaS_clearcache( global_State* g ) {
     int i, j;
 
     for ( i = 0; i < STRCACHE_N; i++ )
-        for ( j = 0; j < STRCACHE_M; j++ )
-        {
-            if ( iswhite( g->strcache[i][j] ) ) /* will entry be collected? */
-            {
+        for ( j = 0; j < STRCACHE_M; j++ ) {
+            if ( iswhite( g->strcache[i][j] ) ) { /* will entry be collected? */
                 g->strcache[i][j] = g->memerrmsg;    /* replace it with something fixed */
             }
         }
@@ -141,8 +127,7 @@ void luaS_clearcache( global_State* g )
 /*
 ** Initialize the string table and the string cache
 */
-void luaS_init( lua_State* L )
-{
+void luaS_init( lua_State* L ) {
     global_State* g = G( L );
     int i, j;
     luaS_resize( L, MINSTRTABSIZE ); /* initial size of string table */
@@ -151,8 +136,7 @@ void luaS_init( lua_State* L )
     luaC_fix( L, obj2gco( g->memerrmsg ) ); /* it should never be collected */
 
     for ( i = 0; i < STRCACHE_N; i++ ) /* fill cache with valid strings */
-        for ( j = 0; j < STRCACHE_M; j++ )
-        {
+        for ( j = 0; j < STRCACHE_M; j++ ) {
             g->strcache[i][j] = g->memerrmsg;
         }
 }
@@ -162,8 +146,8 @@ void luaS_init( lua_State* L )
 /*
 ** creates a new string object
 */
-static TString* createstrobj( lua_State* L, size_t l, int tag, unsigned int h )
-{
+static TString* createstrobj( lua_State* L, size_t l, int tag,
+                              unsigned int h ) {
     TString* ts;
     GCObject* o;
     size_t totalsize;  /* total size of TString object */
@@ -177,21 +161,18 @@ static TString* createstrobj( lua_State* L, size_t l, int tag, unsigned int h )
 }
 
 
-TString* luaS_createlngstrobj( lua_State* L, size_t l )
-{
+TString* luaS_createlngstrobj( lua_State* L, size_t l ) {
     TString* ts = createstrobj( L, l, LUA_TLNGSTR, G( L )->seed );
     ts->u.lnglen = l;
     return ts;
 }
 
 
-void luaS_remove( lua_State* L, TString* ts )
-{
+void luaS_remove( lua_State* L, TString* ts ) {
     stringtable* tb = &G( L )->strt;
     TString** p = &tb->hash[lmod( ts->hash, tb->size )];
 
-    while ( *p != ts ) /* find previous element */
-    {
+    while ( *p != ts ) { /* find previous element */
         p = &( *p )->u.hnext;
     }
 
@@ -203,22 +184,18 @@ void luaS_remove( lua_State* L, TString* ts )
 /*
 ** checks whether short string exists and reuses it or creates a new one
 */
-static TString* internshrstr( lua_State* L, const char* str, size_t l )
-{
+static TString* internshrstr( lua_State* L, const char* str, size_t l ) {
     TString* ts;
     global_State* g = G( L );
     unsigned int h = luaS_hash( str, l, g->seed );
     TString** list = &g->strt.hash[lmod( h, g->strt.size )];
     lua_assert( str != NULL ); /* otherwise 'memcmp'/'memcpy' are undefined */
 
-    for ( ts = *list; ts != NULL; ts = ts->u.hnext )
-    {
+    for ( ts = *list; ts != NULL; ts = ts->u.hnext ) {
         if ( l == ts->shrlen &&
-                ( memcmp( str, getstr( ts ), l * sizeof( char ) ) == 0 ) )
-        {
+                ( memcmp( str, getstr( ts ), l * sizeof( char ) ) == 0 ) ) {
             /* found! */
-            if ( isdead( g, ts ) ) /* dead (but not collected yet)? */
-            {
+            if ( isdead( g, ts ) ) { /* dead (but not collected yet)? */
                 changewhite( ts );    /* resurrect it */
             }
 
@@ -226,8 +203,7 @@ static TString* internshrstr( lua_State* L, const char* str, size_t l )
         }
     }
 
-    if ( g->strt.nuse >= g->strt.size && g->strt.size <= MAX_INT / 2 )
-    {
+    if ( g->strt.nuse >= g->strt.size && g->strt.size <= MAX_INT / 2 ) {
         luaS_resize( L, g->strt.size * 2 );
         list = &g->strt.hash[lmod( h, g->strt.size )]; /* recompute with new size */
     }
@@ -245,18 +221,14 @@ static TString* internshrstr( lua_State* L, const char* str, size_t l )
 /*
 ** new string (with explicit length)
 */
-TString* luaS_newlstr( lua_State* L, const char* str, size_t l )
-{
-    if ( l <= LUAI_MAXSHORTLEN ) /* short string? */
-    {
+TString* luaS_newlstr( lua_State* L, const char* str, size_t l ) {
+    if ( l <= LUAI_MAXSHORTLEN ) { /* short string? */
         return internshrstr( L, str, l );
     }
-    else
-    {
+    else {
         TString* ts;
 
-        if ( l >= ( MAX_SIZE - sizeof( TString ) ) / sizeof( char ) )
-        {
+        if ( l >= ( MAX_SIZE - sizeof( TString ) ) / sizeof( char ) ) {
             luaM_toobig( L );
         }
 
@@ -273,23 +245,19 @@ TString* luaS_newlstr( lua_State* L, const char* str, size_t l )
 ** only zero-terminated strings, so it is safe to use 'strcmp' to
 ** check hits.
 */
-TString* luaS_new( lua_State* L, const char* str )
-{
+TString* luaS_new( lua_State* L, const char* str ) {
     unsigned int i = point2uint( str ) % STRCACHE_N; /* hash */
     int j;
     TString** p = G( L )->strcache[i];
 
-    for ( j = 0; j < STRCACHE_M; j++ )
-    {
-        if ( strcmp( str, getstr( p[j] ) ) == 0 ) /* hit? */
-        {
+    for ( j = 0; j < STRCACHE_M; j++ ) {
+        if ( strcmp( str, getstr( p[j] ) ) == 0 ) { /* hit? */
             return p[j];    /* that is it */
         }
     }
 
     /* normal route */
-    for ( j = STRCACHE_M - 1; j > 0; j-- )
-    {
+    for ( j = STRCACHE_M - 1; j > 0; j-- ) {
         p[j] = p[j - 1];    /* move out last element */
     }
 
@@ -299,13 +267,11 @@ TString* luaS_new( lua_State* L, const char* str )
 }
 
 
-Udata* luaS_newudata( lua_State* L, size_t s )
-{
+Udata* luaS_newudata( lua_State* L, size_t s ) {
     Udata* u;
     GCObject* o;
 
-    if ( s > MAX_SIZE - sizeof( Udata ) )
-    {
+    if ( s > MAX_SIZE - sizeof( Udata ) ) {
         luaM_toobig( L );
     }
 

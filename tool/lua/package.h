@@ -1,8 +1,7 @@
 #ifndef ___PACKAGE_H___
 #define ___PACKAGE_H___
 
-static const unsigned char package_data[10673] =
-{
+static const unsigned char package_data[10673] = {
     0x2D,   0x2D,   0x20,   0x74,   0x6F,
     0x6C,   0x75,   0x61,   0x3A,   0x20,
     0x70,   0x61,   0x63,   0x6B,   0x61,

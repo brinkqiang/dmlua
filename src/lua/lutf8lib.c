@@ -27,18 +27,14 @@
 
 /* from strlib */
 /* translate a relative string position: negative means back from end */
-static lua_Integer u_posrelat( lua_Integer pos, size_t len )
-{
-    if ( pos >= 0 )
-    {
+static lua_Integer u_posrelat( lua_Integer pos, size_t len ) {
+    if ( pos >= 0 ) {
         return pos;
     }
-    else if ( 0u - ( size_t )pos > len )
-    {
+    else if ( 0u - ( size_t )pos > len ) {
         return 0;
     }
-    else
-    {
+    else {
         return ( lua_Integer )len + pos + 1;
     }
 }
@@ -47,27 +43,22 @@ static lua_Integer u_posrelat( lua_Integer pos, size_t len )
 /*
 ** Decode one UTF-8 sequence, returning NULL if byte sequence is invalid.
 */
-static const char* utf8_decode( const char* o, int* val )
-{
+static const char* utf8_decode( const char* o, int* val ) {
     static const unsigned int limits[] = {0xFF, 0x7F, 0x7FF, 0xFFFF};
     const unsigned char* s = ( const unsigned char* )o;
     unsigned int c = s[0];
     unsigned int res = 0;  /* final result */
 
-    if ( c < 0x80 ) /* ascii? */
-    {
+    if ( c < 0x80 ) { /* ascii? */
         res = c;
     }
-    else
-    {
+    else {
         int count = 0;  /* to count number of continuation bytes */
 
-        while ( c & 0x40 )   /* still have continuation bytes? */
-        {
+        while ( c & 0x40 ) { /* still have continuation bytes? */
             int cc = s[++count];  /* read next byte */
 
-            if ( ( cc & 0xC0 ) != 0x80 ) /* not a continuation byte? */
-            {
+            if ( ( cc & 0xC0 ) != 0x80 ) { /* not a continuation byte? */
                 return NULL;    /* invalid byte sequence */
             }
 
@@ -77,16 +68,14 @@ static const char* utf8_decode( const char* o, int* val )
 
         res |= ( ( c & 0x7F ) << ( count * 5 ) ); /* add first byte */
 
-        if ( count > 3 || res > MAXUNICODE || res <= limits[count] )
-        {
+        if ( count > 3 || res > MAXUNICODE || res <= limits[count] ) {
             return NULL;    /* invalid byte sequence */
         }
 
         s += count;  /* skip continuation bytes read */
     }
 
-    if ( val )
-    {
+    if ( val ) {
         *val = res;
     }
 
@@ -99,8 +88,7 @@ static const char* utf8_decode( const char* o, int* val )
 ** range [i,j], or nil + current position if 's' is not well formed in
 ** that interval
 */
-static int utflen( lua_State* L )
-{
+static int utflen( lua_State* L ) {
     int n = 0;
     size_t len;
     const char* s = luaL_checklstring( L, 1, &len );
@@ -111,12 +99,10 @@ static int utflen( lua_State* L )
     luaL_argcheck( L, --posj < ( lua_Integer )len, 3,
                    "final position out of string" );
 
-    while ( posi <= posj )
-    {
+    while ( posi <= posj ) {
         const char* s1 = utf8_decode( s + posi, NULL );
 
-        if ( s1 == NULL )   /* conversion error? */
-        {
+        if ( s1 == NULL ) { /* conversion error? */
             lua_pushnil( L ); /* return nil ... */
             lua_pushinteger( L, posi + 1 ); /* ... and current position */
             return 2;
@@ -135,8 +121,7 @@ static int utflen( lua_State* L )
 ** codepoint(s, [i, [j]])  -> returns codepoints for all characters
 ** that start in the range [i,j]
 */
-static int codepoint( lua_State* L )
-{
+static int codepoint( lua_State* L ) {
     size_t len;
     const char* s = luaL_checklstring( L, 1, &len );
     lua_Integer posi = u_posrelat( luaL_optinteger( L, 2, 1 ), len );
@@ -146,13 +131,11 @@ static int codepoint( lua_State* L )
     luaL_argcheck( L, posi >= 1, 2, "out of range" );
     luaL_argcheck( L, pose <= ( lua_Integer )len, 3, "out of range" );
 
-    if ( posi > pose )
-    {
+    if ( posi > pose ) {
         return 0;    /* empty interval; return no values */
     }
 
-    if ( pose - posi >= INT_MAX ) /* (lua_Integer -> int) overflow? */
-    {
+    if ( pose - posi >= INT_MAX ) { /* (lua_Integer -> int) overflow? */
         return luaL_error( L, "string slice too long" );
     }
 
@@ -161,13 +144,11 @@ static int codepoint( lua_State* L )
     n = 0;
     se = s + pose;
 
-    for ( s += posi - 1; s < se; )
-    {
+    for ( s += posi - 1; s < se; ) {
         int code;
         s = utf8_decode( s, &code );
 
-        if ( s == NULL )
-        {
+        if ( s == NULL ) {
             return luaL_error( L, "invalid UTF-8 code" );
         }
 
@@ -179,8 +160,7 @@ static int codepoint( lua_State* L )
 }
 
 
-static void pushutfchar( lua_State* L, int arg )
-{
+static void pushutfchar( lua_State* L, int arg ) {
     lua_Integer code = luaL_checkinteger( L, arg );
     luaL_argcheck( L, 0 <= code && code <= MAXUNICODE, arg, "value out of range" );
     lua_pushfstring( L, "%U", ( long )code );
@@ -190,22 +170,18 @@ static void pushutfchar( lua_State* L, int arg )
 /*
 ** utfchar(n1, n2, ...)  -> char(n1)..char(n2)...
 */
-static int utfchar( lua_State* L )
-{
+static int utfchar( lua_State* L ) {
     int n = lua_gettop( L ); /* number of arguments */
 
-    if ( n == 1 ) /* optimize common case of single char */
-    {
+    if ( n == 1 ) { /* optimize common case of single char */
         pushutfchar( L, 1 );
     }
-    else
-    {
+    else {
         int i;
         luaL_Buffer b;
         luaL_buffinit( L, &b );
 
-        for ( i = 1; i <= n; i++ )
-        {
+        for ( i = 1; i <= n; i++ ) {
             pushutfchar( L, i );
             luaL_addvalue( &b );
         }
@@ -221,8 +197,7 @@ static int utfchar( lua_State* L )
 ** offset(s, n, [i])  -> index where n-th character counting from
 **   position 'i' starts; 0 means character at 'i'.
 */
-static int byteoffset( lua_State* L )
-{
+static int byteoffset( lua_State* L ) {
     size_t len;
     const char* s = luaL_checklstring( L, 1, &len );
     lua_Integer n  = luaL_checkinteger( L, 2 );
@@ -231,27 +206,20 @@ static int byteoffset( lua_State* L )
     luaL_argcheck( L, 1 <= posi && --posi <= ( lua_Integer )len, 3,
                    "position out of range" );
 
-    if ( n == 0 )
-    {
+    if ( n == 0 ) {
         /* find beginning of current byte sequence */
-        while ( posi > 0 && iscont( s + posi ) )
-        {
+        while ( posi > 0 && iscont( s + posi ) ) {
             posi--;
         }
     }
-    else
-    {
-        if ( iscont( s + posi ) )
-        {
+    else {
+        if ( iscont( s + posi ) ) {
             luaL_error( L, "initial position is a continuation byte" );
         }
 
-        if ( n < 0 )
-        {
-            while ( n < 0 && posi > 0 )   /* move back */
-            {
-                do    /* find beginning of previous character */
-                {
+        if ( n < 0 ) {
+            while ( n < 0 && posi > 0 ) { /* move back */
+                do {  /* find beginning of previous character */
                     posi--;
                 }
                 while ( posi > 0 && iscont( s + posi ) );
@@ -259,14 +227,11 @@ static int byteoffset( lua_State* L )
                 n++;
             }
         }
-        else
-        {
+        else {
             n--;  /* do not move for 1st character */
 
-            while ( n > 0 && posi < ( lua_Integer )len )
-            {
-                do    /* find beginning of next character */
-                {
+            while ( n > 0 && posi < ( lua_Integer )len ) {
+                do {  /* find beginning of next character */
                     posi++;
                 }
                 while ( iscont( s + posi ) );   /* (cannot pass final '\0') */
@@ -276,12 +241,10 @@ static int byteoffset( lua_State* L )
         }
     }
 
-    if ( n == 0 ) /* did it find given character? */
-    {
+    if ( n == 0 ) { /* did it find given character? */
         lua_pushinteger( L, posi + 1 );
     }
-    else  /* no such character */
-    {
+    else { /* no such character */
         lua_pushnil( L );
     }
 
@@ -289,37 +252,30 @@ static int byteoffset( lua_State* L )
 }
 
 
-static int iter_aux( lua_State* L )
-{
+static int iter_aux( lua_State* L ) {
     size_t len;
     const char* s = luaL_checklstring( L, 1, &len );
     lua_Integer n = lua_tointeger( L, 2 ) - 1;
 
-    if ( n < 0 ) /* first iteration? */
-    {
+    if ( n < 0 ) { /* first iteration? */
         n = 0;    /* start from here */
     }
-    else if ( n < ( lua_Integer )len )
-    {
+    else if ( n < ( lua_Integer )len ) {
         n++;  /* skip current byte */
 
-        while ( iscont( s + n ) )
-        {
+        while ( iscont( s + n ) ) {
             n++;    /* and its continuations */
         }
     }
 
-    if ( n >= ( lua_Integer )len )
-    {
+    if ( n >= ( lua_Integer )len ) {
         return 0;    /* no more codepoints */
     }
-    else
-    {
+    else {
         int code;
         const char* next = utf8_decode( s + n, &code );
 
-        if ( next == NULL || iscont( next ) )
-        {
+        if ( next == NULL || iscont( next ) ) {
             return luaL_error( L, "invalid UTF-8 code" );
         }
 
@@ -330,8 +286,7 @@ static int iter_aux( lua_State* L )
 }
 
 
-static int iter_codes( lua_State* L )
-{
+static int iter_codes( lua_State* L ) {
     luaL_checkstring( L, 1 );
     lua_pushcfunction( L, iter_aux );
     lua_pushvalue( L, 1 );
@@ -344,8 +299,7 @@ static int iter_codes( lua_State* L )
 #define UTF8PATT    "[\0-\x7F\xC2-\xF4][\x80-\xBF]*"
 
 
-static const luaL_Reg funcs[] =
-{
+static const luaL_Reg funcs[] = {
     {"offset", byteoffset},
     {"codepoint", codepoint},
     {"char", utfchar},
@@ -357,8 +311,7 @@ static const luaL_Reg funcs[] =
 };
 
 
-LUAMOD_API int luaopen_utf8( lua_State* L )
-{
+LUAMOD_API int luaopen_utf8( lua_State* L ) {
     luaL_newlib( L, funcs );
     lua_pushlstring( L, UTF8PATT, sizeof( UTF8PATT ) / sizeof( char ) - 1 );
     lua_setfield( L, -2, "charpattern" );

@@ -1,8 +1,7 @@
 #ifndef ___FUNCTION_H___
 #define ___FUNCTION_H___
 
-static const unsigned char function_data[14254] =
-{
+static const unsigned char function_data[14254] = {
     0x2D,   0x2D,   0x20,   0x74,   0x6F,
     0x6C,   0x75,   0x61,   0x3A,   0x20,
     0x66,   0x75,   0x6E,   0x63,   0x74,

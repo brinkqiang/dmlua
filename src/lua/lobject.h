@@ -82,8 +82,7 @@ typedef struct GCObject GCObject;
 /*
 ** Common type has only the common header
 */
-struct GCObject
-{
+struct GCObject {
     CommonHeader;
 };
 
@@ -98,8 +97,7 @@ struct GCObject
 /*
 ** Union of all Lua values
 */
-typedef union Value
-{
+typedef union Value {
     GCObject* gc;    /* collectable objects */
     void* p;         /* light userdata */
     int b;           /* booleans */
@@ -112,8 +110,7 @@ typedef union Value
 #define TValuefields    Value value_; int tt_
 
 
-typedef struct lua_TValue
-{
+typedef struct lua_TValue {
     TValuefields;
 } TValue;
 
@@ -303,14 +300,12 @@ typedef TValue* StkId;  /* index to stack elements */
 ** Header for string value; string bytes follow the end of this structure
 ** (aligned according to 'UTString'; see next).
 */
-typedef struct TString
-{
+typedef struct TString {
     CommonHeader;
     lu_byte extra;  /* reserved words for short strings; "has hash" for longs */
     lu_byte shrlen;  /* length for short strings */
     unsigned int hash;
-    union
-    {
+    union {
         size_t lnglen;  /* length for long strings */
         struct TString* hnext;  /* linked list for hash table */
     } u;
@@ -320,8 +315,7 @@ typedef struct TString
 /*
 ** Ensures that address after this type is always fully aligned.
 */
-typedef union UTString
-{
+typedef union UTString {
     L_Umaxalign dummy;  /* ensures maximum alignment for strings */
     TString tsv;
 } UTString;
@@ -349,8 +343,7 @@ typedef union UTString
 ** Header for userdata; memory area follows the end of this structure
 ** (aligned according to 'UUdata'; see next).
 */
-typedef struct Udata
-{
+typedef struct Udata {
     CommonHeader;
     lu_byte ttuv_;  /* user value's tag */
     struct Table* metatable;
@@ -362,8 +355,7 @@ typedef struct Udata
 /*
 ** Ensures that address after this type is always fully aligned.
 */
-typedef union UUdata
-{
+typedef union UUdata {
     L_Umaxalign dummy;  /* ensures maximum alignment for 'local' udata */
     Udata uv;
 } UUdata;
@@ -391,8 +383,7 @@ typedef union UUdata
 /*
 ** Description of an upvalue for function prototypes
 */
-typedef struct Upvaldesc
-{
+typedef struct Upvaldesc {
     TString* name;  /* upvalue name (for debug information) */
     lu_byte instack;  /* whether it is in stack (register) */
     lu_byte idx;  /* index of upvalue (in stack or in outer function's list) */
@@ -403,8 +394,7 @@ typedef struct Upvaldesc
 ** Description of a local variable for function prototypes
 ** (used for debug information)
 */
-typedef struct LocVar
-{
+typedef struct LocVar {
     TString* varname;
     int startpc;  /* first point where variable is active */
     int endpc;    /* first point where variable is dead */
@@ -414,8 +404,7 @@ typedef struct LocVar
 /*
 ** Function Prototypes
 */
-typedef struct Proto
-{
+typedef struct Proto {
     CommonHeader;
     lu_byte numparams;  /* number of fixed parameters */
     lu_byte is_vararg;
@@ -454,24 +443,21 @@ typedef struct UpVal UpVal;
 #define ClosureHeader \
     CommonHeader; lu_byte nupvalues; GCObject *gclist
 
-typedef struct CClosure
-{
+typedef struct CClosure {
     ClosureHeader;
     lua_CFunction f;
     TValue upvalue[1];  /* list of upvalues */
 } CClosure;
 
 
-typedef struct LClosure
-{
+typedef struct LClosure {
     ClosureHeader;
     struct Proto* p;
     UpVal* upvals[1];  /* list of upvalues */
 } LClosure;
 
 
-typedef union Closure
-{
+typedef union Closure {
     CClosure c;
     LClosure l;
 } Closure;
@@ -486,10 +472,8 @@ typedef union Closure
 ** Tables
 */
 
-typedef union TKey
-{
-    struct
-    {
+typedef union TKey {
+    struct {
         TValuefields;
         int next;  /* for chaining (offset for next node) */
     } nk;
@@ -504,15 +488,13 @@ typedef union TKey
       (void)L; checkliveness(L,io_); }
 
 
-typedef struct Node
-{
+typedef struct Node {
     TValue i_val;
     TKey i_key;
 } Node;
 
 
-typedef struct Table
-{
+typedef struct Table {
     CommonHeader;
     lu_byte flags;  /* 1<<p means tagmethod(p) is not present */
     lu_byte lsizenode;  /* log2 of size of 'node' array */
