@@ -8,8 +8,7 @@
 
 /// 导出对象模块
 
-class CObj   // tolua_export
-{
+class CObj {// tolua_export
 public:
     void Reset()
     {
@@ -53,8 +52,8 @@ public:
 // tolua_end
 
 
-class CRole : public CObj   // tolua_export
-{
+class CRole : public CObj {// tolua_export
+
 public:
     void Reset()
     {
@@ -120,8 +119,7 @@ public:
 };
 // tolua_end
 
-class CUser   // tolua_export
-{
+class CUser{// tolua_export
 private:
     std::string m_strName;
 public:
