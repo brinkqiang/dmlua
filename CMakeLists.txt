@@ -58,10 +58,11 @@ IF(UNIX)
     ADD_EXECUTABLE(dmluatest ${TEST_SOURCES})
     TARGET_LINK_LIBRARIES(dmluatest tolua m dl pthread)
 
-    ADD_CUSTOM_COMMAND(PRE_BUILD
-        OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/test/script/dmlua
-        COMMAND tolua++ -t -n interface -o interface.cpp -H interface.h package.pkg
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/dmlua
+    ADD_CUSTOM_COMMAND(
+		TARGET dmluatest
+		PRE_BUILD
+        COMMAND tolua++ -t -n interface -o interface.cpp -H interface.h interface.pkg
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test/script
         DEPENDS tolua++
         )
 ELSEIF(WIN32)
