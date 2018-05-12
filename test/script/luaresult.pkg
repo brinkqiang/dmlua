@@ -1,5 +1,5 @@
-$#include "../../include/dmlua/dmlua_luaresult.h"
-$#include "../../include/dmlua/dmlua_types.h"
+$#include "dmlua_luaresult.h"
+$#include "dmlua_types.h"
 
 
 struct LuaResult
