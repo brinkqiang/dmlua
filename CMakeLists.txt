@@ -65,6 +65,16 @@ IF(UNIX)
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test/script
         DEPENDS tolua++
         )
+    FILE(GLOB_RECURSE LUACHECK_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.pkg)
+
+    ADD_EXECUTABLE(dmluacheck ${LUACHECK_SOURCES})
+    TARGET_LINK_LIBRARIES(dmluacheck tolua)
 ELSEIF(WIN32)
     ADD_DEFINITIONS(-DLUA_COMPAT_MODULE)
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/)
@@ -133,4 +143,14 @@ ELSEIF(WIN32)
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test/script
         DEPENDS tolua++
         )
+    FILE(GLOB_RECURSE LUACHECK_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.pkg)
+
+    ADD_EXECUTABLE(dmluacheck ${LUACHECK_SOURCES})
+    TARGET_LINK_LIBRARIES(dmluacheck tolua)
 ENDIF(UNIX)
