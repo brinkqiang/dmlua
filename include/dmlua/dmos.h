@@ -32,6 +32,9 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -52,6 +55,7 @@
 #include <iostream>
 
 #include <winsock2.h>
+
 
 #include <windows.h>
 #include <direct.h>
