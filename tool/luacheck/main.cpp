@@ -1,5 +1,4 @@
 
-#include "dmos.h"
 #include "dmlua.h"
 
 TOLUA_API int  tolua_interface_open(lua_State* tolua_S)

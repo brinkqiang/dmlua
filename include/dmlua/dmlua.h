@@ -22,6 +22,7 @@
 #ifndef __DMLUA_H_INCLUDE__
 #define __DMLUA_H_INCLUDE__
 
+#include "dmos.h"
 #include "dmlua_engine.h"
 #include "dmlua_luaresult.h"
 
