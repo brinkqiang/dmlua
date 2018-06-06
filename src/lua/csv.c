@@ -298,7 +298,7 @@ static void _close( CsvData* data ) {
     free( data->cols );
 }
 
-static int readline( lua_State* L, CsvData* data, boolean push_error ) {
+static int _readline( lua_State* L, CsvData* data, boolean push_error ) {
     int n = parse_csv_file( L, data->file, data->delim, data->cols );
     int nfield = data->nfield;
 
@@ -334,7 +334,7 @@ static int readline( lua_State* L, CsvData* data, boolean push_error ) {
 static int l_read( lua_State* L ) {
     CsvData* data = ( CsvData* )lua_touserdata( L, 1 );
     lua_createtable( L, data->nfield, 0 );
-    return readline( L, data, TRUE );
+    return _readline( L, data, TRUE );
 }
 
 static int l_write( lua_State* L ) {
@@ -357,7 +357,7 @@ static int readr( lua_State* L ) {
         data->tbl = luaL_ref( L, LUA_REGISTRYINDEX );
     }
 
-    return readline( L, data, FALSE );
+    return _readline( L, data, FALSE );
 }
 
 static int l_rows( lua_State* L ) {
