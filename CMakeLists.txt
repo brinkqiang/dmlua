@@ -56,7 +56,7 @@ IF(UNIX)
         ${CMAKE_CURRENT_SOURCE_DIR}/include/dmlua/dmlua.h)
 
     ADD_EXECUTABLE(dmluatest ${TEST_SOURCES})
-    TARGET_LINK_LIBRARIES(dmluatest tolua m dl pthread)
+    TARGET_LINK_LIBRARIES(dmluatest tolua m dl pthread readline)
 
     ADD_CUSTOM_COMMAND(
 		TARGET dmluatest
@@ -74,7 +74,7 @@ IF(UNIX)
         ${CMAKE_CURRENT_SOURCE_DIR}/tool/luacheck/*.pkg)
 
     ADD_EXECUTABLE(dmluacheck ${LUACHECK_SOURCES})
-    TARGET_LINK_LIBRARIES(dmluacheck tolua)
+    TARGET_LINK_LIBRARIES(dmluacheck tolua m dl pthread readline)
 ELSEIF(WIN32)
     ADD_DEFINITIONS(-DLUA_COMPAT_MODULE)
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/)
