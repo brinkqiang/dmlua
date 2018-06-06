@@ -27,9 +27,9 @@ addons:
 
     packages:
     - cmake
-    - gcc-7
-    - g++-7
-    - clang-5.0
+#   - gcc-7
+#   - g++-7
+#   - clang-5.0
 
 
 install:
