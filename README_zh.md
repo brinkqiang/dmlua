@@ -14,11 +14,11 @@ Copyright (c) 2013-2018 brinkqiang (brink.qiang@gmail.com)
 [win-badge]: https://ci.appveyor.com/api/projects/status/github/brinkqiang/dmlua?branch=master&svg=true "AppVeyor build status"
 [win-link]:  https://ci.appveyor.com/project/brinkqiang/dmlua "AppVeyor build status"
 
-## Introduction
+## Intro
 Lua fully automated engine, based on tolua++, support lua 5.3
 
 ## Contacts
-[dmlua gitter.im](https://gitter.im/brinkqiang/dmlua)
+![Join the chat at https://gitter.im/brinkqiang/dmlua](https://badges.gitter.im/brinkqiang/dmlua/Lobby.svg)
 
 ## Thanks
 gavingqf@126.com
