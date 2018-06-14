@@ -43,5 +43,5 @@ before_script:
 
 script:
 - "if [ -f bin/dmluacheck ] ; then bin/dmluacheck ; fi"
-
+- "if [ -f bin/dmluatest ] ; then bin/dmluatest ; fi"
 
