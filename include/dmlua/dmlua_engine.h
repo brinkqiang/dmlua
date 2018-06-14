@@ -40,6 +40,10 @@
 
 #include "dmsingleton.h"
 
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
+
 TOLUA_API int tolua_interface_open( lua_State* tolua_S );
 
 inline char* tolua_SafeStrCopy( char* des, const char* src, size_t max_len ) {
@@ -834,6 +838,7 @@ FAIL:
 
   private:
     static inline std::string __GetScriptPath() {
+
 #ifdef WIN32
         static char path[MAX_PATH];
         static bool first_time = true;
@@ -847,6 +852,19 @@ FAIL:
             *( p ) = '\0';
         }
 
+        return path;
+#elif __APPLE__
+        static char path[MAX_PATH];
+        static bool first_time = true;
+        if ( first_time ) {
+            int nRet = _NSGetExecutablePath(path, &size);
+            if (nRet != 0)
+            {
+                return "./";
+            }
+            char* p = strrchr( path, '/' );
+            *( p ) = '\0';
+        }
         return path;
 #else
         static char path[MAX_PATH];
