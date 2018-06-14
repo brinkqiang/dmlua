@@ -857,6 +857,7 @@ FAIL:
         static char path[MAX_PATH];
         static bool first_time = true;
         if ( first_time ) {
+			uint32_t size = sizeof(path);
             int nRet = _NSGetExecutablePath(path, &size);
             if (nRet != 0)
             {
