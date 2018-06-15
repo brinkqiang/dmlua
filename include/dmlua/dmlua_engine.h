@@ -856,16 +856,19 @@ FAIL:
 #elif __APPLE__
         static char path[MAX_PATH];
         static bool first_time = true;
+
         if ( first_time ) {
-			uint32_t size = sizeof(path);
+            uint32_t size = sizeof(path);
             int nRet = _NSGetExecutablePath(path, &size);
-            if (nRet != 0)
-            {
+
+            if (nRet != 0) {
                 return "./";
             }
+
             char* p = strrchr( path, '/' );
             *( p ) = '\0';
         }
+
         return path;
 #else
         static char path[MAX_PATH];
