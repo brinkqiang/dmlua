@@ -45,6 +45,16 @@ script:
 - "if [ -f bin/dmluacheck ] ; then bin/dmluacheck ; fi"
 - "if [ -f bin/dmluatest ] ; then bin/dmluatest ; fi"
 
+after_success:
+- echo success
+
+after_failure:
+- echo failure
+
+before_deploy:
+# - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+- echo deploy start
+
 deploy:
   provider: releases
   api_key:
@@ -52,5 +62,8 @@ deploy:
   file: bin/*
   skip_cleanup: true
   on:
-    tags: true
-  # all_branches: true
+    tags: false
+    all_branches: true
+
+after_deploy:
+- echo deploy end
