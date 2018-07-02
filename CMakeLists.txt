@@ -6,6 +6,7 @@ IF (WIN32)
     MESSAGE(STATUS "Now is windows")
 
     SET(DMOS_NAME "win")
+
     SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11" )    
 ELSEIF (APPLE)  
     MESSAGE(STATUS "Now is Apple systems.")  
@@ -19,6 +20,7 @@ ELSEIF (UNIX)
     ADD_DEFINITIONS(-DLUA_USE_LINUX)
 
     SET(DMOS_NAME "lin") 
+    
     SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread" )    
 ENDIF ()
 
