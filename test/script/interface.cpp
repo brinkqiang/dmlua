@@ -15,7 +15,7 @@ TOLUA_API int  tolua_interface_open (lua_State* tolua_S);
 
 #include "dmlua_typeid.h"
 #include "dmlua_luaresult.h"
-#include "dmlua_types.h"
+#include "dmtypes.h"
 #include "../../test/common/macros.h"
 #include "../../test/common/enum.h"
 #include "../../test/common/struct.h"
@@ -24,30 +24,9 @@ TOLUA_API int  tolua_interface_open (lua_State* tolua_S);
 /* function to release collected object via destructor */
 #ifdef __cplusplus
 
-static int tolua_collect_CRole (lua_State* tolua_S)
+static int tolua_collect_std__vector_int_ (lua_State* tolua_S)
 {
- CRole* self = (CRole*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_LuaResult_int_ (lua_State* tolua_S)
-{
- LuaResult<int>* self = (LuaResult<int>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_LuaResult_uint64_t_ (lua_State* tolua_S)
-{
- LuaResult<uint64_t>* self = (LuaResult<uint64_t>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_STaskInfo (lua_State* tolua_S)
-{
- STaskInfo* self = (STaskInfo*) tolua_tousertype(tolua_S,1,0);
+ std::vector<int>* self = (std::vector<int>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -59,9 +38,16 @@ static int tolua_collect_CObj (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_LuaResult_double_ (lua_State* tolua_S)
+static int tolua_collect_SPos (lua_State* tolua_S)
 {
- LuaResult<double>* self = (LuaResult<double>*) tolua_tousertype(tolua_S,1,0);
+ SPos* self = (SPos*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_CRole (lua_State* tolua_S)
+{
+ CRole* self = (CRole*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -80,23 +66,37 @@ static int tolua_collect_std__vector_std__string_ (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_STaskInfo (lua_State* tolua_S)
+{
+ STaskInfo* self = (STaskInfo*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_LuaResult_int_ (lua_State* tolua_S)
+{
+ LuaResult<int>* self = (LuaResult<int>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_LuaResult_double_ (lua_State* tolua_S)
+{
+ LuaResult<double>* self = (LuaResult<double>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_LuaResult_uint64_t_ (lua_State* tolua_S)
+{
+ LuaResult<uint64_t>* self = (LuaResult<uint64_t>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_LuaResult_int64_t_ (lua_State* tolua_S)
 {
  LuaResult<int64_t>* self = (LuaResult<int64_t>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_std__vector_int_ (lua_State* tolua_S)
-{
- std::vector<int>* self = (std::vector<int>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_SPos (lua_State* tolua_S)
-{
- SPos* self = (SPos*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -106,30 +106,30 @@ static int tolua_collect_SPos (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"CRole");
- Mtolua_typeid< CRole >(tolua_S, "CRole");
- tolua_usertype(tolua_S,"LuaResult<int>");
- Mtolua_typeid< LuaResult<int> >(tolua_S, "LuaResult<int>");
- tolua_usertype(tolua_S,"LuaResult<uint64_t>");
- Mtolua_typeid< LuaResult<uint64_t> >(tolua_S, "LuaResult<uint64_t>");
- tolua_usertype(tolua_S,"STaskInfo");
- Mtolua_typeid< STaskInfo >(tolua_S, "STaskInfo");
- tolua_usertype(tolua_S,"CUser");
- Mtolua_typeid< CUser >(tolua_S, "CUser");
- tolua_usertype(tolua_S,"CObj");
- Mtolua_typeid< CObj >(tolua_S, "CObj");
- tolua_usertype(tolua_S,"LuaResult<double>");
- Mtolua_typeid< LuaResult<double> >(tolua_S, "LuaResult<double>");
- tolua_usertype(tolua_S,"LuaResult<std::string>");
- Mtolua_typeid< LuaResult<std::string> >(tolua_S, "LuaResult<std::string>");
- tolua_usertype(tolua_S,"std::vector<std::string>");
- Mtolua_typeid< std::vector<std::string> >(tolua_S, "std::vector<std::string>");
- tolua_usertype(tolua_S,"LuaResult<int64_t>");
- Mtolua_typeid< LuaResult<int64_t> >(tolua_S, "LuaResult<int64_t>");
  tolua_usertype(tolua_S,"std::vector<int>");
  Mtolua_typeid< std::vector<int> >(tolua_S, "std::vector<int>");
+ tolua_usertype(tolua_S,"CObj");
+ Mtolua_typeid< CObj >(tolua_S, "CObj");
  tolua_usertype(tolua_S,"SPos");
  Mtolua_typeid< SPos >(tolua_S, "SPos");
+ tolua_usertype(tolua_S,"LuaResult<std::string>");
+ Mtolua_typeid< LuaResult<std::string> >(tolua_S, "LuaResult<std::string>");
+ tolua_usertype(tolua_S,"CRole");
+ Mtolua_typeid< CRole >(tolua_S, "CRole");
+ tolua_usertype(tolua_S,"CUser");
+ Mtolua_typeid< CUser >(tolua_S, "CUser");
+ tolua_usertype(tolua_S,"std::vector<std::string>");
+ Mtolua_typeid< std::vector<std::string> >(tolua_S, "std::vector<std::string>");
+ tolua_usertype(tolua_S,"STaskInfo");
+ Mtolua_typeid< STaskInfo >(tolua_S, "STaskInfo");
+ tolua_usertype(tolua_S,"LuaResult<int>");
+ Mtolua_typeid< LuaResult<int> >(tolua_S, "LuaResult<int>");
+ tolua_usertype(tolua_S,"LuaResult<double>");
+ Mtolua_typeid< LuaResult<double> >(tolua_S, "LuaResult<double>");
+ tolua_usertype(tolua_S,"LuaResult<uint64_t>");
+ Mtolua_typeid< LuaResult<uint64_t> >(tolua_S, "LuaResult<uint64_t>");
+ tolua_usertype(tolua_S,"LuaResult<int64_t>");
+ Mtolua_typeid< LuaResult<int64_t> >(tolua_S, "LuaResult<int64_t>");
 }
 
 /* get function: value of class  LuaResult<int> */
