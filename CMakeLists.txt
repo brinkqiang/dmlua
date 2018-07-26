@@ -9,14 +9,14 @@ IF (WIN32)
 
     SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11" )    
 ELSEIF (APPLE)  
-    MESSAGE(STATUS "Now is Apple systems.")  
+    MESSAGE(STATUS "Now is Apple systems")  
     ADD_DEFINITIONS(-DLUA_USE_MACOSX)
 
     SET(DMOS_NAME "mac") 
 
     SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread" )
 ELSEIF (UNIX)  
-    MESSAGE(STATUS "Now is UNIX-like OS's. Including Apple os x and CygWin")  
+    MESSAGE(STATUS "Now is UNIX-like OS")  
     ADD_DEFINITIONS(-DLUA_USE_LINUX)
 
     SET(DMOS_NAME "lin") 
