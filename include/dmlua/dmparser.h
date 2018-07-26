@@ -19,8 +19,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef __DMLUA_PARSER_H_INCLUDE__
-#define __DMLUA_PARSER_H_INCLUDE__
+#ifndef __DMPARSER_H_INCLUDE__
+#define __DMPARSER_H_INCLUDE__
 
 #ifdef WIN32
 
@@ -186,4 +186,4 @@ class CDirectoryParser {
 #endif
 };
 
-#endif // __DMLUA_PARSER_H_INCLUDE__
+#endif // __DMPARSER_H_INCLUDE__

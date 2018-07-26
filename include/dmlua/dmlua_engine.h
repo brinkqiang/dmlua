@@ -32,12 +32,13 @@
 #include "lua.hpp"
 #include "tolua++.h"
 
-#include "dmlua_types.h"
+#include "dmtypes.h"
 
-#include "dmlua_parser.h"
 #include "dmlua_typeid.h"
 #include "dmlua_luaresult.h"
 
+#include "dmtypes.h"
+#include "dmparser.h"
 #include "dmsingleton.h"
 
 #ifdef __APPLE__
