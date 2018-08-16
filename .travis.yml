@@ -78,7 +78,7 @@ script:
 
 after_success:
   - "if [ -f bin/dmluatest ] ; then bin/dmluatest ; fi"
-- "if [ -f bin/dmluacheck ] ; then bin/dmluacheck ; fi"
+  - "if [ -f bin/dmluacheck ] ; then bin/dmluacheck ; fi"
 
 after_failure:
   - echo failure
@@ -91,7 +91,7 @@ deploy:
   provider: releases
   api_key:
     secure: $GITHUB_ACCESS_TOKEN
-  file: bin/dmluatest bin/dmluacheck
+  file: bin/dmluacheck
   skip_cleanup: true
   on:
     branch: master
