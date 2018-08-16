@@ -53,7 +53,7 @@ test_script:
 #  provider: GitHub
 #  auth_token:
 #    secure: "%GITHUB_ACCESS_TOKEN%"
-#  artifact: bin\*\*.exe
+#  artifact: bin\*\*.exe bin\*\*.pdb
 #  draft: false
 #  prerelease: false
 #  on:
