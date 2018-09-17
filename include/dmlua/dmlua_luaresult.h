@@ -65,8 +65,8 @@ struct LuaResult<uint64_t> {
 };
 
 typedef LuaResult<int>                  LResultINT;
-typedef LuaResult<int64_t>            LResultINT64;
-typedef LuaResult<uint64_t>   LResultUINT64;
+typedef LuaResult<int64_t>              LResultINT64;
+typedef LuaResult<uint64_t>             LResultUINT64;
 typedef LuaResult<double>               LResultDOUBLE;
 
 typedef LuaResult<std::string>          LResultSTRING;
