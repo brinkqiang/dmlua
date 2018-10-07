@@ -18,7 +18,7 @@ Copyright (c) 2013-2018 brinkqiang (brink.qiang@gmail.com)
 
 ## Intro
 Lua fully automated engine, based on tolua++, support lua 5.3
-```
+```cpp
 #include "test/role/rolemgr.h"
 #include "test/role/role.h"
 #include "dmlua.h"
