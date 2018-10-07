@@ -1,6 +1,6 @@
 #include "test/role/rolemgr.h"
 #include "test/role/role.h"
-#include "dmlua/dmlua.h"
+#include "dmlua.h"
 #include "gtest/gtest.h"
 
 TEST( luatest, luatest ) {

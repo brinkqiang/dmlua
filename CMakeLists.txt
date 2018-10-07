@@ -80,7 +80,7 @@ FILE(GLOB_RECURSE TEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/test/*.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/test/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/test/*.pkg
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/dmlua/dmlua.h)
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dmlua.h)
 
 ADD_EXECUTABLE(dmluatest ${TEST_SOURCES})
 TARGET_LINK_LIBRARIES(dmluatest tolua)
