@@ -12,3 +12,4 @@ CTestTestfile.cmake
 !/bin/data/*.csv
 /lib/*
 /build/*
+/.vscode/*
