@@ -114,7 +114,7 @@ static inline bool DMDirectoryCreate( const char* dir_name, bool force ) {
 #ifdef WIN32
     int ret = mkdir( dir_name );
 #else
-    int ret = mkdir( dir_name, S_IRWXU | S_IRWXG );
+    int ret = mkdir( dir_name, S_IRWXU | S_IRWXG | S_IXOTH);
 #endif
 
     if ( !force ) {
@@ -162,16 +162,18 @@ static inline bool DMDirectoryCreate( const char* dir_name, bool force ) {
                         bfirst = false;
                         continue;
                     }
-
+                    pos = path + strlen(path);
+                    *pos = PATH_DELIMITER;
                     bfirst = false;
+                    continue;
                 }
 
                 if ( !DMDirectoryExist( path ) ) {
-#ifdef WIN32
 
+#ifdef WIN32
                     if ( 0 != mkdir( path ) )
 #else
-                    if ( 0 != mkdir( path, S_IREAD | S_IWRITE ) )
+                    if ( 0 != mkdir( path, S_IRWXU | S_IRWXG | S_IXOTH) )
 #endif
                     {
                         return false;
