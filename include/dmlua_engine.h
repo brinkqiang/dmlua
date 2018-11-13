@@ -512,6 +512,23 @@ FAIL:
         tolua_pushboolean( luaS, t );
     }
 
+
+    template <typename T, typename... ARGS>
+    void PushParam(T t, ARGS... args) {
+        PushLuaParam(m_pLuaS, t);
+        PushParam(args ...);
+    }
+
+    void PushParam() {}
+
+    template<typename... ARGS>
+    inline int Call(const char* func, ARGS... args) {
+        LUA_CHECK_FUNCTION(m_pLuaS, func);
+        PushParam(args...);
+        LUA_CALL_FUNCTION(m_pLuaS, func, sizeof...(args), 0);
+        return 0;
+    }
+
     //////////////////////////////////////////////////////////////////////////
 
     static inline int tolua_isGlobalTable( lua_State* luaS, const char* func ) {
@@ -559,284 +576,6 @@ FAIL:
             return -1;
         }
     }
-
-    inline int Call( const char* func ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 0, 0 );
-        return 0;
-    }
-
-    template<typename T1>
-    inline int Call( const char* func, T1 t1 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 1, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2>
-    inline int Call( const char* func, T1 t1, T2 t2 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 2, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3>
-    inline int Call( const char* func, T1 t1, T2 t2, T3 t3 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        PushLuaParam( m_pLuaS, t3 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 3, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4>
-    inline int Call( const char* func, T1 t1, T2 t2, T3 t3, T4 t4 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        PushLuaParam( m_pLuaS, t3 );
-        PushLuaParam( m_pLuaS, t4 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 4, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5>
-    inline int Call( const char* func, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        PushLuaParam( m_pLuaS, t3 );
-        PushLuaParam( m_pLuaS, t4 );
-        PushLuaParam( m_pLuaS, t5 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 5, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-    inline int Call( const char* func, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        PushLuaParam( m_pLuaS, t3 );
-        PushLuaParam( m_pLuaS, t4 );
-        PushLuaParam( m_pLuaS, t5 );
-        PushLuaParam( m_pLuaS, t6 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 6, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
-    inline int Call( const char* func, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6,
-                     T7 t7 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        PushLuaParam( m_pLuaS, t3 );
-        PushLuaParam( m_pLuaS, t4 );
-        PushLuaParam( m_pLuaS, t5 );
-        PushLuaParam( m_pLuaS, t6 );
-        PushLuaParam( m_pLuaS, t7 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 7, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
-    inline int Call( const char* func, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6,
-                     T7 t7, T8 t8 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        PushLuaParam( m_pLuaS, t3 );
-        PushLuaParam( m_pLuaS, t4 );
-        PushLuaParam( m_pLuaS, t5 );
-        PushLuaParam( m_pLuaS, t6 );
-        PushLuaParam( m_pLuaS, t7 );
-        PushLuaParam( m_pLuaS, t8 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 8, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9>
-    inline int Call( const char* func, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6,
-                     T7 t7, T8 t8, T9 t9 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        PushLuaParam( m_pLuaS, t3 );
-        PushLuaParam( m_pLuaS, t4 );
-        PushLuaParam( m_pLuaS, t5 );
-        PushLuaParam( m_pLuaS, t6 );
-        PushLuaParam( m_pLuaS, t7 );
-        PushLuaParam( m_pLuaS, t8 );
-        PushLuaParam( m_pLuaS, t9 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 9, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10>
-    inline int Call( const char* func, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6,
-                     T7 t7, T8 t8, T9 t9, T10 t10 ) {
-        LUA_CHECK_FUNCTION( m_pLuaS, func );
-        PushLuaParam( m_pLuaS, t1 );
-        PushLuaParam( m_pLuaS, t2 );
-        PushLuaParam( m_pLuaS, t3 );
-        PushLuaParam( m_pLuaS, t4 );
-        PushLuaParam( m_pLuaS, t5 );
-        PushLuaParam( m_pLuaS, t6 );
-        PushLuaParam( m_pLuaS, t7 );
-        PushLuaParam( m_pLuaS, t8 );
-        PushLuaParam( m_pLuaS, t9 );
-        PushLuaParam( m_pLuaS, t10 );
-        LUA_CALL_FUNCTION( m_pLuaS, func, 10, 0 );
-        return 0;
-    }
-
-    //////////////////////////////////////////////////////////////////////////
-    static inline int StaticCall( lua_State* luaS, const char* func ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 0, 0 );
-        return 0;
-    }
-
-    template<typename T1>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 1, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1,
-                                  T2 t2 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 2, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1, T2 t2,
-                                  T3 t3 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        PushLuaParam( luaS, t3 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 3, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1, T2 t2,
-                                  T3 t3, T4 t4 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        PushLuaParam( luaS, t3 );
-        PushLuaParam( luaS, t4 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 4, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1, T2 t2,
-                                  T3 t3, T4 t4, T5 t5 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        PushLuaParam( luaS, t3 );
-        PushLuaParam( luaS, t4 );
-        PushLuaParam( luaS, t5 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 5, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1, T2 t2,
-                                  T3 t3, T4 t4, T5 t5, T6 t6 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        PushLuaParam( luaS, t3 );
-        PushLuaParam( luaS, t4 );
-        PushLuaParam( luaS, t5 );
-        PushLuaParam( luaS, t6 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 6, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1, T2 t2,
-                                  T3 t3, T4 t4, T5 t5, T6 t6, T7 t7 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        PushLuaParam( luaS, t3 );
-        PushLuaParam( luaS, t4 );
-        PushLuaParam( luaS, t5 );
-        PushLuaParam( luaS, t6 );
-        PushLuaParam( luaS, t7 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 7, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1, T2 t2,
-                                  T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        PushLuaParam( luaS, t3 );
-        PushLuaParam( luaS, t4 );
-        PushLuaParam( luaS, t5 );
-        PushLuaParam( luaS, t6 );
-        PushLuaParam( luaS, t7 );
-        PushLuaParam( luaS, t8 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 8, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1, T2 t2,
-                                  T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        PushLuaParam( luaS, t3 );
-        PushLuaParam( luaS, t4 );
-        PushLuaParam( luaS, t5 );
-        PushLuaParam( luaS, t6 );
-        PushLuaParam( luaS, t7 );
-        PushLuaParam( luaS, t8 );
-        PushLuaParam( luaS, t9 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 9, 0 );
-        return 0;
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10>
-    static inline int StaticCall( lua_State* luaS, const char* func, T1 t1, T2 t2,
-                                  T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10 ) {
-        LUA_CHECK_FUNCTION( luaS, func );
-        PushLuaParam( luaS, t1 );
-        PushLuaParam( luaS, t2 );
-        PushLuaParam( luaS, t3 );
-        PushLuaParam( luaS, t4 );
-        PushLuaParam( luaS, t5 );
-        PushLuaParam( luaS, t6 );
-        PushLuaParam( luaS, t7 );
-        PushLuaParam( luaS, t8 );
-        PushLuaParam( luaS, t9 );
-        PushLuaParam( luaS, t10 );
-        LUA_CALL_FUNCTION_NOEVENT( luaS, func, 10, 0 );
-        return 0;
-    }
-
-
   private:
     static inline std::string __GetScriptPath() {
 

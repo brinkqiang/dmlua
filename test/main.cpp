@@ -76,13 +76,17 @@ TEST( luatest, luatest ) {
     poRole->SetMp( 9999 );
     unsigned int dwTaskID = 100;
     LResultINT oResult( -1 );
-    oDMLuaEngine.Call( "script.task.task.AcceptTask", poRole, dwTaskID, &oResult );
+    //oDMLuaEngine.Call( "script.task.task.AcceptTask", poRole, dwTaskID, &oResult );
+
+    oDMLuaEngine.Call("script.task.task.AcceptTask", poRole, dwTaskID, &oResult);
+
     oDMLuaEngine.Call( "script.task.task.FinishTask", poRole, dwTaskID );
     std::vector<std::string> vecData;
     vecData.push_back( "hello" );
     oDMLuaEngine.Call( "script.common.test.main", &vecData );
     oDMLuaEngine.Call( "script.config.loadcsv.main" );
     CRoleMgr::Instance()->ReleaseRole( poRole );
+
 }
 
 TEST( luaperformancetest, luaperformancetest ) {
