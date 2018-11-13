@@ -758,9 +758,11 @@ FAIL:
     }
 
     void __ParserEnd() {
-        //int mask = LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE | LUA_MASKCOUNT;
-        //lua_sethook(m_pLuaS, &FireLuaCheck, mask, 1);
-        //chdir(m_strCwd.c_str());
+        /*
+        int mask = LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE | LUA_MASKCOUNT;
+        lua_sethook(m_pLuaS, &FireLuaCheck, mask, 1);
+        chdir(m_strCwd.c_str());
+        */
     }
 
     bool __LoadScript( const std::string& strName ) {
