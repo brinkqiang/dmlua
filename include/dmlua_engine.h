@@ -217,10 +217,12 @@ class CLuaStateGuard {
     explicit CLuaStateGuard( lua_State* pLuaS, const char* func )
         : m_pLuaS( pLuaS ), m_func( func ) {
         m_nTop = lua_gettop( m_pLuaS );
-        //if (m_nTop)
-        //{
-        //    fprintf(stderr, "function: [%s] found top: [%d] error\n", m_func, m_nTop);
-        //}
+        /*
+        if (m_nTop)
+        {
+            fprintf(stderr, "function: [%s] found top: [%d] error\n", m_func, m_nTop);
+        }
+        */
     }
 
     ~CLuaStateGuard() {
@@ -367,6 +369,17 @@ class CDMLuaEngine : public CDMSafeSingleton<CDMLuaEngine> {
 
         return 0 == nRet ? true : false;
     }
+
+    void AddPath(const char* path) {
+        CLuaStateGuard oGuard(m_pLuaS, "AddPath");
+
+        lua_getglobal(m_pLuaS, "package");
+        lua_getfield(m_pLuaS, -1, "path");
+        const char* curPath = lua_tostring(m_pLuaS, -1);
+        lua_pushfstring(m_pLuaS, "%s;%s/?.lua", curPath, path);
+        lua_setfield(m_pLuaS, -3, "path");
+    }
+
     bool LoadScript( const std::string& strName ) {
         __ParserBegin();
         __LoadScript( strName );
