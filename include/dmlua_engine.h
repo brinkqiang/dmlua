@@ -514,7 +514,7 @@ FAIL:
 
     //////////////////////////////////////////////////////////////////////////
     template <typename T, typename... ARGS>
-    void PushParam(T t, ARGS... args) {
+    void PushParam(T t, ARGS&&... args) {
         PushLuaParam(m_pLuaS, t);
         PushParam(args ...);
     }
@@ -522,7 +522,7 @@ FAIL:
     void PushParam() {}
 
     template<typename... ARGS>
-    inline int Call(const char* func, ARGS... args) {
+    inline int Call(const char* func, ARGS&&... args) {
         LUA_CHECK_FUNCTION(m_pLuaS, func);
         PushParam(args...);
         LUA_CALL_FUNCTION(m_pLuaS, func, sizeof...(args), 0);
@@ -538,7 +538,6 @@ FAIL:
     //template<typename... ARGS>
     //inline int XCall(const char* func, ARGS... args) {
     //    LUA_CHECK_FUNCTION(m_pLuaS, func);
-
     //    std::initializer_list<int>{([&]
     //    {
     //        XPushParam(args);
