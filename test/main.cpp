@@ -75,9 +75,8 @@ TEST( luatest, luatest ) {
     poRole->SetHp( 9999 );
     poRole->SetMp( 9999 );
     unsigned int dwTaskID = 100;
-    LResultINT oResult( -1 );
-    //oDMLuaEngine.Call( "script.task.task.AcceptTask", poRole, dwTaskID, &oResult );
 
+    LResultINT oResult( -1 );
     oDMLuaEngine.Call("script.task.task.AcceptTask", poRole, dwTaskID, &oResult);
 
     oDMLuaEngine.Call( "script.task.task.FinishTask", poRole, dwTaskID );
