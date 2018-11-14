@@ -158,7 +158,7 @@ struct __timeval {
 #endif
 
 typedef union {
-    unsigned long long ft_scalar;
+    uint64_t ft_scalar;
     FILETIME ft_struct;
 } FT;
 
@@ -189,7 +189,7 @@ static inline int gettimeofday( struct __timeval* tv, struct __timezone* tz ) {
 
 #endif
 
-inline unsigned int GetTickCount32() {
+inline uint32_t GetTickCount32() {
 #ifdef WIN32
     struct __timeval tv = {0};
     gettimeofday( &tv, NULL );
@@ -340,7 +340,7 @@ class CDMLuaEngine : public CDMSafeSingleton<CDMLuaEngine> {
         lua_gc( m_pLuaS, LUA_GCCOLLECT, 0 );
     }
 
-    long long GetLuagc() {
+    uint64_t GetLuagc() {
         return lua_gc( m_pLuaS, LUA_GCCOUNT, 0 ) * 1024L + lua_gc( m_pLuaS,
                 LUA_GCCOUNTB, 0 );
     }
@@ -861,7 +861,7 @@ FAIL:
     VecFileInfo m_vecFileInfo;
     std::string m_strSrcPath;
     std::string m_strCwd;
-    unsigned int m_dwStartTime;
+    uint32_t m_dwStartTime;
     bool m_bStartTime;
 };
 
