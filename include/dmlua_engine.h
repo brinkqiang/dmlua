@@ -543,19 +543,18 @@ FAIL:
     }
 
     //////////////////////////////////////////////////////////////////////////
-    //template <typename T>
-    //void XPushParam(T t)
-    //{
-    //    PushLuaParam(m_pLuaS, t);
-    //}
-    //template<typename... ARGS>
-    //inline int XCall(const char* func, ARGS... args) {
+    //    template <typename T>
+    //    void XPushParam(T t)
+    //    {
+    //        PushLuaParam(m_pLuaS, t);
+    //    }
+    //    template<typename... ARGS>
+    //    inline int XCall(const char* func, ARGS... args) {
     //    LUA_CHECK_FUNCTION(m_pLuaS, func);
     //    std::initializer_list<int>{([&]
     //    {
     //        XPushParam(args);
     //    }(), 0)...};
-
     //    LUA_CALL_FUNCTION(m_pLuaS, func, sizeof...(args), 0);
     //    return 0;
     //}
