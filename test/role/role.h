@@ -34,7 +34,9 @@ class CObj { // tolua_export
     long long GetObjID() {
         return m_llID;
     }
-
+    void GetObjID(long long& llID) {
+        llID = m_llID;
+    }
     void SetName( const char* szName ) {
         strcpy( m_szName, szName );
     }
