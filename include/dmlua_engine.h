@@ -589,29 +589,29 @@ FAIL:
         return tolua_tointeger(L, index, 0);
     }
 
-    template <>
-    static inline bool LuaRead(lua_State* L, int index)
-    {
-        if (lua_isnil(L, index)) { return false; }
-        if (lua_isboolean(L, index)) {
-            return tolua_toboolean(L, index, 0) != 0;
-        }
-        else {
-            return tolua_tonumber(L, index, 0) != 0;
-        }
-    }
+    //template <>
+    //static inline bool LuaRead(lua_State* L, int index)
+    //{
+    //    if (lua_isnil(L, index)) { return false; }
+    //    if (lua_isboolean(L, index)) {
+    //        return tolua_toboolean(L, index, 0) != 0;
+    //    }
+    //    else {
+    //        return tolua_tonumber(L, index, 0) != 0;
+    //    }
+    //}
 
-    template <>
-    static inline float LuaRead(lua_State* L, int index)
-    {
-        return (float)tolua_tonumber(L, index, 0);
-    }
+    //template <>
+    //static inline float LuaRead(lua_State* L, int index)
+    //{
+    //    return (float)tolua_tonumber(L, index, 0);
+    //}
 
-    template <>
-    static inline double LuaRead(lua_State* L, int index)
-    {
-        return (double)tolua_tonumber(L, index, 0);
-    }
+    //template <>
+    //static inline double LuaRead(lua_State* L, int index)
+    //{
+    //    return (double)tolua_tonumber(L, index, 0);
+    //}
 
     template <typename T>
     static inline T LuaPop(lua_State* L) { T ret = LuaRead<T>(L, -1); lua_pop(L, 1); return ret; }
