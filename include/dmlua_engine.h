@@ -301,6 +301,43 @@ class CLuaFunctionExtract {
 
 // tolua_begin
 // tolua_end
+
+template <typename T>
+struct LuaRead
+{
+    static T Read(lua_State* L, int index)
+    {
+        if (CluaTypeid::Instance().get_name<T>()) {
+            return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
+        }
+        else {
+            return void2type<T>::invoke(tolua_touserdata(L, index, nullptr));
+        }
+    }
+};
+
+template <>
+struct LuaRead<int64_t>
+{
+    static int64_t Read(lua_State* L, int index)
+    {
+        return tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaRead<uint64_t>
+{
+    static uint64_t Read(lua_State* L, int index)
+    {
+        return tolua_tointeger(L, index, 0);
+    }
+};
+template <typename T>
+static inline T LuaPop(lua_State* L) { T ret = LuaRead<T>::Read(L, -1); lua_pop(L, 1); return ret; }
+
+static inline void LuaPop(lua_State* L) { lua_pop(L, 1); }
+
 class CDMLuaEngine : public CDMSafeSingleton<CDMLuaEngine> {
     friend class CDMSafeSingleton<CDMLuaEngine>;
   public:
@@ -613,38 +650,6 @@ FAIL:
     //    return (double)tolua_tonumber(L, index, 0);
     //}
 
-    template <typename T>
-    struct LuaRead 
-    {
-        T Read(lua_State* L, int index)
-        {
-            if (CluaTypeid::Instance().get_name<T>()) {
-                return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
-            }
-            else {
-                return void2type<T>::invoke(tolua_touserdata(L, index, nullptr));
-            }
-        }
-    };
-
-    template <>
-    struct LuaRead<int64_t>
-    {
-        int64_t Read(lua_State* L, int index)
-        {
-            return tolua_tointeger(L, index, 0);
-        }
-    };
-
-    template <>
-    struct LuaRead<uint64_t>
-    {
-        uint64_t Read(lua_State* L, int index)
-        {
-            return tolua_tointeger(L, index, 0);
-        }
-    };
-
     //template <typename T>
     //static T LuaRead(lua_State* L, int index) {
     //    if (CluaTypeid::Instance().get_name<T>()) {
@@ -666,10 +671,7 @@ FAIL:
     //    return tolua_tointeger(L, index, 0);
     //}
 
-    template <typename T>
-    static inline T LuaPop(lua_State* L) { T ret = LuaRead<T>::Read(L, -1); lua_pop(L, 1); return ret; }
 
-    static inline void LuaPop(lua_State* L) { lua_pop(L, 1); }
 
     template<typename T>
     static inline void PushLuaParam( lua_State* luaS, T& t ) {
