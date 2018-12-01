@@ -502,7 +502,7 @@ FAIL:
     };
 
     template <typename T>
-    T   LuaRead(lua_State* L, int index) {
+    static T LuaRead(lua_State* L, int index) {
         if (CluaTypeid::Instance().get_name<T>()) {
             return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
         }
@@ -511,72 +511,86 @@ FAIL:
         }
     }
 
-    template <> inline void LuaRead(lua_State* L, int index)
+    template <>
+    static inline void LuaRead(lua_State* L, int index)
     {
         return;
     }
 
-    template <> inline void* LuaRead(lua_State* L, int index)
+    template <>
+    static inline void* LuaRead(lua_State* L, int index)
     {
         return tolua_touserdata(L, index, nullptr);
     }
 
-    template <> inline char* LuaRead(lua_State* L, int index)
+    template <>
+    static inline char* LuaRead(lua_State* L, int index)
     {
         return const_cast<char*>(tolua_tostring(L, index, ""));
     }
 
-    template <> inline const char* LuaRead(lua_State* L, int index)
+    template <>
+    static inline const char* LuaRead(lua_State* L, int index)
     {
         return tolua_tostring(L, index, "");
     }
 
-    template <> inline std::string LuaRead(lua_State* L, int index)
+    template <>
+    static inline std::string LuaRead(lua_State* L, int index)
     {
         return tolua_tocppstring(L, index, "");
     }
 
-    template <> inline int8_t LuaRead(lua_State* L, int index)
+    template <>
+    static inline int8_t LuaRead(lua_State* L, int index)
     {
         return (int8_t)tolua_tointeger(L, index, 0);
     }
 
-    template <> inline uint8_t LuaRead(lua_State* L, int index)
+    template <>
+    static inline uint8_t LuaRead(lua_State* L, int index)
     {
         return (uint8_t)tolua_tointeger(L, index, 0);
     }
 
-    template <> inline int16_t LuaRead(lua_State* L, int index)
+    template <>
+    static inline int16_t LuaRead(lua_State* L, int index)
     {
         return (int16_t)tolua_tointeger(L, index, 0);
     }
 
-    template <> inline uint16_t LuaRead(lua_State* L, int index)
+    template <>
+    static inline uint16_t LuaRead(lua_State* L, int index)
     {
         return (uint16_t)tolua_tointeger(L, index, 0);
     }
 
-    template <> inline int32_t LuaRead(lua_State* L, int index)
+    template <>
+    static inline int32_t LuaRead(lua_State* L, int index)
     {
         return (int32_t)tolua_tointeger(L, index, 0);
     }
 
-    template <> inline uint32_t LuaRead(lua_State* L, int index)
+    template <>
+    static inline uint32_t LuaRead(lua_State* L, int index)
     {
         return (uint32_t)tolua_tointeger(L, index, 0);
     }
 
-    template <> inline int64_t LuaRead(lua_State* L, int index)
+    template <>
+    static inline int64_t LuaRead(lua_State* L, int index)
     {
         return tolua_tointeger(L, index, 0);
     }
 
-    template <> inline uint64_t LuaRead(lua_State* L, int index)
+    template <>
+    static inline uint64_t LuaRead(lua_State* L, int index)
     {
         return tolua_tointeger(L, index, 0);
     }
 
-    template <> inline bool LuaRead(lua_State* L, int index)
+    template <>
+    static inline bool LuaRead(lua_State* L, int index)
     {
         if (lua_isnil(L, index)) { return false; }
         if (lua_isboolean(L, index)) {
@@ -587,19 +601,23 @@ FAIL:
         }
     }
 
-    template <> inline float LuaRead(lua_State* L, int index)
+    template <>
+    static inline float LuaRead(lua_State* L, int index)
     {
         return (float)tolua_tonumber(L, index, 0);
     }
 
-    template <> inline double LuaRead(lua_State* L, int index)
+    template <>
+    static inline double LuaRead(lua_State* L, int index)
     {
         return (double)tolua_tonumber(L, index, 0);
     }
 
     template <typename T>
-    inline T LuaPop(lua_State* L) { T ret = LuaRead<T>(L, -1); lua_pop(L, 1); return ret; }
-    template<> inline void LuaPop(lua_State* L) { lua_pop(L, 1); }
+    static inline T LuaPop(lua_State* L) { T ret = LuaRead<T>(L, -1); lua_pop(L, 1); return ret; }
+
+    template<>
+    static inline void LuaPop(lua_State* L) { lua_pop(L, 1); }
 
     template<typename T>
     static inline void PushLuaParam( lua_State* luaS, T& t ) {
