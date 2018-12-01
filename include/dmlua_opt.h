@@ -5,66 +5,16 @@
 #include <stdlib.h>
 #include "dmlua.h"
 
-struct lua_nil {};
-// 如果C为true则是A类型，false是B类型
-template <bool C, typename A, typename B>	struct if_ {};
-template <typename A, typename B>			struct if_<true, A, B> { typedef A type; };
-template <typename A, typename B>			struct if_<false, A, B> { typedef B type; };
-
-// 判断是否指针
-template <typename T>
-struct is_ptr { static const bool value = false; };
-template <typename T>
-struct is_ptr<T*> { static const bool value = true; };
-
-// 判断是否是引用
-template<typename T>
-struct is_ref { static const bool value = false; };
-template<typename T>
-struct is_ref<T&> { static const bool value = true; };
-
-// 获取基本类型 指针以及引用
-template <typename T>
-struct base_type { typedef T type; };
-template <typename T>
-struct base_type<T*> { typedef T type; };
-template <typename T>
-struct base_type<T&> { typedef T type; };
-
-// 输入参数转成T类型
-template<typename T>
-struct void2val { static T invoke(void* input) { return *(T*)input; } };
-// 输入参数转成T类型指针
-template<typename T>
-struct void2ptr { static T* invoke(void* input) { return (T*)input; } };
-// 输入参数转成T类型引用
-template<typename T>
-struct void2ref { static T& invoke(void* input) { return *(T*)input; } };
-
-// 将输入参数ptr转换成T T* 或者T&
-template <typename T>
-struct void2type {
-	static T invoke(void* ptr) {
-		return if_<is_ptr<T>::value,
-					void2ptr<typename base_type<T>::type>,
-					typename if_<is_ref<T>::value,
-						void2ref<typename base_type<T>::type>,
-						void2val<typename base_type<T>::type>
-					>::type
-				>::type::invoke(ptr);
-	}
-};
-
 template <typename T>
 struct LuaReader
 {
     static inline T Read(lua_State* L, int index)
     {
         if (CluaTypeid::Instance().get_name<T>()) {
-            return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
+            return (T)tolua_tousertype(L, index, CluaTypeid::Instance().get_name<T>());
         }
         else {
-            return void2type<T>::invoke(tolua_touserdata(L, index, nullptr));
+            return (T)tolua_touserdata(L, index, NULL);
         }
     }
 };
