@@ -501,21 +501,21 @@ FAIL:
         }
     };
 
-    template <typename T>
-    static inline T LuaRead(lua_State* L, int index) {
-        if (CluaTypeid::Instance().get_name<T>()) {
-            return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
-        }
-        else {
-            return void2type<T>::invoke(tolua_touserdata(L, index, nullptr));
-        }
-    }
+    //template <typename T>
+    //static inline T LuaRead(lua_State* L, int index) {
+    //    if (CluaTypeid::Instance().get_name<T>()) {
+    //        return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
+    //    }
+    //    else {
+    //        return void2type<T>::invoke(tolua_touserdata(L, index, nullptr));
+    //    }
+    //}
 
-    //template <>
-    static inline void LuaRead(lua_State* L, int index)
-    {
-        return;
-    }
+    ////template <>
+    //static inline void LuaRead(lua_State* L, int index)
+    //{
+    //    return;
+    //}
 
     //template <>
     //static inline void* LuaRead(lua_State* L, int index)
@@ -577,17 +577,48 @@ FAIL:
     //    return (uint32_t)tolua_tointeger(L, index, 0);
     //}
 
-    template <>
-    static inline int64_t LuaRead(lua_State* L, int index)
+    template <typename T>
+    struct LuaRead
     {
-        return tolua_tointeger(L, index, 0);
-    }
+        static T Read(lua_State* L, int index)
+        {
+            if (CluaTypeid::Instance().get_name<T>()) {
+                return void2type<T>::invoke(tolua_tousertype(L, index, NULL));
+            }
+            else {
+                return void2type<T>::invoke(tolua_touserdata(L, index, NULL));
+            }
+        }
+    };
 
     template <>
-    static inline uint64_t LuaRead(lua_State* L, int index)
+    struct LuaRead<int64_t>
     {
-        return tolua_tointeger(L, index, 0);
-    }
+        static int64_t Read(lua_State* L, int index)
+        {
+            return tolua_tointeger(L, index, 0);
+        }
+    };
+
+    template <>
+    struct LuaRead<uint64_t>
+    {
+        static uint64_t Read(lua_State* L, int index)
+        {
+            return tolua_tointeger(L, index, 0);
+        }
+    };
+
+    //static inline int64_t LuaRead(lua_State* L, int index)
+    //{
+    //    return tolua_tointeger(L, index, 0);
+    //}
+
+    //template <>
+    //static inline uint64_t LuaRead(lua_State* L, int index)
+    //{
+    //    return tolua_tointeger(L, index, 0);
+    //}
 
     //template <>
     //static inline bool LuaRead(lua_State* L, int index)
@@ -614,7 +645,7 @@ FAIL:
     //}
 
     template <typename T>
-    static inline T LuaPop(lua_State* L) { T ret = LuaRead<T>(L, -1); lua_pop(L, 1); return ret; }
+    static inline T LuaPop(lua_State* L) { T ret = LuaRead<T>::Read(L, -1); lua_pop(L, 1); return ret; }
 
     static inline void LuaPop(lua_State* L) { lua_pop(L, 1); }
 
