@@ -19,6 +19,34 @@ struct LuaReader
     }
 };
 
+template <typename T>
+struct LuaReader<T*>
+{
+    static inline T* Read(lua_State* L, int index)
+    {
+        if (CluaTypeid::Instance().get_name<T>()) {
+            return (T*)tolua_tousertype(L, index, CluaTypeid::Instance().get_name<T>());
+        }
+        else {
+            return (T*)tolua_touserdata(L, index, NULL);
+        }
+    }
+};
+
+template <typename T>
+struct LuaReader<T&>
+{
+    static inline T& Read(lua_State* L, int index)
+    {
+        if (CluaTypeid::Instance().get_name<T>()) {
+            return *(T*)tolua_tousertype(L, index, CluaTypeid::Instance().get_name<T>());
+        }
+        else {
+            return *(T*)tolua_touserdata(L, index, NULL);
+        }
+    }
+};
+
 template <>
 struct LuaReader<void>
 {
