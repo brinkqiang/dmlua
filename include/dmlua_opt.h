@@ -57,13 +57,12 @@ struct void2type {
 
 template <typename T>
 T   LuaRead(lua_State* L, int index) {
-	if (LuaType<typename base_type<T>::type>::isReg()) {
+	if (CluaTypeid::Instance().get_name<T>()) {
 		return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
 	}
 	else {
 		return void2type<T>::invoke(tolua_touserdata(L, index, nullptr));
 	}
-
 }
 
 template <>	inline void LuaRead(lua_State* L, int index)
