@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "dmlua.h"
 
+
 struct lua_nil {};
 // 如果C为true则是A类型，false是B类型
 template <bool C, typename A, typename B>	struct if_ {};
@@ -159,6 +160,16 @@ void LuaPush(lua_State* L, T* arg) {
 	else {
  		tolua_pushuserdata(L, (void*)(arg));
 	}
+}
+
+template<typename T>
+void LuaPush(lua_State* L, T arg) {
+    if (CluaTypeid::Instance().get_name<T>()) {
+        tolua_pushusertype(L, (void*)(&arg), CluaTypeid::Instance().get_name<T>());
+    }
+    else {
+        tolua_pushuserdata(L, (void*)(&arg));
+    }
 }
 
 inline void LuaPush(lua_State* L, char* arg);
