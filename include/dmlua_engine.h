@@ -205,8 +205,11 @@ inline uint32_t GetTickCount32() {
     CLuaStateGuard oGuard(luaS, func);\
     do{ if (LuaCheckFunction(luaS, func)){ OnUserError(luaS, func); return -1;} }while(0)
 
-#define LUA_CALL_FUNCTION(luaS, func, arg, res) \
-    do{ OnEventLuaCallStart();if (lua_pcall(luaS, arg, res, 0)){ OnEventLuaCallEnd();OnScriptError(luaS, func);return -1;}; OnEventLuaCallEnd();} while(0)
+#define LUA_CALL_FUNCTION(luaS, func, arg, count) \
+    do{ OnEventLuaCallStart();if (lua_pcall(luaS, arg, count, 0)){ OnEventLuaCallEnd();OnScriptError(luaS, func);return -1;}; OnEventLuaCallEnd();} while(0)
+
+#define LUA_CALLT_FUNCTION(luaS, func, arg, count, ret) \
+    do{ OnEventLuaCallStart();if (lua_pcall(luaS, arg, count, 0)){ OnEventLuaCallEnd();OnScriptError(luaS, func);return ret;}; OnEventLuaCallEnd();} while(0)
 
 #define LUA_CALL_FUNCTION_NOEVENT(luaS, func, arg, res) \
     do{ if (lua_pcall(luaS, arg, res, 0)){ OnScriptError(luaS, func);return -1;}; } while(0)
@@ -538,8 +541,7 @@ FAIL:
     inline ResultType CallT(const char* func, ARGS&&... args) {
         LUA_CHECK_FUNCTION(m_pLuaS, func);
         PushParam(args...);
-        LUA_CALL_FUNCTION(m_pLuaS, func, sizeof...(args), 1);
-
+        LUA_CALLT_FUNCTION(m_pLuaS, func, sizeof...(args), 1, ResultType());
         return LuaPop<ResultType>(m_pLuaS);
     }
 
