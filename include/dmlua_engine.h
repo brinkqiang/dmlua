@@ -32,7 +32,7 @@
 #include "lua.hpp"
 #include "tolua++.h"
 
-#include "dmtypes.h"
+#include "dmlua_opt.h"
 
 #include "dmlua_typeid.h"
 #include "dmlua_luaresult.h"
@@ -534,11 +534,21 @@ FAIL:
 
     void PushParam() {}
 
+    template<typename ResultType, typename... ARGS>
+    inline ResultType CallT(const char* func, ARGS&&... args) {
+        LUA_CHECK_FUNCTION(m_pLuaS, func);
+        PushParam(args...);
+        LUA_CALL_FUNCTION(m_pLuaS, func, sizeof...(args), 1);
+
+        return LuaPop<ResultType>(m_pLuaS);
+    }
+
     template<typename... ARGS>
     inline int Call(const char* func, ARGS&&... args) {
         LUA_CHECK_FUNCTION(m_pLuaS, func);
         PushParam(args...);
         LUA_CALL_FUNCTION(m_pLuaS, func, sizeof...(args), 0);
+
         return 0;
     }
 

@@ -28,17 +28,15 @@ TEST( luatest, luatest ) {
     }
 
     oDMLuaEngine.DoString(
-        "function addex(first, second, res)\n"
-        "   res.value = first * second\n"
+        "function addex(first, second)\n"
+        "   return first * second\n"
         "end\n" );
     {
-        LResultINT64 resAdd( -1 );
-
         for ( int i = 0; i < 1; ++i ) {
-            int r = oDMLuaEngine.Call( "addex", 100000000LL, 100000000LL, &resAdd );
+            uint64_t r = oDMLuaEngine.CallT<uint64_t>("addex", 100000000LL, 100000000LL);
 
             if ( r >= 0 ) {
-                std::cout << resAdd.value << std::endl;
+                std::cout << r << std::endl;
             }
         }
     }

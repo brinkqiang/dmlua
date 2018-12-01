@@ -134,6 +134,8 @@ TOLUA_API void tolua_pushfieldusertype_and_takeownership( lua_State* L, int lo,
         int index, void* v, const char* type );
 
 TOLUA_API lua_Number tolua_tonumber( lua_State* L, int narg, lua_Number def );
+TOLUA_API lua_Integer tolua_tointeger(lua_State* L, int narg, lua_Integer def);
+
 TOLUA_API const char* tolua_tostring( lua_State* L, int narg, const char* def );
 TOLUA_API void* tolua_touserdata( lua_State* L, int narg, void* def );
 TOLUA_API void* tolua_tousertype( lua_State* L, int narg, void* def );
