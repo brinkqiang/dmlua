@@ -511,12 +511,12 @@ FAIL:
         }
     }
 
-    template <>	inline void LuaRead(lua_State* L, int index)
+    template <> inline void LuaRead(lua_State* L, int index)
     {
         return;
     }
 
-    template <>	inline void* LuaRead(lua_State* L, int index)
+    template <> inline void* LuaRead(lua_State* L, int index)
     {
         return tolua_touserdata(L, index, nullptr);
     }
