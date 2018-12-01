@@ -512,10 +512,10 @@ FAIL:
     }
 
     //template <>
-    //static inline void LuaRead(lua_State* L, int index)
-    //{
-    //    return;
-    //}
+    static inline void LuaRead(lua_State* L, int index)
+    {
+        return;
+    }
 
     //template <>
     //static inline void* LuaRead(lua_State* L, int index)
