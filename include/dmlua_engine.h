@@ -616,7 +616,6 @@ FAIL:
     template <typename T>
     static inline T LuaPop(lua_State* L) { T ret = LuaRead<T>(L, -1); lua_pop(L, 1); return ret; }
 
-    template<>
     static inline void LuaPop(lua_State* L) { lua_pop(L, 1); }
 
     template<typename T>
