@@ -511,71 +511,71 @@ FAIL:
         }
     }
 
-    template <>
-    static inline void LuaRead(lua_State* L, int index)
-    {
-        return;
-    }
+    //template <>
+    //static inline void LuaRead(lua_State* L, int index)
+    //{
+    //    return;
+    //}
 
-    template <>
-    static inline void* LuaRead(lua_State* L, int index)
-    {
-        return tolua_touserdata(L, index, nullptr);
-    }
+    //template <>
+    //static inline void* LuaRead(lua_State* L, int index)
+    //{
+    //    return tolua_touserdata(L, index, nullptr);
+    //}
 
-    template <>
-    static inline char* LuaRead(lua_State* L, int index)
-    {
-        return const_cast<char*>(tolua_tostring(L, index, ""));
-    }
+    //template <>
+    //static inline char* LuaRead(lua_State* L, int index)
+    //{
+    //    return const_cast<char*>(tolua_tostring(L, index, ""));
+    //}
 
-    template <>
-    static inline const char* LuaRead(lua_State* L, int index)
-    {
-        return tolua_tostring(L, index, "");
-    }
+    //template <>
+    //static inline const char* LuaRead(lua_State* L, int index)
+    //{
+    //    return tolua_tostring(L, index, "");
+    //}
 
-    template <>
-    static inline std::string LuaRead(lua_State* L, int index)
-    {
-        return tolua_tocppstring(L, index, "");
-    }
+    //template <>
+    //static inline std::string LuaRead(lua_State* L, int index)
+    //{
+    //    return tolua_tocppstring(L, index, "");
+    //}
 
-    template <>
-    static inline int8_t LuaRead(lua_State* L, int index)
-    {
-        return (int8_t)tolua_tointeger(L, index, 0);
-    }
+    //template <>
+    //static inline int8_t LuaRead(lua_State* L, int index)
+    //{
+    //    return (int8_t)tolua_tointeger(L, index, 0);
+    //}
 
-    template <>
-    static inline uint8_t LuaRead(lua_State* L, int index)
-    {
-        return (uint8_t)tolua_tointeger(L, index, 0);
-    }
+    //template <>
+    //static inline uint8_t LuaRead(lua_State* L, int index)
+    //{
+    //    return (uint8_t)tolua_tointeger(L, index, 0);
+    //}
 
-    template <>
-    static inline int16_t LuaRead(lua_State* L, int index)
-    {
-        return (int16_t)tolua_tointeger(L, index, 0);
-    }
+    //template <>
+    //static inline int16_t LuaRead(lua_State* L, int index)
+    //{
+    //    return (int16_t)tolua_tointeger(L, index, 0);
+    //}
 
-    template <>
-    static inline uint16_t LuaRead(lua_State* L, int index)
-    {
-        return (uint16_t)tolua_tointeger(L, index, 0);
-    }
+    //template <>
+    //static inline uint16_t LuaRead(lua_State* L, int index)
+    //{
+    //    return (uint16_t)tolua_tointeger(L, index, 0);
+    //}
 
-    template <>
-    static inline int32_t LuaRead(lua_State* L, int index)
-    {
-        return (int32_t)tolua_tointeger(L, index, 0);
-    }
+    //template <>
+    //static inline int32_t LuaRead(lua_State* L, int index)
+    //{
+    //    return (int32_t)tolua_tointeger(L, index, 0);
+    //}
 
-    template <>
-    static inline uint32_t LuaRead(lua_State* L, int index)
-    {
-        return (uint32_t)tolua_tointeger(L, index, 0);
-    }
+    //template <>
+    //static inline uint32_t LuaRead(lua_State* L, int index)
+    //{
+    //    return (uint32_t)tolua_tointeger(L, index, 0);
+    //}
 
     template <>
     static inline int64_t LuaRead(lua_State* L, int index)
