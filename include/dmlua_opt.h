@@ -55,102 +55,6 @@ struct void2type {
 	}
 };
 
-//template <typename T>
-//T   LuaReader(lua_State* L, int index) {
-//	if (CluaTypeid::Instance().get_name<T>()) {
-//		return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
-//	}
-//	else {
-//		return void2type<T>::invoke(tolua_touserdata(L, index, nullptr));
-//	}
-//}
-
-//template <>	inline void LuaReader(lua_State* L, int index)
-//{
-//    return;
-//}
-//
-//template <>	inline void* LuaReader(lua_State* L, int index)
-//{
-//    return tolua_touserdata(L, index, nullptr);
-//}
-//
-//template <> inline char* LuaReader(lua_State* L, int index)
-//{
-//    return const_cast<char*>(tolua_tostring(L, index, ""));
-//}
-//
-//template <> inline const char* LuaReader(lua_State* L, int index)
-//{
-//    return tolua_tostring(L, index, "");
-//}
-//
-//template <> inline std::string LuaReader(lua_State* L, int index)
-//{
-//    return tolua_tocppstring(L, index, "");
-//}
-//
-//template <> inline int8_t LuaReader(lua_State* L, int index)
-//{
-//    return (int8_t)tolua_tointeger(L, index, 0);
-//}
-//
-//template <> inline uint8_t LuaReader(lua_State* L, int index)
-//{
-//    return (uint8_t)tolua_tointeger(L, index, 0);
-//}
-//
-//template <> inline int16_t LuaReader(lua_State* L, int index)
-//{
-//    return (int16_t)tolua_tointeger(L, index, 0);
-//}
-//
-//template <> inline uint16_t LuaReader(lua_State* L, int index)
-//{
-//    return (uint16_t)tolua_tointeger(L, index, 0);
-//}
-//
-//template <> inline int32_t LuaReader(lua_State* L, int index)
-//{
-//    return (int32_t)tolua_tointeger(L, index, 0);
-//}
-//
-//template <> inline uint32_t LuaReader(lua_State* L, int index)
-//{
-//    return (uint32_t)tolua_tointeger(L, index, 0);
-//}
-//
-//template <> inline int64_t LuaReader(lua_State* L, int index)
-//{
-//    return tolua_tointeger(L, index, 0);
-//}
-//
-//template <> inline uint64_t LuaReader(lua_State* L, int index)
-//{
-//    return tolua_tointeger(L, index, 0);
-//}
-//
-//template <> inline bool LuaReader(lua_State* L, int index)
-//{
-//    if (lua_isnil(L, index)) { return false; }
-//    if (lua_isboolean(L, index)) {
-//        return tolua_toboolean(L, index, 0) != 0;
-//    }
-//    else {
-//        return tolua_tonumber(L, index, 0) != 0;
-//    }
-//}
-//
-//template <> inline float LuaReader(lua_State* L, int index)
-//{
-//    return (float)tolua_tonumber(L, index, 0);
-//}
-//
-//template <> inline double LuaReader(lua_State* L, int index)
-//{
-//    return (double)tolua_tonumber(L, index, 0);
-//}
-
 template <typename T>
 struct LuaReader
 {
@@ -166,22 +70,223 @@ struct LuaReader
 };
 
 template <>
-struct LuaReader<int64_t>
+struct LuaReader<void>
 {
-    static inline int64_t Read(lua_State* L, int index)
+    static inline void Read(lua_State* L, int index)
     {
-        return tolua_tointeger(L, index, 0);
+
     }
 };
 
 template <>
-struct LuaReader<uint64_t>
+struct LuaReader<void*>
 {
-    static inline uint64_t Read(lua_State* L, int index)
+    static inline void* Read(lua_State* L, int index)
     {
-        return tolua_tointeger(L, index, 0);
+        return tolua_touserdata(L, index, NULL);
     }
 };
+
+template <>
+struct LuaReader<char>
+{
+    static inline char Read(lua_State* L, int index)
+    {
+        return (char)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<unsigned char>
+{
+    static inline unsigned char Read(lua_State* L, int index)
+    {
+        return (unsigned char)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<short>
+{
+    static inline short Read(lua_State* L, int index)
+    {
+        return (short)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<unsigned short>
+{
+    static inline unsigned short Read(lua_State* L, int index)
+    {
+        return (unsigned short)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<int>
+{
+    static inline int Read(lua_State* L, int index)
+    {
+        return (int)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<unsigned int>
+{
+    static inline unsigned int Read(lua_State* L, int index)
+    {
+        return (unsigned int)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<long>
+{
+    static inline long Read(lua_State* L, int index)
+    {
+        return (long)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<unsigned long>
+{
+    static inline unsigned long Read(lua_State* L, int index)
+    {
+        return (unsigned long)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<long long>
+{
+    static inline long long Read(lua_State* L, int index)
+    {
+        return (long long)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<unsigned long long>
+{
+    static inline unsigned long long Read(lua_State* L, int index)
+    {
+        return (unsigned long long)tolua_tointeger(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<float>
+{
+    static inline float Read(lua_State* L, int index)
+    {
+        return (float)tolua_tonumber(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<double>
+{
+    static inline double Read(lua_State* L, int index)
+    {
+        return (double)tolua_tonumber(L, index, 0);
+    }
+};
+
+template <>
+struct LuaReader<const char*>
+{
+    static inline const char* Read(lua_State* L, int index)
+    {
+        return tolua_tostring(L, index, "");
+    }
+};
+
+template <>
+struct LuaReader<char*>
+{
+    static inline char* Read(lua_State* L, int index)
+    {
+        return const_cast<char*>(tolua_tostring(L, index, ""));
+    }
+};
+
+template <>
+struct LuaReader<bool>
+{
+    static inline bool Read(lua_State* L, int index)
+    {
+        if (lua_isnil(L, index)) { return false; }
+        if (lua_isboolean(L, index)) {
+            return tolua_toboolean(L, index, 0) != 0;
+        }
+        else {
+            return tolua_tonumber(L, index, 0) != 0;
+        }
+    }
+};
+
+//static inline void PushLuaParam(lua_State* luaS, const char* t) {
+//    tolua_pushstring(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const bool t) {
+//    tolua_pushboolean(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, std::string& t) {
+//    tolua_pushstring(luaS, t.c_str());
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const std::string& t) {
+//    tolua_pushstring(luaS, t.c_str());
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const short t) {
+//    lua_pushinteger(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const unsigned short t) {
+//    lua_pushinteger(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const int t) {
+//    lua_pushinteger(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const unsigned int t) {
+//    lua_pushinteger(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const long t) {
+//    lua_pushinteger(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const unsigned long t) {
+//    lua_pushinteger(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const long long t) {
+//    lua_pushinteger(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const unsigned long long t) {
+//    lua_pushinteger(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const double t) {
+//    tolua_pushnumber(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const char* t) {
+//    tolua_pushstring(luaS, t);
+//}
+//
+//static inline void PushLuaParam(lua_State* luaS, const bool t) {
+//    tolua_pushboolean(luaS, t);
+//}
 
 template <typename T>
 static inline T LuaPop(lua_State* L) { T ret = LuaReader<T>::Read(L, -1); lua_pop(L, 1); return ret; }
