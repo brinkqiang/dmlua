@@ -502,7 +502,7 @@ FAIL:
     };
 
     template <typename T>
-    static T LuaRead(lua_State* L, int index) {
+    static inline T LuaRead(lua_State* L, int index) {
         if (CluaTypeid::Instance().get_name<T>()) {
             return void2type<T>::invoke(tolua_tousertype(L, index, nullptr));
         }
@@ -577,13 +577,13 @@ FAIL:
     //    return (uint32_t)tolua_tointeger(L, index, 0);
     //}
 
-    //template <>
-    //static inline int64_t LuaRead(lua_State* L, int index)
-    //{
-    //    return tolua_tointeger(L, index, 0);
-    //}
+    template <>
+    static inline int64_t LuaRead(lua_State* L, int index)
+    {
+        return tolua_tointeger(L, index, 0);
+    }
 
-    //template <>
+    template <>
     static inline uint64_t LuaRead(lua_State* L, int index)
     {
         return tolua_tointeger(L, index, 0);
