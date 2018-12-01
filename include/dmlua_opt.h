@@ -228,66 +228,6 @@ struct LuaReader<bool>
     }
 };
 
-//static inline void PushLuaParam(lua_State* luaS, const char* t) {
-//    tolua_pushstring(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const bool t) {
-//    tolua_pushboolean(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, std::string& t) {
-//    tolua_pushstring(luaS, t.c_str());
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const std::string& t) {
-//    tolua_pushstring(luaS, t.c_str());
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const short t) {
-//    lua_pushinteger(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const unsigned short t) {
-//    lua_pushinteger(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const int t) {
-//    lua_pushinteger(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const unsigned int t) {
-//    lua_pushinteger(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const long t) {
-//    lua_pushinteger(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const unsigned long t) {
-//    lua_pushinteger(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const long long t) {
-//    lua_pushinteger(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const unsigned long long t) {
-//    lua_pushinteger(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const double t) {
-//    tolua_pushnumber(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const char* t) {
-//    tolua_pushstring(luaS, t);
-//}
-//
-//static inline void PushLuaParam(lua_State* luaS, const bool t) {
-//    tolua_pushboolean(luaS, t);
-//}
-
 template <typename T>
 static inline T LuaPop(lua_State* L) { T ret = LuaReader<T>::Read(L, -1); lua_pop(L, 1); return ret; }
 

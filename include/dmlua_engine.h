@@ -454,7 +454,7 @@ FAIL:
     }
 
     template<typename T>
-    static inline void PushLuaParam( lua_State* luaS, T& t ) {
+    static inline void LuaPush( lua_State* luaS, T& t ) {
         if ( CluaTypeid::Instance().get_name<T>() ) {
             tolua_pushusertype( luaS, ( void* )( &t ),
                                 CluaTypeid::Instance().get_name<T>() );
@@ -466,7 +466,7 @@ FAIL:
     }
 
     template<typename T>
-    static inline void PushLuaParam( lua_State* luaS, T*& t ) {
+    static inline void LuaPush( lua_State* luaS, T*& t ) {
         if ( CluaTypeid::Instance().get_name<T>() ) {
             tolua_pushusertype( luaS, t, CluaTypeid::Instance().get_name<T>() );
         }
@@ -476,71 +476,71 @@ FAIL:
         }
     }
 
-    static inline void PushLuaParam( lua_State* luaS, std::string& t ) {
+    static inline void LuaPush( lua_State* luaS, std::string& t ) {
         tolua_pushstring( luaS, t.c_str() );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const std::string& t ) {
+    static inline void LuaPush( lua_State* luaS, const std::string& t ) {
         tolua_pushstring( luaS, t.c_str() );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const short t ) {
+    static inline void LuaPush( lua_State* luaS, const short t ) {
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const unsigned short t ) {
+    static inline void LuaPush( lua_State* luaS, const unsigned short t ) {
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const int t ) {
+    static inline void LuaPush( lua_State* luaS, const int t ) {
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const unsigned int t ) {
+    static inline void LuaPush( lua_State* luaS, const unsigned int t ) {
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const long t ) {
+    static inline void LuaPush( lua_State* luaS, const long t ) {
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const unsigned long t ) {
+    static inline void LuaPush( lua_State* luaS, const unsigned long t ) {
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const long long t ) {
+    static inline void LuaPush( lua_State* luaS, const long long t ) {
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const unsigned long long t ) {
+    static inline void LuaPush( lua_State* luaS, const unsigned long long t ) {
         lua_pushinteger( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const double t ) {
+    static inline void LuaPush( lua_State* luaS, const double t ) {
         tolua_pushnumber( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const char* t ) {
+    static inline void LuaPush( lua_State* luaS, const char* t ) {
         tolua_pushstring( luaS, t );
     }
 
-    static inline void PushLuaParam( lua_State* luaS, const bool t ) {
+    static inline void LuaPush( lua_State* luaS, const bool t ) {
         tolua_pushboolean( luaS, t );
     }
 
     //////////////////////////////////////////////////////////////////////////
     template <typename T, typename... ARGS>
-    void PushParam(T t, ARGS&&... args) {
-        PushLuaParam(m_pLuaS, t);
-        PushParam(args ...);
+    void LuaPushT(T t, ARGS&&... args) {
+        LuaPush(m_pLuaS, t);
+        LuaPushT(args ...);
     }
 
-    void PushParam() {}
+    void LuaPushT() {}
 
     template<typename ResultType, typename... ARGS>
     inline ResultType CallT(const char* func, ARGS&&... args) {
         LUA_CHECK_FUNCTION(m_pLuaS, func);
-        PushParam(args...);
+        LuaPushT(args...);
         LUA_CALLT_FUNCTION(m_pLuaS, func, sizeof...(args), 1, ResultType());
         return LuaPop<ResultType>(m_pLuaS);
     }
@@ -548,7 +548,7 @@ FAIL:
     template<typename... ARGS>
     inline int Call(const char* func, ARGS&&... args) {
         LUA_CHECK_FUNCTION(m_pLuaS, func);
-        PushParam(args...);
+        LuaPushT(args...);
         LUA_CALL_FUNCTION(m_pLuaS, func, sizeof...(args), 0);
 
         return 0;
