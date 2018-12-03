@@ -16,7 +16,7 @@ namespace std
 {
     class vector
     {
-        TOLUA_TEMPLATE_BIND(T, std::string, int);
+        TOLUA_TEMPLATE_BIND(T, int, int64_t, uint64_t, double, std::string);
 
         void clear();
         int size() const;
