@@ -42,17 +42,17 @@ TEST( luatest, luatest ) {
     }
     {
         oDMLuaEngine.DoString(
-            "function script.task.taskinfo(task)\n"
+            "function script.task.taskinfo()\n"
+            "   local task = STaskInfo:new()\n"
             "   task.nTaskID = 1002\n"
             "   task.nTaskState = 2\n"
             "   task.nTaskCondition = 2\n"
-            "end\n" );
-        STaskInfo sInfo;
-        int r = oDMLuaEngine.Call( "script.task.taskinfo", &sInfo );
+            "   return task\n"
+            "end\n");
 
-        if ( r >= 0 ) {
-            std::cout << sInfo.nTaskID << std::endl;
-        }
+        STaskInfo sInfo = oDMLuaEngine.CallT<STaskInfo>( "script.task.taskinfo" );
+
+        std::cout << sInfo.nTaskID << std::endl;
     }
     {
         oDMLuaEngine.DoString(

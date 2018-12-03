@@ -203,6 +203,10 @@ inline uint32_t GetTickCount32() {
     CLuaStateGuard oGuard(luaS, func);\
     do{ if (LuaCheckFunction(luaS, func)){ OnUserError(luaS, func); return -1;} }while(0)
 
+#define LUA_CHECKT_FUNCTION(luaS, func, ret) \
+    CLuaStateGuard oGuard(luaS, func);\
+    do{ if (LuaCheckFunction(luaS, func)){ OnUserError(luaS, func); return ret;} }while(0)
+
 #define LUA_CALL_FUNCTION(luaS, func, arg, count) \
     do{ OnEventLuaCallStart();if (lua_pcall(luaS, arg, count, 0)){ OnEventLuaCallEnd();OnScriptError(luaS, func);return -1;}; OnEventLuaCallEnd();} while(0)
 
@@ -307,10 +311,10 @@ struct LuaReader
     static inline T Read(lua_State* L, int index)
     {
         if (CluaTypeid::Instance().get_name<T>()) {
-            return (T)tolua_tousertype(L, index, CluaTypeid::Instance().get_name<T>());
+            return *(T*)(tolua_tousertype(L, index, NULL));
         }
         else {
-            return (T)tolua_touserdata(L, index, NULL);
+            return *(T*)(tolua_touserdata(L, index, NULL));
         }
     }
 };
@@ -321,7 +325,7 @@ struct LuaReader<T*>
     static inline T* Read(lua_State* L, int index)
     {
         if (CluaTypeid::Instance().get_name<T>()) {
-            return (T*)tolua_tousertype(L, index, CluaTypeid::Instance().get_name<T>());
+            return (T*)tolua_tousertype(L, index, NULL);
         }
         else {
             return (T*)tolua_touserdata(L, index, NULL);
@@ -335,7 +339,7 @@ struct LuaReader<T&>
     static inline T& Read(lua_State* L, int index)
     {
         if (CluaTypeid::Instance().get_name<T>()) {
-            return *(T*)tolua_tousertype(L, index, CluaTypeid::Instance().get_name<T>());
+            return *(T*)tolua_tousertype(L, index, NULL);
         }
         else {
             return *(T*)tolua_touserdata(L, index, NULL);
@@ -743,7 +747,7 @@ FAIL:
 
     template<typename ResultType, typename... ARGS>
     inline ResultType CallT(const char* func, ARGS&&... args) {
-        LUA_CHECK_FUNCTION(m_pLuaS, func);
+        LUA_CHECKT_FUNCTION(m_pLuaS, func, ResultType());
         LuaPushT(args...);
         LUA_CALLT_FUNCTION(m_pLuaS, func, sizeof...(args), 1, ResultType());
         return LuaPop<ResultType>(m_pLuaS);
