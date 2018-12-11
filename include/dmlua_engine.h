@@ -901,11 +901,7 @@ FAIL:
             strRealPath = strRoot;
         }
         else {
-#ifdef WIN32
-            strRealPath = strRoot + "\\" + strPwd;
-#else
-            strRealPath = strRoot + "/" + strPwd;
-#endif
+            strRealPath = strRoot + PATH_DELIMITER_STR + strPwd;
         }
 
         if ( !oDirectoryParser.Open( strRealPath.c_str() ) ) {
@@ -927,20 +923,11 @@ FAIL:
                 strFullPathPwd = szPath;
             }
             else {
-#ifdef WIN32
-                strFullPathPwd = strPwd + "\\" + szPath;
-#else
-                strFullPathPwd = strPwd + "/" + szPath;
-#endif
+                strFullPathPwd = strPwd + PATH_DELIMITER_STR + szPath;
             }
 
-#ifdef WIN32
-            std::string strFullPathFile = strRoot + "\\" + strFullPathPwd;
-            std::string strFullPath = strRoot + "\\" + strPwd;
-#else
-            std::string strFullPathFile = strRoot + "/" + strFullPathPwd;
-            std::string strFullPath = strRoot + "/" + strPwd;
-#endif
+            std::string strFullPathFile = strRoot + PATH_DELIMITER_STR + strFullPathPwd;
+            std::string strFullPath = strRoot + PATH_DELIMITER_STR + strPwd;
 
             if ( sAttr.isDir ) {
                 __ParserFiles( strRoot, strFullPathPwd );
@@ -955,11 +942,7 @@ FAIL:
             if ( ext == ".lua" ) {
                 std::string strModuleName = strFullPathPwd.substr( 0,
                                             strFullPathPwd.size() - ext.size() );
-#ifdef WIN32
-                std::replace( strModuleName.begin(), strModuleName.end(), '\\', '.' );
-#else
-                std::replace( strModuleName.begin(), strModuleName.end(), '/', '.' );
-#endif
+                std::replace( strModuleName.begin(), strModuleName.end(), PATH_DELIMITER, '.' );
                 __AddFile( strFullPathFile, strModuleName, strFullPath );
             }
         }
