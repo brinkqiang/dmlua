@@ -52,7 +52,21 @@ TEST( luatest, luatest ) {
     if ( !oDMLuaEngine.ReloadScript() ) {
         return;
     }
+    
+    oDMLuaEngine.DoString(
+        "function addex(first, second)\n"
+        "   return first * second\n"
+        "end\n" );
+    {
+        for ( int i = 0; i < 1; ++i ) {
+            uint64_t r = oDMLuaEngine.CallT<uint64_t>("addex", 100000000LL, 100000000LL);
 
+            if ( r >= 0 ) {
+                std::cout << r << std::endl;
+            }
+        }
+    }
+    
     oDMLuaEngine.DoString(
         "function addex(first, second, res)\n"
         "   res.value = first * second\n"
