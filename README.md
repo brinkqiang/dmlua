@@ -2,7 +2,12 @@
 
 Copyright (c) 2013-2018 brinkqiang (brink.qiang@gmail.com)
 
-[dmlua GitHub](https://github.com/brinkqiang/dmlua)
+[![dmlua](https://img.shields.io/badge/brinkqiang-dmlua-blue.svg?style=flat-square)](https://github.com/brinkqiang/dmlua)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/brinkqiang/dmlua/blob/master/LICENSE)
+[![blog](https://img.shields.io/badge/Author-Blog-7AD6FD.svg)](https://brinkqiang.github.io/)
+[![Open Source Love](https://badges.frapsoft.com/os/v3/open-source.png)](https://github.com/brinkqiang)
+[![GitHub stars](https://img.shields.io/github/stars/brinkqiang/dmlua.svg?label=Stars)](https://github.com/brinkqiang/dmlua) 
+[![GitHub forks](https://img.shields.io/github/forks/brinkqiang/dmlua.svg?label=Fork)](https://github.com/brinkqiang/dmlua)
 
 ## Build status
 | [Linux][lin-link] | [MacOSX][osx-link] | [Windows][win-link] |
