@@ -85,7 +85,7 @@ class CDirectoryParser {
         m_szPath += "\\*";
         m_fHandle = INVALID_HANDLE_VALUE;
 #else
-        strncpy( m_curDir, path, sizeof( m_curDir ) );
+        strncpy( m_curDir, path, sizeof( m_curDir ) - 1 );
         m_dir = opendir( path );
 
         if ( m_dir == NULL ) {
