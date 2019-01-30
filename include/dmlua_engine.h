@@ -685,11 +685,11 @@ FAIL:
     }
 
     static inline void LuaPush( lua_State* luaS, std::string& t ) {
-        tolua_pushstring( luaS, t.c_str() );
+        tolua_pushlstring(luaS, t.c_str(), t.size());
     }
 
     static inline void LuaPush( lua_State* luaS, const std::string& t ) {
-        tolua_pushstring( luaS, t.c_str() );
+        tolua_pushlstring( luaS, t.c_str(), t.size());
     }
 
     static inline void LuaPush( lua_State* luaS, const short t ) {

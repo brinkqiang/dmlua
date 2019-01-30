@@ -38,6 +38,15 @@ TOLUA_API void tolua_pushstring( lua_State* L, const char* value ) {
     }
 }
 
+TOLUA_API void tolua_pushlstring(lua_State* L, const char* value, size_t len) {
+    if (value == NULL) {
+        lua_pushnil(L);
+    }
+    else {
+        lua_pushlstring(L, value, len);
+    }
+}
+
 TOLUA_API void tolua_pushuserdata( lua_State* L, void* value ) {
     if ( value == NULL ) {
         lua_pushnil( L );

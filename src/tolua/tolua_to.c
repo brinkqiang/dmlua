@@ -30,7 +30,30 @@ TOLUA_API const char* tolua_tostring( lua_State* L, int narg,
     return lua_gettop( L ) < abs( narg ) ? def : lua_tostring( L, narg );
 }
 
-TOLUA_API void* tolua_touserdata( lua_State* L, int narg, void* def ) {
+TOLUA_API const char* tolua_tolstring(lua_State* L, int narg, const char* def, size_t* len)
+{
+    if (lua_gettop(L) < abs(narg))
+    {
+        *len = strlen(def);
+        return def;
+    }
+    else
+    {
+        return lua_tolstring(L, narg, len);
+    }
+}
+
+TOLUA_API const char* tolua_tofieldlstring(lua_State* L, int lo, int index, const char* def, size_t* len)
+{
+    const char* v;
+    lua_pushnumber(L, index);
+    lua_gettable(L, lo);
+    v = lua_isnil(L, -1) ? def : lua_tolstring(L, -1, len);
+    lua_pop(L, 1);
+    return v;
+}
+
+TOLUA_API void* tolua_touserdata(lua_State* L, int narg, void* def) {
     /* return lua_gettop(L)<abs(narg) ? def : lua_touserdata(L,narg); */
     if ( lua_gettop( L ) < abs( narg ) ) {
         return def;

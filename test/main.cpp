@@ -60,14 +60,29 @@ TEST( luatest, luatest ) {
             "   task.nTaskID = 1003\n"
             "   task.nTaskState = 1\n"
             "   task.nTaskCondition = 0\n"
-            "end\n" );
+            "end\n");
         STaskInfo sInfo;
-        int r = oDMLuaEngine.Call( "script.task.taskinfo", &sInfo );
+        int r = oDMLuaEngine.Call("script.task.taskinfo", &sInfo);
 
-        if ( r >= 0 ) {
+        if (r >= 0) {
             std::cout << sInfo.nTaskID << std::endl;
         }
     }
+    {
+        oDMLuaEngine.DoString(
+            "function bintest(data)\n"
+            "   print(string.len(data))"
+            "   print(data)"
+            "end\n");
+        std::string strData = "12345";
+        strData.append("\0", 1);
+        strData.append("ABCDE", 5);
+        int r = oDMLuaEngine.Call("bintest", strData);
+        if (r >= 0) {
+            ;
+        }
+    }
+
     CRole* poRole = CRoleMgr::Instance()->CreateRole();
     poRole->SetName( "andy" );
     poRole->SetHp( 9999 );

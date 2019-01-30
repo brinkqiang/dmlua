@@ -115,6 +115,7 @@ TOLUA_API void tolua_pushvalue( lua_State* L, int lo );
 TOLUA_API void tolua_pushboolean( lua_State* L, int value );
 TOLUA_API void tolua_pushnumber( lua_State* L, lua_Number value );
 TOLUA_API void tolua_pushstring( lua_State* L, const char* value );
+TOLUA_API void tolua_pushlstring(lua_State* L, const char* value, size_t len);
 TOLUA_API void tolua_pushuserdata( lua_State* L, void* value );
 TOLUA_API void tolua_pushusertype( lua_State* L, void* value,
                                    const char* type );
@@ -137,6 +138,11 @@ TOLUA_API lua_Number tolua_tonumber( lua_State* L, int narg, lua_Number def );
 TOLUA_API lua_Integer tolua_tointeger(lua_State* L, int narg, lua_Integer def);
 
 TOLUA_API const char* tolua_tostring( lua_State* L, int narg, const char* def );
+
+TOLUA_API const char* tolua_tolstring(lua_State* L, int narg, const char* def, size_t* len);
+
+TOLUA_API const char* tolua_tofieldlstring(lua_State* L, int lo, int index, const char* def, size_t* len);
+
 TOLUA_API void* tolua_touserdata( lua_State* L, int narg, void* def );
 TOLUA_API void* tolua_tousertype( lua_State* L, int narg, void* def );
 TOLUA_API int tolua_tovalue( lua_State* L, int narg, int def );
@@ -158,15 +164,21 @@ TOLUA_API void tolua_dobuffer( lua_State* L, char* B, unsigned int size,
 TOLUA_API int class_gc_event( lua_State* L );
 
 #ifdef __cplusplus
-static inline const char* tolua_tocppstring( lua_State* L, int narg,
-        const char* def ) {
-    const char* s = tolua_tostring( L, narg, def );
-    return s ? s : "";
+static inline const char* tolua_tocppstring(lua_State* L, int narg, const char* def, size_t* len = NULL) {
+    const char* s;
+    if (len == NULL)
+        s = tolua_tostring(L, narg, def);
+    else
+        s = tolua_tolstring(L, narg, def, len);
+    return s ? s : def;
 };
 
-static inline const char* tolua_tofieldcppstring( lua_State* L, int lo,
-        int index, const char* def ) {
-    const char* s = tolua_tofieldstring( L, lo, index, def );
+static inline const char* tolua_tofieldcppstring(lua_State* L, int lo, int index, const char* def, size_t* len = NULL) {
+    const char* s;
+    if (len == NULL)
+        s = tolua_tofieldstring(L, lo, index, def);
+    else
+        s = tolua_tofieldlstring(L, lo, index, def, len);
     return s ? s : "";
 };
 
