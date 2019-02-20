@@ -32,7 +32,7 @@
 
 #include <errno.h>
 #include <direct.h>
-
+#include <wtypes.h>
 #ifndef MAX_PATH
 #define MAX_PATH PATH_MAX
 #endif

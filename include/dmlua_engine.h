@@ -24,6 +24,8 @@
 
 #include <assert.h>
 #include <string.h>
+#include <time.h>
+
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -526,6 +528,7 @@ class CDMLuaEngine : public CDMSafeSingleton<CDMLuaEngine> {
         : m_pLuaS( luaL_newstate() ), m_dwStartTime( 0 ), m_bStartTime( false ) {
         luaL_openlibs( m_pLuaS );
         tolua_interface_open( m_pLuaS );
+        AddPath("");
     }
 
     virtual ~CDMLuaEngine() {
