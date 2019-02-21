@@ -27,6 +27,8 @@ TEST( luatest, luatest ) {
         return;
     }
 
+    oDMLuaEngine.Call("script.msg.msg.main");
+
     oDMLuaEngine.DoString(
         "function addex(first, second)\n"
         "   return first * second\n"
@@ -99,15 +101,19 @@ TEST( luatest, luatest ) {
     oDMLuaEngine.Call( "script.config.loadcsv.main" );
     CRoleMgr::Instance()->ReleaseRole( poRole );
 
+    CDMLuaEngine::Instance()->DoString(
+        "function Sqrt(x\n)"
+        "MAX_LOOP = 100000000\n"
+        "z = 1.0\n"
+        "for i = 1, MAX_LOOP do\n"
+        "z = z - (z*z - x) / (2 * z)\n"
+        "end\n"
+        "return z\n"
+        "end\n");
 }
 
 TEST( luaperformancetest, luaperformancetest ) {
-    CDMLuaEngine oEZLuaEngine;
-    oEZLuaEngine.DoString(
-        "function performancetest()\n"
-        "end\n" );
-
-    for ( int i = 0; i < 1000000; ++i ) {
-        oEZLuaEngine.Call( "performancetest" );
-    }
+    CDMLuaEngine::Instance()->DoString(
+        "print(Sqrt(2))");
 }
+

@@ -2,7 +2,7 @@
 #include "protoimporter.h"
 
 #include <stdio.h>
-#include "gutil.h"
+#include "dmutil.h"
 
 class MyMultiFileErrorCollector : public google::protobuf::compiler::MultiFileErrorCollector
 {	
@@ -25,11 +25,11 @@ ProtoImporter::ProtoImporter():
 	char* protopath = getenv("PROTO_PATH");
 	if (!protopath)
 	{
-        putenv(("PROTO_PATH=" + GGetRootPath()).c_str());
+        putenv(("PROTO_PATH=" + DMGetRootPath()).c_str());
         protopath = getenv("PROTO_PATH");
 
-		sourceTree.MapPath("", GGetRootPath() + "proto");
-        sourceTree.MapPath("", GGetRootPath() + ".." + PATH_DELIMITER_STR + "proto");
+		sourceTree.MapPath("", DMGetRootPath() + "proto");
+        sourceTree.MapPath("", DMGetRootPath() + ".." + PATH_DELIMITER_STR + "proto");
         sourceTree.MapPath("", protopath);
 	}
 	else

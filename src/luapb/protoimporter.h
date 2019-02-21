@@ -2,7 +2,7 @@
 #ifndef PROTOIMPORTER_H_
 #define PROTOIMPORTER_H_
 
-#include "gsingleton.h"
+#include "dmsingleton.h"
 
 #include <string>
 
