@@ -131,6 +131,12 @@ static int pb_repeated_add(lua_State* L)
             reflection->AddBool(message, field, val);
         }
         break;
+        case google::protobuf::FieldDescriptor::TYPE_ENUM:
+        {
+            int val = static_cast<int>(luaL_checkinteger(L, 2));
+            reflection->AddEnumValue(message, field, val);
+        }
+        break;
     default:
         luaL_argerror(L, (2), "pb_repeated_add field name type for add  is not support!!");
         return 0;
@@ -234,6 +240,11 @@ static int pb_repeated_get(lua_State* L)
         lua_pushboolean(L, reflection->GetRepeatedBool(*message, field, index));
     }
     break;
+    case google::protobuf::FieldDescriptor::TYPE_ENUM:
+    {
+        lua_pushinteger(L, reflection->GetRepeatedEnumValue(*message, field, index));
+    }
+    break;
     default:
         luaL_argerror(L, 0, "pb_repeated_get, field type for get not support!!!");
         return 0;
@@ -322,6 +333,12 @@ static int pb_repeated_set(lua_State* L)
     {
         int val = static_cast<int>(lua_toboolean(L, 3));
         reflection->SetRepeatedBool(message, field, index, val);
+    }
+    break;
+    case google::protobuf::FieldDescriptor::TYPE_ENUM:
+    {
+        int val = static_cast<int>(luaL_checkinteger(L, 3));
+        reflection->SetRepeatedEnumValue(message, field, index, val);
     }
     break;
     default:
@@ -457,6 +474,11 @@ static int pb_get(lua_State* L)
         lua_pushboolean(L, reflection->GetBool(*message, field));
     }
     break;
+    case google::protobuf::FieldDescriptor::TYPE_ENUM:
+    {
+        lua_pushinteger(L, reflection->GetEnumValue(*message, field));
+    }
+    break;
     default:
         luaL_argerror(L, (2), "pb_repeated_add field name type for add  is not support!!");
         return 0;
@@ -546,6 +568,12 @@ static int pb_set(lua_State* L)
     {
         int val = static_cast<int>(luaL_checkinteger(L, 3));
         reflection->SetBool(message, field, val);
+    }
+    break;
+    case google::protobuf::FieldDescriptor::TYPE_ENUM:
+    {
+        int val = static_cast<int>(luaL_checkinteger(L, 3));
+        reflection->SetEnumValue(message, field, val);
     }
     break;
     default:

@@ -15,6 +15,12 @@ package net;
 enum MessageId {
   MSGID_tb_Person = 1000;
 }
+
+enum PhoneType {
+MOBILE = 0;
+HOME = 1;
+WORK = 2;
+}
 // [END enums]
 
 // [START messages]
@@ -23,6 +29,7 @@ message tb_Person {
   optional string number = 2;
   optional string email = 3;
   optional uint32 age = 4;
-  repeated string desc = 5;
+  optional PhoneType ptype = 5;
+  repeated string desc = 6;
 }
 // [END messages]

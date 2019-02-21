@@ -9,6 +9,7 @@ function main()
   msg.number = "13615632545"
   msg.email = "13615632545@163.com"
   msg.age = 28
+  msg.ptype = 2
   msg.desc:add("first")
   msg.desc:add("second")
   msg.desc:add("three")
