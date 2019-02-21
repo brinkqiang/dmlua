@@ -12,6 +12,7 @@ function main()
   msg.desc:add("first")
   msg.desc:add("second")
   msg.desc:add("three")
-  print("str: " .. pb.tostring(msg))
+  print("debug:\n" .. pb.tostring(msg))
+  print("bin:\n" .. pb.serializeToString(msg))
 end
 
