@@ -28,8 +28,8 @@ ProtoImporter::ProtoImporter():
         putenv(("PROTO_PATH=" + DMGetRootPath()).c_str());
         protopath = getenv("PROTO_PATH");
 
-		sourceTree.MapPath("", DMGetRootPath() + "proto");
-        sourceTree.MapPath("", DMGetRootPath() + ".." + PATH_DELIMITER_STR + "proto");
+		sourceTree.MapPath("", DMGetRootPath() + PATH_DELIMITER_STR + "proto");
+        sourceTree.MapPath("", DMGetRootPath() + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto");
         sourceTree.MapPath("", protopath);
 	}
 	else
