@@ -36,43 +36,43 @@ static MyMultiFileErrorCollector errorCollector;
 static google::protobuf::compiler::DiskSourceTree sourceTree;
 
 ProtoImporter::ProtoImporter():
-		importer(&sourceTree, &errorCollector)
+		m_oImporter(&sourceTree, &errorCollector)
 {
     std::string strRoot = DMGetRootPath();
-    std::string strPath = strRoot + PATH_DELIMITER_STR + "proto";
-    std::string strPath2 = strRoot + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto";
+    std::string strProtoPath = strRoot + PATH_DELIMITER_STR + "proto";
+    std::string strProtoPath2 = strRoot + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto";
 
     sourceTree.MapPath("", strRoot);
-    sourceTree.MapPath("", strPath);
-    sourceTree.MapPath("", strPath2);
+    sourceTree.MapPath("", strProtoPath);
+    sourceTree.MapPath("", strProtoPath2);
 
     printf("[ProtoImporter] protopath:%s\n", strRoot.c_str());
-	printf("[ProtoImporter] protopath:%s\n", strPath.c_str());
-    printf("[ProtoImporter] protopath:%s\n", strPath2.c_str());
+	printf("[ProtoImporter] protopath:%s\n", strProtoPath.c_str());
+    printf("[ProtoImporter] protopath:%s\n", strProtoPath2.c_str());
 }
 
 ProtoImporter::~ProtoImporter()
 {
 }
 
-bool ProtoImporter::Import(const std::string& filename)
+bool ProtoImporter::Import(const std::string& strFileName)
 {
-	const  google::protobuf::FileDescriptor* filedescriptor = importer.Import(filename);
+	const  google::protobuf::FileDescriptor* filedescriptor = m_oImporter.Import(strFileName);
 	if (!filedescriptor)
 	{
-		fprintf(stderr, "import (%s) file descriptor error\n", filename.c_str());
+		fprintf(stderr, "import (%s) file descriptor error\n", strFileName.c_str());
 		return false;
 	}
 	return true;
 }
 
-google::protobuf::Message* ProtoImporter::CreateMessage(const std::string& typeName)
+google::protobuf::Message* ProtoImporter::CreateMessage(const std::string& strTypeName)
 {
 	google::protobuf::Message* message = NULL;
-	const google::protobuf::Descriptor* descriptor = importer.pool()->FindMessageTypeByName(typeName);
+	const google::protobuf::Descriptor* descriptor = m_oImporter.pool()->FindMessageTypeByName(strTypeName);
 	if (descriptor)
 	{
-		const google::protobuf::Message* prototype = factory.GetPrototype(descriptor);
+		const google::protobuf::Message* prototype = m_oFactory.GetPrototype(descriptor);
 		if (prototype)
 		{
 			message = prototype->New();

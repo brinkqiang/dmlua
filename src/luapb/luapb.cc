@@ -593,7 +593,7 @@ static int pb_parseFromString(lua_State* L)
 
     size_t bin_len;
     const char* bin = static_cast<const char*>(	luaL_checklstring(L, 2, &bin_len));
-    message->ParseFromArray(bin, bin_len);
+    message->ParseFromArray(bin, (int)bin_len);
     return 0;
 }
 
@@ -653,5 +653,3 @@ int luaopen_luapb(lua_State* L)
 	luaL_register(L, PB_MESSAGE, lib);
 	return 1;
 }
-
-

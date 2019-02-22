@@ -14,13 +14,13 @@ class ProtoImporter : public TSingleton<ProtoImporter>
     friend class TSingleton<ProtoImporter>;
 public:
 	ProtoImporter();
-    ~ProtoImporter();
+    virtual ~ProtoImporter();
 public:
-	bool Import(const std::string& filename);
-	google::protobuf::Message* CreateMessage(const std::string& typeName);
+	bool Import(const std::string& strFileName);
+	google::protobuf::Message* CreateMessage(const std::string& strTypeName);
 public:
-	google::protobuf::compiler::Importer importer;
-	google::protobuf::DynamicMessageFactory factory;
+	google::protobuf::compiler::Importer m_oImporter;
+	google::protobuf::DynamicMessageFactory m_oFactory;
 };
 
 #endif
