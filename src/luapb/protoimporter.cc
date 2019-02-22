@@ -4,6 +4,22 @@
 #include <stdio.h>
 #include "dmutil.h"
 
+class ProtobufLibrary
+{
+public:
+    ProtobufLibrary()
+    {
+        GOOGLE_PROTOBUF_VERIFY_VERSION;
+    };
+    virtual ~ProtobufLibrary()
+    {
+        // fixed memory leak
+        google::protobuf::ShutdownProtobufLibrary();
+    }
+};
+
+static ProtobufLibrary _protobuf_library;
+
 class MyMultiFileErrorCollector : public google::protobuf::compiler::MultiFileErrorCollector
 {	
 	virtual void AddError(
