@@ -22,21 +22,17 @@ static google::protobuf::compiler::DiskSourceTree sourceTree;
 ProtoImporter::ProtoImporter():
 		importer(&sourceTree, &errorCollector)
 {
-	char* protopath = getenv("PROTO_PATH");
-	if (!protopath)
-	{
-        putenv((std::string("PROTO_PATH=") + DMGetRootPath()).c_str());
-        protopath = getenv("PROTO_PATH");
+    std::string strRoot = DMGetRootPath();
+    std::string strPath = strRoot + PATH_DELIMITER_STR + "proto";
+    std::string strPath2 = strRoot + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto";
 
-		sourceTree.MapPath("", DMGetRootPath() + PATH_DELIMITER_STR + "proto");
-        sourceTree.MapPath("", DMGetRootPath() + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto");
-        sourceTree.MapPath("", protopath);
-    }
-    else
-    {
-        sourceTree.MapPath("", protopath);
-    }
-	printf("[ProtoImporter] protopath:%s\n", protopath);
+    sourceTree.MapPath("", strRoot);
+    sourceTree.MapPath("", strPath);
+    sourceTree.MapPath("", strPath2);
+
+    printf("[ProtoImporter] protopath:%s\n", strRoot.c_str());
+	printf("[ProtoImporter] protopath:%s\n", strPath.c_str());
+    printf("[ProtoImporter] protopath:%s\n", strPath2.c_str());
 }
 
 ProtoImporter::~ProtoImporter()
