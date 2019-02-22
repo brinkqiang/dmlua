@@ -25,17 +25,17 @@ ProtoImporter::ProtoImporter():
 	char* protopath = getenv("PROTO_PATH");
 	if (!protopath)
 	{
-        putenv(("PROTO_PATH=" + DMGetRootPath()).c_str());
+        putenv((std::string("PROTO_PATH=") + DMGetRootPath()).c_str());
         protopath = getenv("PROTO_PATH");
 
 		sourceTree.MapPath("", DMGetRootPath() + PATH_DELIMITER_STR + "proto");
         sourceTree.MapPath("", DMGetRootPath() + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto");
         sourceTree.MapPath("", protopath);
-	}
-	else
-	{
-		sourceTree.MapPath("", protopath);
-	}
+    }
+    else
+    {
+        sourceTree.MapPath("", protopath);
+    }
 	printf("[ProtoImporter] protopath:%s\n", protopath);
 }
 
