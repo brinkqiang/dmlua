@@ -16,13 +16,13 @@ function main()
   local debugstr = pb.tostring(msg)
   local binstr = pb.serializeToString(msg)
 
-  print("msgdebug:\n" .. debugstr)
-  print("msgbin:\n" .. binstr)
+  --print("msgdebug:\n" .. debugstr)
+  --print("msgbin:\n" .. binstr)
 
   local msg2 = pb.new("net.tb_Person")
   pb.parseFromString(msg2, binstr)
 
-  print("msg2debug:\n" .. pb.tostring(msg2))
-  print("msg2bin:\n" .. pb.serializeToString(msg2))
+  --print("msg2debug:\n" .. pb.tostring(msg2))
+  --print("msg2bin:\n" .. pb.serializeToString(msg2))
 end
 
