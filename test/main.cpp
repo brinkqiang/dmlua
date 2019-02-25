@@ -3,7 +3,7 @@
 #include "dmlua.h"
 #include "gtest/gtest.h"
 
-TEST( luatest, luatest ) {
+TEST( luabasetest, luabasetest) {
     CDMLuaEngine oDMLuaEngine;
 
     if ( !oDMLuaEngine.ReloadScript() ) {
@@ -26,8 +26,6 @@ TEST( luatest, luatest ) {
     if ( !oDMLuaEngine.ReloadScript() ) {
         return;
     }
-
-    oDMLuaEngine.Call("script.msg.msg.main");
 
     oDMLuaEngine.DoString(
         "function addex(first, second)\n"
@@ -101,6 +99,14 @@ TEST( luatest, luatest ) {
     oDMLuaEngine.Call( "script.config.loadcsv.main" );
     CRoleMgr::Instance()->ReleaseRole( poRole );
 
+
+}
+
+TEST(luaload, luaload) {
+    if (!CDMLuaEngine::Instance()->ReloadScript()) {
+        return;
+    }
+
     CDMLuaEngine::Instance()->DoString(
         "function Sqrt(x\n)"
         "MAX_LOOP = 100000000\n"
@@ -113,7 +119,13 @@ TEST( luatest, luatest ) {
 }
 
 TEST( luaperformancetest, luaperformancetest ) {
+
     CDMLuaEngine::Instance()->DoString(
         "print(Sqrt(2))");
 }
 
+TEST(luapbtest, luapbtest) {
+    for (int i = 0; i < 1000000; ++i) {
+        CDMLuaEngine::Instance()->Call("script.msg.msg.main");
+    }
+}
