@@ -182,7 +182,6 @@ static int pb_repeated_get(lua_State* L)
     const Reflection* reflection = message->GetReflection();
     luaL_argcheck(L, field != NULL, 1, "pb_repeated_get field not exist");
 
-	// -1 为了和lua的下标从一开始保持一致
 	int index = static_cast<int>(luaL_checkinteger(L, 2)) - 1;
 	luaL_argcheck(L, index >= 0, 2, "pb_repeated_get index expected >= 1");
 
