@@ -39,27 +39,17 @@ public:
 static MyMultiFileErrorCollector errorCollector;
 static google::protobuf::compiler::DiskSourceTree sourceTree;
 
-ProtoImporter::ProtoImporter():
+ProtoImporterImpl::ProtoImporterImpl():
 		m_oImporter(&sourceTree, &errorCollector)
 {
-    std::string strRoot = DMGetRootPath();
-    std::string strProtoPath = strRoot + PATH_DELIMITER_STR + "proto";
-    std::string strProtoPath2 = strRoot + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto";
 
-    sourceTree.MapPath("", strRoot);
-    sourceTree.MapPath("", strProtoPath);
-    sourceTree.MapPath("", strProtoPath2);
-
-    printf("[ProtoImporter] protopath:%s\n", strRoot.c_str());
-	printf("[ProtoImporter] protopath:%s\n", strProtoPath.c_str());
-    printf("[ProtoImporter] protopath:%s\n", strProtoPath2.c_str());
 }
 
-ProtoImporter::~ProtoImporter()
+ProtoImporterImpl::~ProtoImporterImpl()
 {
 }
 
-bool ProtoImporter::Import(const std::string& strFileName)
+bool ProtoImporterImpl::Import(const std::string& strFileName)
 {
 	const  google::protobuf::FileDescriptor* filedescriptor = m_oImporter.Import(strFileName);
 	if (!filedescriptor)
@@ -70,7 +60,7 @@ bool ProtoImporter::Import(const std::string& strFileName)
 	return true;
 }
 
-google::protobuf::Message* ProtoImporter::CreateMessage(const std::string& strTypeName)
+google::protobuf::Message* ProtoImporterImpl::CreateMessage(const std::string& strTypeName)
 {
 	google::protobuf::Message* message = NULL;
 	const google::protobuf::Descriptor* descriptor = m_oImporter.pool()->FindMessageTypeByName(strTypeName);
@@ -83,4 +73,50 @@ google::protobuf::Message* ProtoImporter::CreateMessage(const std::string& strTy
 		}
 	}
 	return message;
+}
+
+ProtoImporter::ProtoImporter()
+{
+    std::string strRoot = DMGetRootPath();
+    std::string strProtoPath = strRoot + PATH_DELIMITER_STR + "proto";
+    std::string strProtoPath2 = strRoot + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto";
+
+    sourceTree.MapPath("", strRoot);
+    sourceTree.MapPath("", strProtoPath);
+    sourceTree.MapPath("", strProtoPath2);
+
+    printf("[ProtoImporter] protopath:%s\n", strRoot.c_str());
+    printf("[ProtoImporter] protopath:%s\n", strProtoPath.c_str());
+    printf("[ProtoImporter] protopath:%s\n", strProtoPath2.c_str());
+    SetImporter(new ProtoImporterImpl());
+}
+
+ProtoImporter::~ProtoImporter()
+{
+
+}
+
+bool ProtoImporter::Import(const std::string & strFileName)
+{
+    ProtoImporterImpl* poProtoImporter = GetImporter();
+    if (NULL != poProtoImporter)
+    {
+        delete poProtoImporter;
+        SetImporter(NULL);
+    }
+
+    SetImporter(new ProtoImporterImpl());
+    poProtoImporter = GetImporter();
+ 
+    if (NULL == poProtoImporter)
+    {
+        return false;
+    }
+
+    return poProtoImporter->Import(strFileName);
+}
+
+google::protobuf::Message* ProtoImporter::CreateMessage(const std::string& strTypeName)
+{
+    return m_poProtoImporter->CreateMessage(strTypeName);
 }

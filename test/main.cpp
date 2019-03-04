@@ -98,8 +98,6 @@ TEST( luabasetest, luabasetest) {
     oDMLuaEngine.Call( "script.common.test.main", &vecData );
     oDMLuaEngine.Call( "script.config.loadcsv.main" );
     CRoleMgr::Instance()->ReleaseRole( poRole );
-
-
 }
 
 TEST(luaload, luaload) {
@@ -125,7 +123,7 @@ TEST( luaperformancetest, luaperformancetest ) {
 }
 
 TEST(luapbtest, luapbtest) {
-    for (int i = 0; i < 1000000; ++i) {
+    for (int i = 0; i < 1; ++i) {
         CDMLuaEngine::Instance()->Call("script.msg.msg.main");
     }
 }
