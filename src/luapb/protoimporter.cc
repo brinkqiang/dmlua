@@ -96,7 +96,7 @@ ProtoImporter::~ProtoImporter()
 
 }
 
-bool ProtoImporter::Import(const std::string & strFileName)
+bool ProtoImporter::Import(const std::string& strFileName)
 {
     ProtoImporterImpl* poProtoImporter = GetImporter();
     if (NULL != poProtoImporter)
