@@ -22,14 +22,18 @@ static ProtobufLibrary _protobuf_library;
 
 class MyMultiFileErrorCollector : public google::protobuf::compiler::MultiFileErrorCollector
 {	
-	virtual void AddError(
-			const std::string & filename,
-			int line,
-			int column,
-			const std::string & message)
+public:
+	virtual void AddError(const std::string& filename, int line, int column,
+        const std::string& message)
 	{
 		fprintf(stderr, "%s:%d:%d:%s\n", filename.c_str(), line, column, message.c_str());
 	}
+
+    virtual void AddWarning(const std::string& filename, int line, int column,
+        const std::string& message)
+    {
+        fprintf(stdout, "%s:%d:%d:%s\n", filename.c_str(), line, column, message.c_str());
+    }
 };
 
 static MyMultiFileErrorCollector errorCollector;
