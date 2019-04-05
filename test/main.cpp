@@ -7,6 +7,7 @@ TEST( luabasetest, luabasetest) {
     CDMLuaEngine oDMLuaEngine;
 
     if ( !oDMLuaEngine.ReloadScript() ) {
+        ASSERT_TRUE(0);
         return;
     }
 
@@ -24,6 +25,7 @@ TEST( luabasetest, luabasetest) {
     }
 
     if ( !oDMLuaEngine.ReloadScript() ) {
+        ASSERT_TRUE(0);
         return;
     }
 
@@ -102,6 +104,7 @@ TEST( luabasetest, luabasetest) {
 
 TEST(luaload, luaload) {
     if (!CDMLuaEngine::Instance()->ReloadScript()) {
+        ASSERT_TRUE(0);
         return;
     }
 
@@ -116,14 +119,50 @@ TEST(luaload, luaload) {
         "end\n");
 }
 
-TEST( luaperformancetest, luaperformancetest ) {
+TEST(lua_empty_call, lua_empty_call) {
+    CDMLuaEngine oDMLuaEngine;
+    if (!oDMLuaEngine.ReloadScript()) {
+        ASSERT_TRUE(0);
+        return;
+    }
+    oDMLuaEngine.DoString(
+        "function performancetest()\n"
+        "end\n");
 
-    CDMLuaEngine::Instance()->DoString(
-        "print(Sqrt(2))");
+    for (int i = 0; i < 1000000; ++i) {
+        oDMLuaEngine.Call("performancetest");
+    }
+}
+TEST(lua_tb_create, lua_tb_create) {
+    CDMLuaEngine oDMLuaEngine;
+    if (!oDMLuaEngine.ReloadScript()) {
+        ASSERT_TRUE(0);
+        return;
+    }
+
+    for (int i = 0; i < 1000000; ++i) {
+        CDMLuaEngine::Instance()->Call("script.msg.msg.tbcreate");
+    }
 }
 
-TEST(luapbtest, luapbtest) {
-    for (int i = 0; i < 1; ++i) {
-        CDMLuaEngine::Instance()->Call("script.msg.msg.main");
+TEST(lua_pbcodec, lua_pbcodec) {
+    CDMLuaEngine oDMLuaEngine;
+    if (!oDMLuaEngine.ReloadScript()) {
+        ASSERT_TRUE(0);
+        return;
     }
+
+    for (int i = 0; i < 1000000; ++i) {
+        oDMLuaEngine.Call("script.msg.msg.pbtest");
+    }
+}
+
+TEST(lua_pbcodec2, lua_pbcodec2) {
+    CDMLuaEngine oDMLuaEngine;
+    if (!oDMLuaEngine.ReloadScript()) {
+        ASSERT_TRUE(0);
+        return;
+    }
+
+    oDMLuaEngine.Call("script.msg.msg.pbtest2");
 }
