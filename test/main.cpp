@@ -3,10 +3,12 @@
 #include "dmlua.h"
 #include "gtest/gtest.h"
 
-TEST( luabasetest, luabasetest) {
+#define DMLUA_TEST_COUNT 10000
+
+TEST(luabasetest, luabasetest) {
     CDMLuaEngine oDMLuaEngine;
 
-    if ( !oDMLuaEngine.ReloadScript() ) {
+    if (!oDMLuaEngine.ReloadScript()) {
         ASSERT_TRUE(0);
         return;
     }
@@ -17,14 +19,14 @@ TEST( luabasetest, luabasetest) {
         "   local b = 100000000\n"
         "   local c = a * b\n"
         "   print(c)\n"
-        "end\n" );
+        "end\n");
     {
-        for ( int i = 0; i < 1; ++i ) {
-            int r = oDMLuaEngine.Call( "addtest" );
+        for (int i = 0; i < 1; ++i) {
+            int r = oDMLuaEngine.Call("addtest");
         }
     }
 
-    if ( !oDMLuaEngine.ReloadScript() ) {
+    if (!oDMLuaEngine.ReloadScript()) {
         ASSERT_TRUE(0);
         return;
     }
@@ -32,12 +34,12 @@ TEST( luabasetest, luabasetest) {
     oDMLuaEngine.DoString(
         "function addex(first, second)\n"
         "   return first * second\n"
-        "end\n" );
+        "end\n");
     {
-        for ( int i = 0; i < 1; ++i ) {
+        for (int i = 0; i < 1; ++i) {
             uint64_t r = oDMLuaEngine.CallT<uint64_t>("addex", 100000000LL, 100000000LL);
 
-            if ( r >= 0 ) {
+            if (r >= 0) {
                 std::cout << r << std::endl;
             }
         }
@@ -52,7 +54,7 @@ TEST( luabasetest, luabasetest) {
             "   return task\n"
             "end\n");
 
-        STaskInfo sInfo = oDMLuaEngine.CallT<STaskInfo>( "script.task.taskinfo" );
+        STaskInfo sInfo = oDMLuaEngine.CallT<STaskInfo>("script.task.taskinfo");
 
         std::cout << sInfo.nTaskID << std::endl;
     }
@@ -86,53 +88,53 @@ TEST( luabasetest, luabasetest) {
     }
 
     CRole* poRole = CRoleMgr::Instance()->CreateRole();
-    poRole->SetName( "andy" );
-    poRole->SetHp( 9999 );
-    poRole->SetMp( 9999 );
+    poRole->SetName("andy");
+    poRole->SetHp(9999);
+    poRole->SetMp(9999);
     unsigned int dwTaskID = 100;
 
-    LResultINT oResult( -1 );
+    LResultINT oResult(-1);
     oDMLuaEngine.Call("script.task.task.AcceptTask", poRole, dwTaskID, &oResult);
 
-    oDMLuaEngine.Call( "script.task.task.FinishTask", poRole, dwTaskID );
+    oDMLuaEngine.Call("script.task.task.FinishTask", poRole, dwTaskID);
     std::vector<std::string> vecData;
-    vecData.push_back( "hello" );
-    oDMLuaEngine.Call( "script.common.test.main", &vecData );
-    oDMLuaEngine.Call( "script.config.loadcsv.main" );
-    CRoleMgr::Instance()->ReleaseRole( poRole );
+    vecData.push_back("hello");
+    oDMLuaEngine.Call("script.common.test.main", &vecData);
+    oDMLuaEngine.Call("script.config.loadcsv.main");
+    CRoleMgr::Instance()->ReleaseRole(poRole);
 }
-
-TEST(luaload, luaload) {
-    if (!CDMLuaEngine::Instance()->ReloadScript()) {
-        ASSERT_TRUE(0);
-        return;
-    }
-
-    CDMLuaEngine::Instance()->DoString(
-        "function Sqrt(x\n)"
-        "MAX_LOOP = 100000000\n"
-        "z = 1.0\n"
-        "for i = 1, MAX_LOOP do\n"
-        "z = z - (z*z - x) / (2 * z)\n"
-        "end\n"
-        "return z\n"
-        "end\n");
-}
-
-TEST(lua_empty_call, lua_empty_call) {
-    CDMLuaEngine oDMLuaEngine;
-    if (!oDMLuaEngine.ReloadScript()) {
-        ASSERT_TRUE(0);
-        return;
-    }
-    oDMLuaEngine.DoString(
-        "function performancetest()\n"
-        "end\n");
-
-    for (int i = 0; i < 1000000; ++i) {
-        oDMLuaEngine.Call("performancetest");
-    }
-}
+//
+//TEST(luaload, luaload) {
+//    if (!CDMLuaEngine::Instance()->ReloadScript()) {
+//        ASSERT_TRUE(0);
+//        return;
+//    }
+//
+//    CDMLuaEngine::Instance()->DoString(
+//        "function Sqrt(x\n)"
+//        "MAX_LOOP = 100000000\n"
+//        "z = 1.0\n"
+//        "for i = 1, MAX_LOOP do\n"
+//        "z = z - (z*z - x) / (2 * z)\n"
+//        "end\n"
+//        "return z\n"
+//        "end\n");
+//}
+//
+//TEST(lua_empty_call, lua_empty_call) {
+//    CDMLuaEngine oDMLuaEngine;
+//    if (!oDMLuaEngine.ReloadScript()) {
+//        ASSERT_TRUE(0);
+//        return;
+//    }
+//    oDMLuaEngine.DoString(
+//        "function performancetest()\n"
+//        "end\n");
+//
+//    for (int i = 0; i < DMLUA_TEST_COUNT; ++i) {
+//        oDMLuaEngine.Call("performancetest");
+//    }
+//}
 TEST(lua_tb_create, lua_tb_create) {
     CDMLuaEngine oDMLuaEngine;
     if (!oDMLuaEngine.ReloadScript()) {
@@ -140,8 +142,8 @@ TEST(lua_tb_create, lua_tb_create) {
         return;
     }
 
-    for (int i = 0; i < 1000000; ++i) {
-        CDMLuaEngine::Instance()->Call("script.msg.msg.tbcreate");
+    for (int i = 0; i < DMLUA_TEST_COUNT; ++i) {
+        oDMLuaEngine.Call("script.msg.msg.tbcreate");
     }
 }
 
@@ -152,17 +154,21 @@ TEST(lua_pbcodec, lua_pbcodec) {
         return;
     }
 
-    for (int i = 0; i < 1000000; ++i) {
+    for (int i = 0; i < DMLUA_TEST_COUNT; ++i) {
         oDMLuaEngine.Call("script.msg.msg.pbtest");
     }
 }
 
-TEST(lua_pbcodec2, lua_pbcodec2) {
+TEST(lua_profiler, lua_profiler) {
     CDMLuaEngine oDMLuaEngine;
     if (!oDMLuaEngine.ReloadScript()) {
         ASSERT_TRUE(0);
         return;
     }
 
-    oDMLuaEngine.Call("script.msg.msg.pbtest2");
+    oDMLuaEngine.Call("script.debug.profiler.profiler_start");
+    oDMLuaEngine.Call("script.msg.msg.pbtest");
+    oDMLuaEngine.Call("script.msg.msg.tbcreate");
+    oDMLuaEngine.Call("script.config.loadcsv.main");
+    oDMLuaEngine.Call("script.debug.profiler.profiler_stop");
 }
