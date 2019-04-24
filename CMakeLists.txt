@@ -2,31 +2,15 @@ cmake_minimum_required(VERSION 2.8)
 
 PROJECT(dmlua)
 
-IF (WIN32)  
-    MESSAGE(STATUS "Now is windows")
-
-    SET(DMOS_NAME "win")
-
-    SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11" )    
-ELSEIF (APPLE)  
-    MESSAGE(STATUS "Now is Apple systems")  
-    ADD_DEFINITIONS(-DLUA_USE_MACOSX)
-
-    SET(DMOS_NAME "mac") 
-
-    SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread" )
-ELSEIF (UNIX)  
-    MESSAGE(STATUS "Now is UNIX-like OS")  
-    ADD_DEFINITIONS(-DLUA_USE_LINUX)
-
-    SET(DMOS_NAME "lin") 
-    
-    SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread" )    
-ENDIF ()
+INCLUDE(cmake/ModuleImport.cmake)
+LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+INCLUDE(cmake/ModuleCompileOptions.cmake)
+ModuleSetCompileOptions()
 
 ADD_DEFINITIONS(-DLUA_COMPAT_MODULE)
 
-ADD_SUBDIRECTORY(thirdparty/dmprotobuf/cmake)
+ModuleImport("dmprotobuf" "thirdparty/dmprotobuf")
+
 IF (WIN32)
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/dmprotobuf/src/windows)
 ENDIF(WIN32)
