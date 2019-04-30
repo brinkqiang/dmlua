@@ -20,27 +20,8 @@ public:
 
 static ProtobufLibrary _protobuf_library;
 
-class MyMultiFileErrorCollector : public google::protobuf::compiler::MultiFileErrorCollector
-{	
-public:
-	virtual void AddError(const std::string& filename, int line, int column,
-        const std::string& message)
-	{
-		fprintf(stderr, "%s:%d:%d:%s\n", filename.c_str(), line, column, message.c_str());
-	}
-
-    virtual void AddWarning(const std::string& filename, int line, int column,
-        const std::string& message)
-    {
-        fprintf(stdout, "%s:%d:%d:%s\n", filename.c_str(), line, column, message.c_str());
-    }
-};
-
-static MyMultiFileErrorCollector errorCollector;
-static google::protobuf::compiler::DiskSourceTree sourceTree;
-
-ProtoImporterImpl::ProtoImporterImpl():
-		m_oImporter(&sourceTree, &errorCollector)
+ProtoImporterImpl::ProtoImporterImpl(MyMultiFileErrorCollector& oErrorCollector, google::protobuf::compiler::DiskSourceTree& oSourceTree):
+		m_oImporter(&oSourceTree, &oErrorCollector)
 {
 
 }
@@ -81,14 +62,15 @@ ProtoImporter::ProtoImporter()
     std::string strProtoPath = strRoot + PATH_DELIMITER_STR + "proto";
     std::string strProtoPath2 = strRoot + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR + "proto";
 
-    sourceTree.MapPath("", strRoot);
-    sourceTree.MapPath("", strProtoPath);
-    sourceTree.MapPath("", strProtoPath2);
+    m_oSourceTree.MapPath("", strRoot);
+    m_oSourceTree.MapPath("", strProtoPath);
+    m_oSourceTree.MapPath("", strProtoPath2);
 
     printf("[ProtoImporter] protopath:%s\n", strRoot.c_str());
     printf("[ProtoImporter] protopath:%s\n", strProtoPath.c_str());
     printf("[ProtoImporter] protopath:%s\n", strProtoPath2.c_str());
-    SetImporter(new ProtoImporterImpl());
+ 
+    SetImporter(new ProtoImporterImpl(m_oErrorCollector, m_oSourceTree));
 }
 
 ProtoImporter::~ProtoImporter()
@@ -105,7 +87,7 @@ bool ProtoImporter::Import(const std::string& strFileName)
         SetImporter(NULL);
     }
 
-    SetImporter(new ProtoImporterImpl());
+    SetImporter(new ProtoImporterImpl(m_oErrorCollector, m_oSourceTree));
     poProtoImporter = GetImporter();
  
     if (NULL == poProtoImporter)

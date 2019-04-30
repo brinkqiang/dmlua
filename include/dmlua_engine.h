@@ -202,6 +202,10 @@ inline uint32_t GetTickCount32() {
 #endif
 }
 
+//#define DMLUA_CALL lua_pcall
+//#define DMLUA_CALL(L,n,r,f) (lua_call(L,n,r),0)
+#define DMLUA_CALL(L,n,r,f) (lua_pcall(L,n,r,f))
+
 #define LUA_CHECK_FUNCTION(luaS, func) \
     CLuaStateGuard oGuard(luaS, func);\
     do{ if (LuaCheckFunction(luaS, func)){ OnUserError(luaS, func); return -1;} }while(0)
@@ -211,13 +215,13 @@ inline uint32_t GetTickCount32() {
     do{ if (LuaCheckFunction(luaS, func)){ OnUserError(luaS, func); return ret;} }while(0)
 
 #define LUA_CALL_FUNCTION(luaS, func, arg, count) \
-    do{ OnEventLuaCallStart();if (lua_pcall(luaS, arg, count, 0)){ OnEventLuaCallEnd();OnScriptError(luaS, func);return -1;}; OnEventLuaCallEnd();} while(0)
+    do{ OnEventLuaCallStart();if (DMLUA_CALL(luaS, arg, count, 0)){ OnEventLuaCallEnd();OnScriptError(luaS, func);return -1;}; OnEventLuaCallEnd();} while(0)
 
 #define LUA_CALLT_FUNCTION(luaS, func, arg, count, ret) \
-    do{ OnEventLuaCallStart();if (lua_pcall(luaS, arg, count, 0)){ OnEventLuaCallEnd();OnScriptError(luaS, func);return ret;}; OnEventLuaCallEnd();} while(0)
+    do{ OnEventLuaCallStart();if (DMLUA_CALL(luaS, arg, count, 0)){ OnEventLuaCallEnd();OnScriptError(luaS, func);return ret;}; OnEventLuaCallEnd();} while(0)
 
 #define LUA_CALL_FUNCTION_NOEVENT(luaS, func, arg, res) \
-    do{ if (lua_pcall(luaS, arg, res, 0)){ OnScriptError(luaS, func);return -1;}; } while(0)
+    do{ if (DMLUA_CALL(luaS, arg, res, 0)){ OnScriptError(luaS, func);return -1;}; } while(0)
 
 class CLuaStateGuard {
 

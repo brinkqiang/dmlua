@@ -9,10 +9,26 @@
 #include <google/protobuf/dynamic_message.h>
 #include <google/protobuf/compiler/importer.h>
 
+class MyMultiFileErrorCollector : public google::protobuf::compiler::MultiFileErrorCollector
+{
+public:
+    virtual void AddError(const std::string& filename, int line, int column,
+        const std::string& message)
+    {
+        fprintf(stderr, "%s:%d:%d:%s\n", filename.c_str(), line, column, message.c_str());
+    }
+
+    virtual void AddWarning(const std::string& filename, int line, int column,
+        const std::string& message)
+    {
+        fprintf(stdout, "%s:%d:%d:%s\n", filename.c_str(), line, column, message.c_str());
+    }
+};
+
 class ProtoImporterImpl
 {
 public:
-	ProtoImporterImpl();
+	ProtoImporterImpl(MyMultiFileErrorCollector& oErrorCollector, google::protobuf::compiler::DiskSourceTree& oSourceTree);
     virtual ~ProtoImporterImpl();
 public:
 	bool Import(const std::string& strFileName);
@@ -20,6 +36,8 @@ public:
 public:
 	google::protobuf::compiler::Importer m_oImporter;
 	google::protobuf::DynamicMessageFactory m_oFactory;
+
+
 };
 
 class ProtoImporter : public TSingleton<ProtoImporter>
@@ -40,8 +58,13 @@ public:
         m_poProtoImporter = poProtoImporter;
     }
 
+    MyMultiFileErrorCollector& GetErrorCollector() { return m_oErrorCollector; }
+    google::protobuf::compiler::DiskSourceTree& GetSourceTree() { return m_oSourceTree; }
 private:
     ProtoImporterImpl* m_poProtoImporter;
+
+    MyMultiFileErrorCollector m_oErrorCollector;
+    google::protobuf::compiler::DiskSourceTree m_oSourceTree;
 };
 
 
