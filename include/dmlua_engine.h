@@ -44,7 +44,7 @@
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
 #endif
-#include "luapb.h"
+#include "luapb_module.h"
 
 TOLUA_API int tolua_interface_open( lua_State* tolua_S );
 
