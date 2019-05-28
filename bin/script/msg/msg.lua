@@ -3,6 +3,11 @@ module (..., package.seeall)
 
 pb.import("net.proto")
 
+function bin2hex(s)
+    s = string.gsub(s,"(.)",function (x) return string.format("%02X ",string.byte(x)) end)
+    return s
+end
+
 function tbcreate()
     local msg = pb.new("net.tb_Person")
     msg.number = "13615632545"
@@ -27,6 +32,7 @@ function pbtest()
     local binstr = pb.serializeToString(msg)
     local msg2 = pb.new("net.tb_Person")
     pb.parseFromString(msg2, binstr)
+    print("pbtest " .. bin2hex(bin2hex))
 end
 
 function pbtest2()
