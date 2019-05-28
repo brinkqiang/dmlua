@@ -32,7 +32,7 @@ function pbtest()
     local binstr = pb.serializeToString(msg)
     local msg2 = pb.new("net.tb_Person")
     pb.parseFromString(msg2, binstr)
-    print("pbtest " .. bin2hex(bin2hex))
+    print("pbtest " .. bin2hex(binstr))
 end
 
 function pbtest2()
