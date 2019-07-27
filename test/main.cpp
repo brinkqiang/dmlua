@@ -135,29 +135,6 @@ TEST(luabasetest, luabasetest) {
 //        oDMLuaEngine.Call("performancetest");
 //    }
 //}
-TEST(lua_tb_create, lua_tb_create) {
-    CDMLuaEngine oDMLuaEngine;
-    if (!oDMLuaEngine.ReloadScript()) {
-        ASSERT_TRUE(0);
-        return;
-    }
-
-    for (int i = 0; i < DMLUA_TEST_COUNT; ++i) {
-        oDMLuaEngine.Call("script.msg.msg.tbcreate");
-    }
-}
-
-TEST(lua_pbcodec, lua_pbcodec) {
-    CDMLuaEngine oDMLuaEngine;
-    if (!oDMLuaEngine.ReloadScript()) {
-        ASSERT_TRUE(0);
-        return;
-    }
-
-    for (int i = 0; i < DMLUA_TEST_COUNT; ++i) {
-        oDMLuaEngine.Call("script.msg.msg.pbtest");
-    }
-}
 
 TEST(lua_profiler, lua_profiler) {
     CDMLuaEngine oDMLuaEngine;
@@ -167,8 +144,6 @@ TEST(lua_profiler, lua_profiler) {
     }
 
     oDMLuaEngine.Call("script.debug.profiler.profiler_start");
-    oDMLuaEngine.Call("script.msg.msg.pbtest");
-    oDMLuaEngine.Call("script.msg.msg.tbcreate");
     oDMLuaEngine.Call("script.config.loadcsv.main");
     oDMLuaEngine.Call("script.debug.profiler.profiler_stop");
 }

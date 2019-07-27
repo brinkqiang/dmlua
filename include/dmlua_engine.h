@@ -44,7 +44,6 @@
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
 #endif
-#include "luapb_module.h"
 
 TOLUA_API int tolua_interface_open( lua_State* tolua_S );
 
@@ -533,7 +532,6 @@ class CDMLuaEngine : public CDMSafeSingleton<CDMLuaEngine> {
         : m_pLuaS( luaL_newstate() ), m_dwStartTime( 0 ), m_bStartTime( false ) {
         luaL_openlibs( m_pLuaS );
         tolua_interface_open( m_pLuaS );
-        luaopen_luapb( m_pLuaS );
         AddPath("");
     }
 
