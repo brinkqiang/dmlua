@@ -126,7 +126,8 @@ TEST( luatest, luatest ) {
 }
 ```
 ## lua modules
-[luapb](https://github.com/brinkqiang/luapb)
+[![luapb](https://img.shields.io/badge/luapb-luajson-7AD6FD.svg)](https://github.com/brinkqiang/luapb)
+
 ```lua
 -- lua script
 module (..., package.seeall)
