@@ -135,15 +135,3 @@ TEST(luabasetest, luabasetest) {
 //        oDMLuaEngine.Call("performancetest");
 //    }
 //}
-
-TEST(lua_profiler, lua_profiler) {
-    CDMLuaEngine oDMLuaEngine;
-    if (!oDMLuaEngine.ReloadScript()) {
-        ASSERT_TRUE(0);
-        return;
-    }
-
-    oDMLuaEngine.Call("script.debug.profiler.profiler_start");
-    oDMLuaEngine.Call("script.config.loadcsv.main");
-    oDMLuaEngine.Call("script.debug.profiler.profiler_stop");
-}
