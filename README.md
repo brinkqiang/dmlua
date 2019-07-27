@@ -126,7 +126,25 @@ TEST( luatest, luatest ) {
 }
 ```
 ## lua modules
-[![luapb](https://img.shields.io/badge/luapb-luajson-7AD6FD.svg)](https://github.com/brinkqiang/luapb)
+[![luapb](https://img.shields.io/badge/luapb--luajson--luaxml-7AD6FD.svg)](https://github.com/brinkqiang/luapb)
+
+[![luacrypto](https://img.shields.io/badge/luacrypto-7AD6FD.svg)](https://github.com/brinkqiang/luacrypto)
+
+[![luahttpclient](https://img.shields.io/badge/luahttpclient-7AD6FD.svg)](https://github.com/brinkqiang/luahttpclient)
+
+[![luamysql](https://img.shields.io/badge/luamysql-7AD6FD.svg)](https://github.com/brinkqiang/luamysql)
+
+[![luaredis](https://img.shields.io/badge/luaredis-7AD6FD.svg)](https://github.com/brinkqiang/luaredis)
+
+[![luatimer](https://img.shields.io/badge/luatimer-7AD6FD.svg)](https://github.com/brinkqiang/luatimer)
+
+[![luacsv](https://img.shields.io/badge/luacsv-7AD6FD.svg)](https://github.com/brinkqiang/luacsv)
+
+[![luautf8](https://img.shields.io/badge/luautf8-7AD6FD.svg)](https://github.com/brinkqiang/luautf8)
+
+[![luaprofiler](https://img.shields.io/badge/luaprofiler-7AD6FD.svg)](https://github.com/brinkqiang/luaprofiler)
+
+[![luatime](https://img.shields.io/badge/luatime-7AD6FD.svg)](https://github.com/brinkqiang/luatime)
 
 ```lua
 -- lua script
