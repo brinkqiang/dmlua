@@ -125,7 +125,8 @@ TEST( luatest, luatest ) {
     CRoleMgr::Instance()->ReleaseRole( poRole );
 }
 ```
-
+## lua modules
+[luapb]:  https://github.com/brinkqiang/luapb "luapb"
 ```lua
 -- lua script
 module (..., package.seeall)
