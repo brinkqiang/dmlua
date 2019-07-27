@@ -8,7 +8,7 @@ function dump (t)
 end
 
 function main()
-    local w = csv.writer('test.csv')
+    local w = csv.writer('config/test.csv')
     w:write {'Name is \"that\"','Product','Date','Age'}
     
     w:write {'steve', 'bonzo \"dog\" catcher','10/10/09',3}
@@ -16,7 +16,7 @@ function main()
     w:write {'john','CowCatcher','20/10/09',4}
     w:close()
 
-    local r,c = csv.reader('test.csv',true,true)
+    local r,c = csv.reader('config/test.csv',true,true)
     if c then
         print 'headers'
         dump(c)
