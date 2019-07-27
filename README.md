@@ -158,7 +158,7 @@ print("Name2ID: " .. pb.name2id("net.tb_Person"))
 
 function tbcreate()
     local msg = pb.new("net.tb_Person")
-    msg.number = "13615632545"
+    msg.number = "13615632545
     msg.email = "13615632545@163.com"
     msg.age = 28
     msg.ptype = 2
@@ -230,8 +230,10 @@ end
 
 pbtest()
 ```
+
+
 ## Contacts
-[![Join the chat]](https://gitter.im/brinkqiang/dmlua)
+[![Join the chat](https://badges.gitter.im/brinkqiang/dmlua/Lobby.svg)](https://gitter.im/brinkqiang/dmlua)
 
 ## Thanks
 gavingqf@126.com
