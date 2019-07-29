@@ -126,7 +126,10 @@ TEST( luatest, luatest ) {
 }
 ```
 ## lua modules
-[![luapb](https://img.shields.io/badge/luapb--luajson--luaxml-7AD6FD.svg)](https://github.com/brinkqiang/luapb)
+
+[![lua53](https://img.shields.io/badge/lua53-7AD6FD.svg)](https://github.com/brinkqiang/lua53)
+
+[![luapb](https://img.shields.io/badge/luapb-7AD6FD.svg)](https://github.com/brinkqiang/luapb)
 
 [![luacrypto](https://img.shields.io/badge/luacrypto-7AD6FD.svg)](https://github.com/brinkqiang/luacrypto)
 
@@ -146,6 +149,9 @@ TEST( luatest, luatest ) {
 
 [![luatime](https://img.shields.io/badge/luatime-7AD6FD.svg)](https://github.com/brinkqiang/luatime)
 
+[![luajson](https://img.shields.io/badge/luajson-7AD6FD.svg)](https://github.com/brinkqiang/luajson)
+
+[![luaxml](https://img.shields.io/badge/luaxml-7AD6FD.svg)](https://github.com/brinkqiang/luaxml)
 ```lua
 -- lua script
 module (..., package.seeall)
