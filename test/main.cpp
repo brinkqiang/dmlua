@@ -13,13 +13,14 @@ TEST(luabasetest, luabasetest) {
         return;
     }
 
-    oDMLuaEngine.DoString(
-        "function addtest()\n"
-        "   local a = 100000000\n"
-        "   local b = 100000000\n"
-        "   local c = a * b\n"
-        "   print(c)\n"
-        "end\n");
+    oDMLuaEngine.DoString(R"(
+        function addtest()
+           local a = 100000000
+           local b = 100000000
+           local c = a * b
+           print(c)
+        end
+        )");
     {
         for (int i = 0; i < 1; ++i) {
             int r = oDMLuaEngine.Call("addtest");
@@ -31,13 +32,15 @@ TEST(luabasetest, luabasetest) {
         return;
     }
 
-    oDMLuaEngine.DoString(
-        "function addex(first, second)\n"
-        "   return first * second\n"
-        "end\n");
+    oDMLuaEngine.DoString(R"(
+        function addex(first, second)
+            print(first * second)
+            return first * second
+        end
+        )");
     {
         for (int i = 0; i < 1; ++i) {
-            uint64_t r = oDMLuaEngine.CallT<uint64_t>("addex", 100000000LL, 100000000LL);
+            uint64_t r = oDMLuaEngine.CallT<uint64_t>("addex", 4294967295ULL, 4294967295ULL);
 
             if (r >= 0) {
                 std::cout << r << std::endl;
@@ -45,26 +48,28 @@ TEST(luabasetest, luabasetest) {
         }
     }
     {
-        oDMLuaEngine.DoString(
-            "function script.task.taskinfo()\n"
-            "   local task = STaskInfo:new()\n"
-            "   task.nTaskID = 1002\n"
-            "   task.nTaskState = 2\n"
-            "   task.nTaskCondition = 2\n"
-            "   return task\n"
-            "end\n");
+        oDMLuaEngine.DoString(R"(
+            function script.task.taskinfo()
+               local task = STaskInfo:new()
+               task.nTaskID = 1002
+               task.nTaskState = 2
+               task.nTaskCondition = 2
+               return task
+            end
+            )");
 
         STaskInfo sInfo = oDMLuaEngine.CallT<STaskInfo>("script.task.taskinfo");
 
         std::cout << sInfo.nTaskID << std::endl;
     }
     {
-        oDMLuaEngine.DoString(
-            "function script.task.taskinfo(task)\n"
-            "   task.nTaskID = 1003\n"
-            "   task.nTaskState = 1\n"
-            "   task.nTaskCondition = 0\n"
-            "end\n");
+        oDMLuaEngine.DoString(R"(
+            function script.task.taskinfo(task)
+               task.nTaskID = 1003
+               task.nTaskState = 1
+               task.nTaskCondition = 0
+            end
+            )");
         STaskInfo sInfo;
         int r = oDMLuaEngine.Call("script.task.taskinfo", &sInfo);
 
@@ -73,11 +78,12 @@ TEST(luabasetest, luabasetest) {
         }
     }
     {
-        oDMLuaEngine.DoString(
-            "function bintest(data)\n"
-            "   print(string.len(data))"
-            "   print(data)"
-            "end\n");
+        oDMLuaEngine.DoString(R"(
+            function bintest(data)
+               print(string.len(data))
+            print(data)
+            end
+            )");
         std::string strData = "12345";
         strData.append("\0", 1);
         strData.append("ABCDE", 5);
