@@ -616,6 +616,7 @@ class CDMLuaEngine : public CDMSafeSingleton<CDMLuaEngine> {
 
     bool ReloadScript() {
         CDMLuaEngine oEngine;
+        oEngine.SetRootPath(m_strSrcPath);
 
         if ( !oEngine.LoadScript() ) {
             goto FAIL;
