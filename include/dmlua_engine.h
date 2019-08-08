@@ -883,6 +883,8 @@ FAIL:
 
             char* p = strrchr( path, '/' );
             *( p ) = '\0';
+            p = strrchr(path, '/');
+            *(p) = '\0';
         }
 
         return path;
