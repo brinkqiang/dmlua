@@ -11,8 +11,8 @@ TEST(luabasetest, luabasetest) {
     //The default search path is to search the root directory with the exe program /../relative path (because cmake will add the $BUILD_TYPE directory to the generated bin directory.)
     //If you need to modify to other paths, please set your own search path
 
-    //Ä¬ÈÏËÑË÷Â·¾¶ÊÇÒÔ exe³ÌĞò /../Ïà¶ÔÂ·¾¶ÎªËÑË÷¸ùÄ¿Â¼(Ô­ÒòÊÇ cmake »áÔÚÉú³ÉµÄbinÄ¿Â¼¼ÓÉÏ$BUILD_TYPEÄ¿Â¼.)
-    //Èç¹ûĞèÒªĞŞ¸ÄÎªÆäËûÂ·¾¶, Çë×ÔĞĞÉèÖÃËÑË÷Â·¾¶
+    //é»˜è®¤æœç´¢è·¯å¾„æ˜¯ä»¥ exeç¨‹åº /../ç›¸å¯¹è·¯å¾„ä¸ºæœç´¢æ ¹ç›®å½•(åŸå› æ˜¯ cmake ä¼šåœ¨ç”Ÿæˆçš„binç›®å½•åŠ ä¸Š$BUILD_TYPEç›®å½•.)
+    //å¦‚æœéœ€è¦ä¿®æ”¹ä¸ºå…¶ä»–è·¯å¾„, è¯·è‡ªè¡Œè®¾ç½®æœç´¢è·¯å¾„
     //std::string strScriptRootPath = DMGetRootPath();
     //oDMLuaEngine.SetRootPath(strScriptRootPath + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR);
 
