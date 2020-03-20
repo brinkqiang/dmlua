@@ -4,6 +4,7 @@ module (..., package.seeall)
 function AcceptTask(role, taskid, ret)
     print("==================================")
     print("Player Name = " .. role:GetName())
+    print("PlayerID = " .. role:GetObjID())
     print("AcceptTask taskid = " .. taskid)
 
     if role:AcceptTask(taskid) then
