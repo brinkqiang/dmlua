@@ -1,0 +1,56 @@
+{
+    "global": {
+        "type": "table",
+        "fields": {
+            "role": {
+                "link": "role",
+                "description": "role.",
+                "type": "table",
+                "fields": {
+                    "GetName": {
+                        "link": "GetName",
+                        "description": "Returns a string.",
+                        "type": "function",
+                        "returnTypes": [
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "GetObjID": {
+                        "link": "GetObjID",
+                        "description": "Returns a number.",
+                        "type": "function",
+                        "returnTypes": [
+                            {
+                                "type": "number"
+                            }
+                        ]
+                    },
+                    "AcceptTask": {
+                        "link": "AcceptTask",
+                        "description": "Returns a bool.",
+                        "type": "function",
+                        "args": [
+                            {
+                                "name": "v",
+                                "type": "any",
+                                "displayName": "v: any"
+                            },
+                            {
+                                "name": "taskid",
+                                "type": "number",
+                                "displayName": "taskid?: number"
+                            }
+                        ],
+                        "returnTypes": [
+                            {
+                                "type": "bool"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
