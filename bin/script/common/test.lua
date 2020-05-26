@@ -1,7 +1,7 @@
 -- lua script
 module (..., package.seeall)
 
-function main(vec)
+function main_vector(vec)
 
     vec:push_back('world')
     
@@ -9,4 +9,13 @@ function main(vec)
 
     for i=0,vec:size()-1,1 do print(vec[i]) end
 
+end
+function main()
+    local role = CreateRole();
+    role:SetName("Jerry2020")
+
+    print("Player Name = " .. role:GetName())
+    print("PlayerID = " .. role:GetObjID())
+
+    ReleaseRole(role)
 end
