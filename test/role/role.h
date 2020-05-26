@@ -4,20 +4,19 @@
 
 #include <map>
 #include <iostream>
-#include "test/common/struct.h"
+#include "common/struct.h"
 
-/// µ¼³ö¶ÔÏóÄ£¿é
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
 
 class CObj { // tolua_export
   public:
     void Reset() {
-        m_llID = -1;
-        memset( m_szName, 0, sizeof( m_szName ) );
+        m_qwObjID = -1;
     }
 
   private:
-    long long           m_llID;
-    char                m_szName[MAX_NAME_LEN];
+    uint64_t            m_qwObjID;
+    std::string         m_strName;
 
   public:
 // tolua_begin
@@ -28,20 +27,20 @@ class CObj { // tolua_export
     virtual ~CObj() {
         Reset();
     }
-    void SetObjID( long long llID ) {
-        m_llID = llID;
+    void SetObjID( uint64_t qwObjID ) {
+        m_qwObjID = qwObjID;
     }
-    long long GetObjID() {
-        return m_llID;
+    uint64_t GetObjID() {
+        return m_qwObjID;
     }
-    void GetObjID(long long& llID) {
-        llID = m_llID;
+    void GetObjID(uint64_t& qwObjID) {
+        qwObjID = m_qwObjID;
     }
     void SetName( const char* szName ) {
-        strcpy( m_szName, szName );
+        m_strName = szName;
     }
     const char* GetName() {
-        return m_szName;
+        return m_strName.c_str();
     }
 };
 // tolua_end
@@ -99,17 +98,6 @@ class CRole : public CObj { // tolua_export
 
     bool AcceptTask( int nTaskID );
     void FinishTask( int nTaskID );
-};
-// tolua_end
-
-class CUser { // tolua_export
-  private:
-    std::string m_strName;
-  public:
-// tolua_begin
-
-    void SetName( const char* name );
-    const char* GetName();
 };
 // tolua_end
 

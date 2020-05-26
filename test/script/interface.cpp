@@ -16,13 +16,28 @@ TOLUA_API int  tolua_interface_open (lua_State* tolua_S);
 #include "dmlua_typeid.h"
 #include "dmlua_luaresult.h"
 #include "dmtypes.h"
-#include "../../test/common/macros.h"
-#include "../../test/common/enum.h"
-#include "../../test/common/struct.h"
-#include "../../test/role/role.h"
+#include "../common/macros.h"
+#include "../common/enum.h"
+#include "../common/struct.h"
+#include "../role/role.h"
+#include "../role/rolemgr.h"
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
+
+static int tolua_collect_std__vector_int64_t_ (lua_State* tolua_S)
+{
+ std::vector<int64_t>* self = (std::vector<int64_t>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_std__vector_uint64_t_ (lua_State* tolua_S)
+{
+ std::vector<uint64_t>* self = (std::vector<uint64_t>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
 
 static int tolua_collect_CRole (lua_State* tolua_S)
 {
@@ -31,9 +46,9 @@ static int tolua_collect_CRole (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_STaskInfo (lua_State* tolua_S)
+static int tolua_collect_std__vector_double_ (lua_State* tolua_S)
 {
- STaskInfo* self = (STaskInfo*) tolua_tousertype(tolua_S,1,0);
+ std::vector<double>* self = (std::vector<double>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -52,9 +67,9 @@ static int tolua_collect_LuaResult_double_ (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_std__vector_int64_t_ (lua_State* tolua_S)
+static int tolua_collect_LuaResult_int_ (lua_State* tolua_S)
 {
- std::vector<int64_t>* self = (std::vector<int64_t>*) tolua_tousertype(tolua_S,1,0);
+ LuaResult<int>* self = (LuaResult<int>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -66,9 +81,16 @@ static int tolua_collect_CObj (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_LuaResult_int_ (lua_State* tolua_S)
+static int tolua_collect_STaskInfo (lua_State* tolua_S)
 {
- LuaResult<int>* self = (LuaResult<int>*) tolua_tousertype(tolua_S,1,0);
+ STaskInfo* self = (STaskInfo*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_LuaResult_uint64_t_ (lua_State* tolua_S)
+{
+ LuaResult<uint64_t>* self = (LuaResult<uint64_t>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -87,13 +109,6 @@ static int tolua_collect_std__vector_std__string_ (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_LuaResult_std__string_ (lua_State* tolua_S)
-{
- LuaResult<std::string>* self = (LuaResult<std::string>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_std__vector_int_ (lua_State* tolua_S)
 {
  std::vector<int>* self = (std::vector<int>*) tolua_tousertype(tolua_S,1,0);
@@ -101,23 +116,9 @@ static int tolua_collect_std__vector_int_ (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_std__vector_uint64_t_ (lua_State* tolua_S)
+static int tolua_collect_LuaResult_std__string_ (lua_State* tolua_S)
 {
- std::vector<uint64_t>* self = (std::vector<uint64_t>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_std__vector_double_ (lua_State* tolua_S)
-{
- std::vector<double>* self = (std::vector<double>*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_LuaResult_uint64_t_ (lua_State* tolua_S)
-{
- LuaResult<uint64_t>* self = (LuaResult<uint64_t>*) tolua_tousertype(tolua_S,1,0);
+ LuaResult<std::string>* self = (LuaResult<std::string>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -127,36 +128,34 @@ static int tolua_collect_LuaResult_uint64_t_ (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
+ tolua_usertype(tolua_S,"std::vector<int64_t>");
+ Mtolua_typeid< std::vector<int64_t> >(tolua_S, "std::vector<int64_t>");
+ tolua_usertype(tolua_S,"std::vector<uint64_t>");
+ Mtolua_typeid< std::vector<uint64_t> >(tolua_S, "std::vector<uint64_t>");
  tolua_usertype(tolua_S,"CRole");
  Mtolua_typeid< CRole >(tolua_S, "CRole");
- tolua_usertype(tolua_S,"STaskInfo");
- Mtolua_typeid< STaskInfo >(tolua_S, "STaskInfo");
+ tolua_usertype(tolua_S,"std::vector<double>");
+ Mtolua_typeid< std::vector<double> >(tolua_S, "std::vector<double>");
  tolua_usertype(tolua_S,"LuaResult<int64_t>");
  Mtolua_typeid< LuaResult<int64_t> >(tolua_S, "LuaResult<int64_t>");
  tolua_usertype(tolua_S,"LuaResult<double>");
  Mtolua_typeid< LuaResult<double> >(tolua_S, "LuaResult<double>");
- tolua_usertype(tolua_S,"std::vector<int64_t>");
- Mtolua_typeid< std::vector<int64_t> >(tolua_S, "std::vector<int64_t>");
- tolua_usertype(tolua_S,"CObj");
- Mtolua_typeid< CObj >(tolua_S, "CObj");
  tolua_usertype(tolua_S,"LuaResult<int>");
  Mtolua_typeid< LuaResult<int> >(tolua_S, "LuaResult<int>");
- tolua_usertype(tolua_S,"CUser");
- Mtolua_typeid< CUser >(tolua_S, "CUser");
+ tolua_usertype(tolua_S,"CObj");
+ Mtolua_typeid< CObj >(tolua_S, "CObj");
+ tolua_usertype(tolua_S,"STaskInfo");
+ Mtolua_typeid< STaskInfo >(tolua_S, "STaskInfo");
+ tolua_usertype(tolua_S,"LuaResult<uint64_t>");
+ Mtolua_typeid< LuaResult<uint64_t> >(tolua_S, "LuaResult<uint64_t>");
  tolua_usertype(tolua_S,"SPos");
  Mtolua_typeid< SPos >(tolua_S, "SPos");
  tolua_usertype(tolua_S,"std::vector<std::string>");
  Mtolua_typeid< std::vector<std::string> >(tolua_S, "std::vector<std::string>");
- tolua_usertype(tolua_S,"LuaResult<std::string>");
- Mtolua_typeid< LuaResult<std::string> >(tolua_S, "LuaResult<std::string>");
  tolua_usertype(tolua_S,"std::vector<int>");
  Mtolua_typeid< std::vector<int> >(tolua_S, "std::vector<int>");
- tolua_usertype(tolua_S,"std::vector<uint64_t>");
- Mtolua_typeid< std::vector<uint64_t> >(tolua_S, "std::vector<uint64_t>");
- tolua_usertype(tolua_S,"std::vector<double>");
- Mtolua_typeid< std::vector<double> >(tolua_S, "std::vector<double>");
- tolua_usertype(tolua_S,"LuaResult<uint64_t>");
- Mtolua_typeid< LuaResult<uint64_t> >(tolua_S, "LuaResult<uint64_t>");
+ tolua_usertype(tolua_S,"LuaResult<std::string>");
+ Mtolua_typeid< LuaResult<std::string> >(tolua_S, "LuaResult<std::string>");
 }
 
 /* get function: value of class  LuaResult<int> */
@@ -2642,12 +2641,12 @@ static int tolua_interface_CObj_SetObjID00(lua_State* tolua_S)
 #endif
  {
   CObj* self = (CObj*)  tolua_tousertype(tolua_S,1,0);
-  long long llID = ((long long)  tolua_tonumber(tolua_S,2,0));
+  uint64_t qwObjID = ((uint64_t)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'SetObjID'", NULL);
 #endif
   {
-   self->SetObjID(llID);
+   self->SetObjID(qwObjID);
   }
  }
  return 0;
@@ -2678,7 +2677,7 @@ static int tolua_interface_CObj_GetObjID00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'GetObjID'", NULL);
 #endif
   {
-   long long tolua_ret = (long long)  self->GetObjID();
+   uint64_t tolua_ret = (uint64_t)  self->GetObjID();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -2705,13 +2704,13 @@ static int tolua_interface_CObj_GetObjID01(lua_State* tolua_S)
  else
  {
   CObj* self = (CObj*)  tolua_tousertype(tolua_S,1,0);
-  long long llID = ((long long)  tolua_tonumber(tolua_S,2,0));
+  uint64_t qwObjID = ((uint64_t)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'GetObjID'", NULL);
 #endif
   {
-   self->GetObjID(llID);
-   tolua_pushnumber(tolua_S,(lua_Number)llID);
+   self->GetObjID(qwObjID);
+   tolua_pushnumber(tolua_S,(lua_Number)qwObjID);
   }
  }
  return 1;
@@ -3199,66 +3198,85 @@ static int tolua_interface_CRole_FinishTask00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: SetName of class  CUser */
-#ifndef TOLUA_DISABLE_tolua_interface_CUser_SetName00
-static int tolua_interface_CUser_SetName00(lua_State* tolua_S)
+/* function: FindRole */
+#ifndef TOLUA_DISABLE_tolua_interface_FindRole00
+static int tolua_interface_FindRole00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"CUser",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CUser* self = (CUser*)  tolua_tousertype(tolua_S,1,0);
-  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'SetName'", NULL);
-#endif
-  {
-   self->SetName(name);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'SetName'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: GetName of class  CUser */
-#ifndef TOLUA_DISABLE_tolua_interface_CUser_GetName00
-static int tolua_interface_CUser_GetName00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CUser",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  CUser* self = (CUser*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'GetName'", NULL);
-#endif
+  uint64_t qwID = ((uint64_t)  tolua_tonumber(tolua_S,1,0));
   {
-   const char* tolua_ret = (const char*)  self->GetName();
-   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+   CRole* tolua_ret = (CRole*)  FindRole(qwID);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CRole");
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'GetName'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'FindRole'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: CreateRole */
+#ifndef TOLUA_DISABLE_tolua_interface_CreateRole00
+static int tolua_interface_CreateRole00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   CRole* tolua_ret = (CRole*)  CreateRole();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CRole");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'CreateRole'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ReleaseRole */
+#ifndef TOLUA_DISABLE_tolua_interface_ReleaseRole00
+static int tolua_interface_ReleaseRole00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CRole",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CRole* poRole = ((CRole*)  tolua_tousertype(tolua_S,1,0));
+  {
+   ReleaseRole(poRole);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'ReleaseRole'.",&tolua_err);
  return 0;
 #endif
 }
@@ -3493,11 +3511,9 @@ TOLUA_API int tolua_interface_open (lua_State* tolua_S)
    tolua_function(tolua_S,"AcceptTask",tolua_interface_CRole_AcceptTask00);
    tolua_function(tolua_S,"FinishTask",tolua_interface_CRole_FinishTask00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"CUser","CUser","",NULL);
-  tolua_beginmodule(tolua_S,"CUser");
-   tolua_function(tolua_S,"SetName",tolua_interface_CUser_SetName00);
-   tolua_function(tolua_S,"GetName",tolua_interface_CUser_GetName00);
-  tolua_endmodule(tolua_S);
+  tolua_function(tolua_S,"FindRole",tolua_interface_FindRole00);
+  tolua_function(tolua_S,"CreateRole",tolua_interface_CreateRole00);
+  tolua_function(tolua_S,"ReleaseRole",tolua_interface_ReleaseRole00);
  tolua_endmodule(tolua_S);
  return 1;
 }

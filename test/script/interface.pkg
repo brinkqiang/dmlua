@@ -3,8 +3,9 @@ $#include "dmlua_typeid.h"
 
 $pfile "luaresult.pkg"
 
-$cfile "../../test/common/macros.h"
-$cfile "../../test/common/enum.h"
-$cfile "../../test/common/struct.h"
+$cfile "../common/macros.h"
+$cfile "../common/enum.h"
+$cfile "../common/struct.h"
 
-$cfile "../../test/role/role.h"
+$cfile "../role/role.h"
+$cfile "../role/rolemgr.h"

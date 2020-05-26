@@ -5,7 +5,7 @@
 
 #include "dmsingleton.h"
 #include "dmrapidpool.h"
-#include "test/role/role.h"
+#include "role/role.h"
 
 class CRoleMgr : public TSingleton<CRoleMgr> {
     friend class TSingleton<CRoleMgr>;
@@ -15,20 +15,24 @@ class CRoleMgr : public TSingleton<CRoleMgr> {
     ~CRoleMgr();
 
   public:
-    CRole*   FindRole( long long llID );
-    CRole*   CreateRole();                   /// 这里要导出到lua
-    void     ReleaseRole( CRole* poRole );    /// 回收Role,要在lua中注销
+    CRole*   FindRole( uint64_t qwID );
+    CRole*   CreateRole();
+    void     ReleaseRole( CRole* poRole );
 
   private:
-    long long GetNextObjID();
+    uint64_t GetNextObjID();
 
     CDynamicRapidPool<CRole, 10000, 100> m_oRolePool;
 
-    typedef std::map<long long, CRole*> MapRole;
-    typedef std::map<long long, CRole*>::iterator MapRoleIt;
+    typedef std::map<uint64_t, CRole*> MapRole;
+    typedef std::map<uint64_t, CRole*>::iterator MapRoleIt;
     MapRole m_mapRole;
 
-    long long  m_llObjID;
+    uint64_t m_qwObjID;
 };
-
+// tolua_begin
+CRole* FindRole(uint64_t qwID );
+CRole* CreateRole();
+void   ReleaseRole( CRole* poRole );
+// tolua_end
 #endif // __ROLEMGR_H_INCLUDE__

@@ -25,11 +25,3 @@ void CRole::FinishTask( int nTaskID ) {
 
     It->second.nTaskState = eTaskStateEnd;
 }
-
-void CUser::SetName( const char* name ) {
-    m_strName = name;
-}
-
-const char* CUser::GetName() {
-    return m_strName.c_str();
-}
