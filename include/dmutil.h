@@ -31,40 +31,48 @@
 // tolua_begin
 
 #ifdef WIN32
-static inline struct tm* localtime_r( const time_t* timep, struct tm* result ) {
+static inline struct tm* localtime_r( const time_t* timep, struct tm* result )
+{
     localtime_s( result, timep );
     return result;
 }
-static inline struct tm* gmtime_r( const time_t* timep, struct tm* result ) {
+static inline struct tm* gmtime_r( const time_t* timep, struct tm* result )
+{
     gmtime_s( result, timep );
     return result;
 }
 #endif
 
-static inline std::string DMFormatIP( unsigned int dwIP ) {
+static inline std::string DMFormatIP( unsigned int dwIP )
+{
     sockaddr_in s;
     s.sin_family = AF_INET;
     s.sin_addr.s_addr = dwIP;
     return inet_ntoa( s.sin_addr );
 }
 
-static inline unsigned int DMFormatIP( const std::string& strIp ) {
+static inline unsigned int DMFormatIP( const std::string& strIp )
+{
     return inet_addr( strIp.c_str() );
 }
 
-static inline unsigned short DMFormatPort( const std::string& strPort ) {
+static inline unsigned short DMFormatPort( const std::string& strPort )
+{
     return htons( atoi( strPort.c_str() ) );
 }
 
-static inline unsigned short DMFormatPort( unsigned short wPort ) {
+static inline unsigned short DMFormatPort( unsigned short wPort )
+{
     return htons( wPort );
 }
 
 static inline std::string DMFormatDateTime( time_t tVal = time( 0 ),
-        const char* pFormat = "%Y-%m-%d %H:%M:%S" ) {
+        const char* pFormat = "%Y-%m-%d %H:%M:%S" )
+{
     struct tm Tm = {0};
 
-    if ( localtime_r( &tVal, &Tm ) ) {
+    if ( localtime_r( &tVal, &Tm ) )
+    {
         char szBuf[128];
         strftime( szBuf, sizeof( szBuf ), pFormat, &Tm );
         return szBuf;
@@ -74,12 +82,14 @@ static inline std::string DMFormatDateTime( time_t tVal = time( 0 ),
 }
 
 static inline time_t DMFormatDateTime( const std::string& strTime,
-                                       const char* pFormat =  "%d-%d-%d %d:%d:%d" ) {
+                                       const char* pFormat =  "%d-%d-%d %d:%d:%d" )
+{
     time_t ret = 0;
     struct tm tmMake = {0};
 
     if ( 6 == sscanf( strTime.c_str(), pFormat, &tmMake.tm_year, &tmMake.tm_mon,
-                      &tmMake.tm_mday, &tmMake.tm_hour, &tmMake.tm_min, &tmMake.tm_sec ) ) {
+                      &tmMake.tm_mday, &tmMake.tm_hour, &tmMake.tm_min, &tmMake.tm_sec ) )
+    {
         tmMake.tm_year -= 1900;
         tmMake.tm_mon -= 1;
         ret = mktime( &tmMake );
@@ -88,11 +98,13 @@ static inline time_t DMFormatDateTime( const std::string& strTime,
     return ret;
 }
 
-static bool DMIsDirectory( const char* dir_name ) {
+static bool DMIsDirectory( const char* dir_name )
+{
 #ifdef WIN32
     int ret = GetFileAttributesA( dir_name );
 
-    if ( ret == -1 ) {
+    if ( ret == -1 )
+    {
         return false;
     }
 
@@ -101,7 +113,8 @@ static bool DMIsDirectory( const char* dir_name ) {
     struct stat fileStat;
     int ret = stat( dir_name, &fileStat );
 
-    if ( ret == 0 ) {
+    if ( ret == 0 )
+    {
         return S_ISDIR( fileStat.st_mode );
     }
 
@@ -109,25 +122,31 @@ static bool DMIsDirectory( const char* dir_name ) {
 #endif
 }
 
-static inline bool DMCreateDirectory(const char* dir_name) {
+static inline bool DMCreateDirectory(const char* dir_name)
+{
 #ifdef WIN32
     int ret = mkdir(dir_name);
 #else
     int ret = mkdir(dir_name, S_IRWXU | S_IRWXG | S_IXOTH);
 #endif
 
-    if (0 != ret) {
+    if (0 != ret)
+    {
         return false;
     }
 
     return true;
 }
 
-static inline bool DMCreateDirectories(const char* dir_name){
-    if (access(dir_name, 0) == 0){
-        if (DMIsDirectory(dir_name)){
+static inline bool DMCreateDirectories(const char* dir_name)
+{
+    if (access(dir_name, 0) == 0)
+    {
+        if (DMIsDirectory(dir_name))
+        {
             return true;
         }
+
         return false;
     }
 
@@ -135,20 +154,25 @@ static inline bool DMCreateDirectories(const char* dir_name){
     strncpy(path, dir_name, sizeof(path));
 
     char* p = strrchr(path, PATH_DELIMITER);
-    if (NULL == p){
+
+    if (NULL == p)
+    {
         return DMCreateDirectory(path);
     }
+
     *(p) = '\0';
     DMCreateDirectories(path);
     return DMCreateDirectory(dir_name);
 }
 
-static std::string DMGetRootPath() {
+static std::string DMGetRootPath()
+{
 #ifdef WIN32
     static char path[MAX_PATH];
     static bool first_time = true;
 
-    if ( first_time ) {
+    if ( first_time )
+    {
         first_time = false;
         GetModuleFileNameA( 0, path, sizeof( path ) );
         char* p = strrchr( path, '\\' );
@@ -160,11 +184,13 @@ static std::string DMGetRootPath() {
     static char path[MAX_PATH];
     static bool first_time = true;
 
-    if ( first_time ) {
+    if ( first_time )
+    {
         uint32_t size = sizeof( path );
         int nRet = _NSGetExecutablePath( path, &size );
 
-        if ( nRet != 0 ) {
+        if ( nRet != 0 )
+        {
             return "./";
         }
 
@@ -177,11 +203,13 @@ static std::string DMGetRootPath() {
     static char path[MAX_PATH];
     static bool first_time = true;
 
-    if ( first_time ) {
+    if ( first_time )
+    {
         first_time = false;
         int nRet = readlink( "/proc/self/exe", path, MAX_PATH );
 
-        if ( nRet < 0 || nRet >= MAX_PATH ) {
+        if ( nRet < 0 || nRet >= MAX_PATH )
+        {
             return "./";
         }
 
@@ -193,12 +221,14 @@ static std::string DMGetRootPath() {
 #endif
 }
 
-static std::string DMGetExePath() {
+static std::string DMGetExePath()
+{
 #ifdef WIN32
     static char path[MAX_PATH];
     static bool first_time = true;
 
-    if ( first_time ) {
+    if ( first_time )
+    {
         first_time = false;
         GetModuleFileNameA( 0, path, sizeof( path ) );
     }
@@ -208,11 +238,13 @@ static std::string DMGetExePath() {
     static char path[MAX_PATH];
     static bool first_time = true;
 
-    if ( first_time ) {
+    if ( first_time )
+    {
         uint32_t size = sizeof( path );
         int nRet = _NSGetExecutablePath( path, &size );
 
-        if ( nRet != 0 ) {
+        if ( nRet != 0 )
+        {
             return "./";
         }
     }
@@ -222,11 +254,13 @@ static std::string DMGetExePath() {
     static char path[MAX_PATH];
     static bool first_time = true;
 
-    if ( first_time ) {
+    if ( first_time )
+    {
         first_time = false;
         int nRet = readlink( "/proc/self/exe", path, MAX_PATH );
 
-        if ( nRet < 0 || nRet >= MAX_PATH ) {
+        if ( nRet < 0 || nRet >= MAX_PATH )
+        {
             return "./";
         }
     }
@@ -235,7 +269,8 @@ static std::string DMGetExePath() {
 #endif
 }
 
-static std::string DMGetWorkPath() {
+static std::string DMGetWorkPath()
+{
     char szPath[MAX_PATH];
     getcwd( szPath, sizeof( szPath ) );
     return szPath;

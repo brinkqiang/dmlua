@@ -24,15 +24,17 @@
 
 #include "dmos.h"
 
-class IDMThread {
-  public:
+class IDMThread
+{
+public:
     virtual ~IDMThread() {}
     virtual void ThrdProc() = 0;
     virtual void Terminate() = 0;
 };
 
-class IDMThreadCtrl {
-  public:
+class IDMThreadCtrl
+{
+public:
     virtual ~IDMThreadCtrl() {}
     virtual void Resume() = 0;
     virtual void Suspend() = 0;
@@ -44,9 +46,11 @@ class IDMThreadCtrl {
     virtual void Release() = 0;
 };
 
-class CDMThreadCtrl : public IDMThreadCtrl {
-  public:
-    CDMThreadCtrl() {
+class CDMThreadCtrl : public IDMThreadCtrl
+{
+public:
+    CDMThreadCtrl()
+    {
 #ifdef WIN32
         m_bIsStop       = true;
         m_bNeedWaitFor  = true;
@@ -61,11 +65,13 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
     }
 
-    virtual ~CDMThreadCtrl() {
+    virtual ~CDMThreadCtrl()
+    {
     }
 
-  public:
-    virtual void Resume( void ) {
+public:
+    virtual void Resume( void )
+    {
 #ifdef WIN32
         ResumeThread( m_hThread );
 #else
@@ -73,7 +79,8 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
     }
 
-    virtual void Suspend() {
+    virtual void Suspend()
+    {
 #ifdef WIN32
         SuspendThread( m_hThread );
 #else
@@ -81,7 +88,8 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
     }
 
-    virtual void Stop( void ) {
+    virtual void Stop( void )
+    {
 #ifdef WIN32
         m_poThread->Terminate();
 #else
@@ -89,14 +97,17 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
     }
 
-    virtual bool Kill( unsigned int dwExitCode ) {
+    virtual bool Kill( unsigned int dwExitCode )
+    {
 #ifdef WIN32
 
-        if ( INVALID_HANDLE_VALUE == m_hThread ) {
+        if ( INVALID_HANDLE_VALUE == m_hThread )
+        {
             return false;
         }
 
-        if ( !TerminateThread( m_hThread, dwExitCode ) ) {
+        if ( !TerminateThread( m_hThread, dwExitCode ) )
+        {
             return false;
         }
 
@@ -109,10 +120,12 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
     }
 
-    virtual bool WaitFor( unsigned int dwWaitTime = INFINITE ) {
+    virtual bool WaitFor( unsigned int dwWaitTime = INFINITE )
+    {
 #ifdef WIN32
 
-        if ( !m_bNeedWaitFor || INVALID_HANDLE_VALUE == m_hThread ) {
+        if ( !m_bNeedWaitFor || INVALID_HANDLE_VALUE == m_hThread )
+        {
             return false;
         }
 
@@ -121,14 +134,16 @@ class CDMThreadCtrl : public IDMThreadCtrl {
         m_hThread = INVALID_HANDLE_VALUE;
         m_bIsStop = true;
 
-        if ( WAIT_OBJECT_0 == dwRet ) {
+        if ( WAIT_OBJECT_0 == dwRet )
+        {
             return true;
         }
 
         return false;
 #else
 
-        if ( false == m_bNeedWaitFor ) {
+        if ( false == m_bNeedWaitFor )
+        {
             return false;
         }
 
@@ -139,11 +154,13 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
     }
 
-    virtual void Release( void ) {
+    virtual void Release( void )
+    {
         delete this;
     }
 
-    virtual unsigned int GetThreadID( void ) {
+    virtual unsigned int GetThreadID( void )
+    {
 #ifdef WIN32
         return m_dwThreadID;
 #else
@@ -151,7 +168,8 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
     }
 
-    virtual IDMThread* GetThread( void ) {
+    virtual IDMThread* GetThread( void )
+    {
         return m_poThread;
     }
 
@@ -182,7 +200,8 @@ class CDMThreadCtrl : public IDMThreadCtrl {
         sigaddset( &new_set, SIGPIPE );
         pthread_sigmask( SIG_BLOCK, &new_set, &old_set );
 
-        if ( !poCtrl->m_bNeedWaitFor ) {
+        if ( !poCtrl->m_bNeedWaitFor )
+        {
             pthread_detach( pthread_self() );
         }
 
@@ -193,21 +212,25 @@ class CDMThreadCtrl : public IDMThreadCtrl {
     }
 
     bool Start( IDMThread* poThread, bool bNeedWaitFor = true,
-                bool bSuspend = false ) {
+                bool bSuspend = false )
+    {
 #ifdef WIN32
         m_bNeedWaitFor = bNeedWaitFor;
         m_poThread = poThread;
 
-        if ( bSuspend ) {
+        if ( bSuspend )
+        {
             m_hThread = ( HANDLE )_beginthreadex( 0, 0, StaticThreadFunc, this,
                                                   CREATE_SUSPENDED, &m_dwThreadID );
         }
-        else {
+        else
+        {
             m_hThread = ( HANDLE )_beginthreadex( 0, 0, StaticThreadFunc, this, 0,
                                                   &m_dwThreadID );
         }
 
-        if ( INVALID_HANDLE_VALUE == m_hThread ) {
+        if ( INVALID_HANDLE_VALUE == m_hThread )
+        {
             return false;
         }
 
@@ -217,7 +240,8 @@ class CDMThreadCtrl : public IDMThreadCtrl {
         m_poThread = poThread;
 
         if ( 0 != pthread_create( &m_ID, NULL, ( void* ( * )( void* ) )StaticThreadFunc,
-                                  this ) ) {
+                                  this ) )
+        {
             return false;
         }
 
@@ -225,7 +249,7 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
     }
 
-  protected:
+protected:
 #ifdef WIN32
     volatile bool   m_bIsStop;
     bool            m_bNeedWaitFor;
@@ -240,7 +264,8 @@ class CDMThreadCtrl : public IDMThreadCtrl {
 #endif
 };
 
-inline IDMThreadCtrl* CreateThreadCtrl() {
+inline IDMThreadCtrl* CreateThreadCtrl()
+{
     return new CDMThreadCtrl;
 }
 

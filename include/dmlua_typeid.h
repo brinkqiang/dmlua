@@ -30,42 +30,50 @@
 
 //#define Mtolua_typeid(L,TI,T) tolua_typeid_reg<TI>(L,T)
 
-struct SLuaTypeInfo {
+struct SLuaTypeInfo
+{
     SLuaTypeInfo()
-        : m_bInit( false ) {
+        : m_bInit( false )
+    {
     }
     std::string m_strName;
     bool        m_bInit;
 };
 
-class CluaTypeid {
-  public:
-    static CluaTypeid& Instance() {
+class CluaTypeid
+{
+public:
+    static CluaTypeid& Instance()
+    {
         static CluaTypeid s;
         return s;
     }
 
     template<typename T>
-    inline void type_reg( const char* name ) {
+    inline void type_reg( const char* name )
+    {
         name_holder<T>().m_strName = name;
         name_holder<T>().m_bInit = true;
     }
 
     template<typename T>
-    inline const char* get_name() {
+    inline const char* get_name()
+    {
         return name_holder<T>().m_bInit ? name_holder<T>().m_strName.c_str() : NULL;
     }
 
-  private:
+private:
     template<typename T>
-    inline SLuaTypeInfo& name_holder() {
+    inline SLuaTypeInfo& name_holder()
+    {
         static SLuaTypeInfo sInfo;
         return sInfo;
     }
 };
 
 template<typename T>
-inline void Mtolua_typeid( lua_State* tolua_S, const char* name ) {
+inline void Mtolua_typeid( lua_State* tolua_S, const char* name )
+{
     CluaTypeid::Instance().type_reg<T>( name );
 }
 #endif

@@ -26,39 +26,47 @@
 #include "dmtypes.h"
 
 template<typename T>
-struct LuaResult {
+struct LuaResult
+{
     LuaResult() : value( T() ) {}
     LuaResult( const T& t ) : value( t ) {}
-    operator T& () {
+    operator T& ()
+    {
         return value;
     }
     T value;
 };
 
 template<>
-struct LuaResult<std::string> {
+struct LuaResult<std::string>
+{
     LuaResult() : value( std::string() ) {}
-    operator const char* () {
+    operator const char* ()
+    {
         return value.c_str();
     }
     std::string value;
 };
 
 template<>
-struct LuaResult<int64_t> {
+struct LuaResult<int64_t>
+{
     LuaResult() : value( 0 ) {}
     LuaResult( const int64_t& t ) : value( t ) {}
-    operator int64_t() {
+    operator int64_t()
+    {
         return value;
     }
     int64_t value;
 };
 
 template<>
-struct LuaResult<uint64_t> {
+struct LuaResult<uint64_t>
+{
     LuaResult() : value( 0 ) {}
     LuaResult( const uint64_t& t ) : value( t ) {}
-    operator uint64_t() {
+    operator uint64_t()
+    {
         return value;
     }
     uint64_t value;
