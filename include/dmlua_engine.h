@@ -659,14 +659,14 @@ public:
         return 0 == nRet ? true : false;
     }
 
-    void AddPath(const char* path)
+    void AddPath(const std::string& strPath)
     {
         CLuaStateGuard oGuard(m_pLuaS, "AddPath");
 
         lua_getglobal(m_pLuaS, "package");
         lua_getfield(m_pLuaS, -1, "path");
         const char* curPath = lua_tostring(m_pLuaS, -1);
-        lua_pushfstring(m_pLuaS, "%s;%s/?.lua", curPath, path);
+        lua_pushfstring(m_pLuaS, "%s;%s/?.lua", curPath, strPath.c_str());
         lua_setfield(m_pLuaS, -3, "path");
     }
 
