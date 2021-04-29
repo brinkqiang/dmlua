@@ -46,7 +46,8 @@ typedef int lua_Object;
 #include "lua.h"
 #include "lauxlib.h"
 
-struct tolua_Error {
+struct tolua_Error
+{
     int index;
     int array;
     const char* type;
@@ -96,7 +97,7 @@ TOLUA_API void tolua_usertype( lua_State* L, const char* type );
 TOLUA_API void tolua_beginmodule( lua_State* L, const char* name );
 TOLUA_API void tolua_endmodule( lua_State* L );
 TOLUA_API void tolua_module( lua_State* L, const char* name, int hasvar );
-TOLUA_API void tolua_class( lua_State* L, const char* name, const char* base );
+//TOLUA_API void tolua_class( lua_State* L, const char* name, const char* base );
 TOLUA_API void tolua_cclass( lua_State* L, const char* lname, const char* name,
                              const char* base, lua_CFunction col );
 TOLUA_API void tolua_function( lua_State* L, const char* name,
@@ -139,9 +140,11 @@ TOLUA_API lua_Integer tolua_tointeger(lua_State* L, int narg, lua_Integer def);
 
 TOLUA_API const char* tolua_tostring( lua_State* L, int narg, const char* def );
 
-TOLUA_API const char* tolua_tolstring(lua_State* L, int narg, const char* def, size_t* len);
+TOLUA_API const char* tolua_tolstring(lua_State* L, int narg, const char* def,
+                                      size_t* len);
 
-TOLUA_API const char* tolua_tofieldlstring(lua_State* L, int lo, int index, const char* def, size_t* len);
+TOLUA_API const char* tolua_tofieldlstring(lua_State* L, int lo, int index,
+        const char* def, size_t* len);
 
 TOLUA_API void* tolua_touserdata( lua_State* L, int narg, void* def );
 TOLUA_API void* tolua_tousertype( lua_State* L, int narg, void* def );
@@ -164,21 +167,37 @@ TOLUA_API void tolua_dobuffer( lua_State* L, char* B, unsigned int size,
 TOLUA_API int class_gc_event( lua_State* L );
 
 #ifdef __cplusplus
-static inline const char* tolua_tocppstring(lua_State* L, int narg, const char* def, size_t* len = NULL) {
+static inline const char* tolua_tocppstring(lua_State* L, int narg,
+        const char* def, size_t* len = NULL)
+{
     const char* s;
+
     if (len == NULL)
+    {
         s = tolua_tostring(L, narg, def);
+    }
     else
+    {
         s = tolua_tolstring(L, narg, def, len);
+    }
+
     return s ? s : def;
 };
 
-static inline const char* tolua_tofieldcppstring(lua_State* L, int lo, int index, const char* def, size_t* len = NULL) {
+static inline const char* tolua_tofieldcppstring(lua_State* L, int lo,
+        int index, const char* def, size_t* len = NULL)
+{
     const char* s;
+
     if (len == NULL)
+    {
         s = tolua_tofieldstring(L, lo, index, def);
+    }
     else
+    {
         s = tolua_tofieldlstring(L, lo, index, def, len);
+    }
+
     return s ? s : "";
 };
 

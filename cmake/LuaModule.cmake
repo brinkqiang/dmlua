@@ -125,6 +125,7 @@ macro(LuaModuleImport LuaVersion ModuleName ModulePath DependLibs)
 
         LUA_SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR}/test)
         FOREACH(subdir ${SUBDIRS})
+            INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir})
             FILE(GLOB_RECURSE DMMODULETEST_SOURCES
             ${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir}/*.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir}/*.cc
@@ -148,6 +149,7 @@ macro(LuaModuleImport LuaVersion ModuleName ModulePath DependLibs)
 
         LUA_SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR}/test)
         FOREACH(subdir ${SUBDIRS})
+            INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir})
             FILE(GLOB_RECURSE DMMODULETEST_SOURCES
             ${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir}/*.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir}/*.cc
@@ -168,6 +170,7 @@ macro(LuaModuleImport LuaVersion ModuleName ModulePath DependLibs)
   
         LUA_SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR}/test)
         FOREACH(subdir ${SUBDIRS})
+            INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir})
             FILE(GLOB_RECURSE DMMODULETEST_SOURCES
             ${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir}/*.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/test/${subdir}/*.cc
