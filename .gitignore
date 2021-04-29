@@ -10,6 +10,7 @@ CTestTestfile.cmake
 
 !/bin/script/*.lua
 !/bin/data/*.csv
+/bin/*
 /lib/*
 /build/*
 /.vscode/*
