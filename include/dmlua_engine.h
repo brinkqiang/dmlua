@@ -40,6 +40,7 @@
 #include "dmtypes.h"
 #include "dmparser.h"
 #include "dmsingleton.h"
+#include "dmutil.h"
 
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
@@ -668,6 +669,21 @@ public:
         const char* curPath = lua_tostring(m_pLuaS, -1);
         lua_pushfstring(m_pLuaS, "%s;%s/?.lua", curPath, strPath.c_str());
         lua_setfield(m_pLuaS, -3, "path");
+    }
+
+    void AddCPath(const std::string& strPath)
+    {
+        CLuaStateGuard oGuard(m_pLuaS, "AddCPath");
+
+        lua_getglobal(m_pLuaS, "package");
+        lua_getfield(m_pLuaS, -1, "cpath");
+        const char* curPath = lua_tostring(m_pLuaS, -1);
+#ifdef _WIN32
+        lua_pushfstring(m_pLuaS, "%s;%s/?.dll", curPath, strPath.c_str());
+#else
+        lua_pushfstring(m_pLuaS, "%s;%s/?.so", curPath, strPath.c_str());
+#endif
+        lua_setfield(m_pLuaS, -3, "cpath");
     }
 
     bool LoadScript( const std::string& strName )
