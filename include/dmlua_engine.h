@@ -46,6 +46,11 @@
 #include <mach-o/dyld.h>
 #endif
 
+#ifdef WIN32
+#else
+#include <sys/time.h>
+#endif
+
 TOLUA_API int tolua_interface_open( lua_State* tolua_S );
 
 inline char* tolua_SafeStrCopy( char* des, const char* src, size_t max_len )
