@@ -25,6 +25,7 @@ ADD_CUSTOM_COMMAND(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
     DEPENDS tolua++
     )
+
 ADD_CUSTOM_COMMAND(
     TARGET dmluademo
     PRE_BUILD
