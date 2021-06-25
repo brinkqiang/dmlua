@@ -1,0 +1,7 @@
+
+#include "../common/macros.h"
+#include "../common/enum.h"
+#include "../common/struct.h"
+
+#include "../role/role.h"
+#include "../role/rolemgr.h"
