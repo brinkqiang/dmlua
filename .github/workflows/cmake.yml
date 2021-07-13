@@ -41,6 +41,8 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Status
+        shell: bash
+        run: echo "done"
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: 'Test run'
@@ -80,6 +82,8 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Status
+        shell: bash
+        run: echo "done"
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: 'Test run'
