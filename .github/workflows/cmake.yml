@@ -41,12 +41,11 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Status
-        with: 
+        with:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: 'Test run'
           description: 'Passed'
           state: 'success'
-          sha: ${{github.event.pull_request.head.sha || github.sha}}
 
   win:
     runs-on: ${{ matrix.os }}
@@ -81,9 +80,9 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Status
-        with: 
+        with:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: 'Test run'
           description: 'Passed'
           state: 'success'
-          sha: ${{github.event.pull_request.head.sha || github.sha}}
+
