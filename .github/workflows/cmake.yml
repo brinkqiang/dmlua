@@ -79,7 +79,7 @@ jobs:
       - name: Test
         shell: bash
         run: ctest -C ${{env.BUILD_TYPE}}
-        
+
       - name: Status
         with: 
           authToken: ${{secrets.GITHUB_TOKEN}}
