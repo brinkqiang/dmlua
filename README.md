@@ -10,16 +10,16 @@ Copyright (c) 2013-2018 brinkqiang (brink.qiang@gmail.com)
 [![GitHub forks](https://img.shields.io/github/forks/brinkqiang/dmlua.svg?label=Fork)](https://github.com/brinkqiang/dmlua)
 
 ## Build status
-| [Linux][lin-link] | [Mac][Mac-link] | [Windows][win-link] |
+| [Linux][lin-link] | [Mac][mac-link] | [Windows][win-link] |
 | :---------------: | :----------------: | :-----------------: |
 | ![lin-badge]      | ![mac-badge]       | ![win-badge]        |
 
 [lin-badge]: https://github.com/brinkqiang/dmlua/workflows/linux/badge.svg "linux build status"
-[lin-link]:  https://travis-ci.org/brinkqiang/dmlua "linux build status"
+[lin-link]:  https://github.com/brinkqiang/dmlua/actions/workflows/linux.yml "linux build status"
 [mac-badge]: https://github.com/brinkqiang/dmlua/workflows/mac/badge.svg "mac build status"
-[mac-link]:  https://travis-ci.org/brinkqiang/dmlua "mac build status"
+[mac-link]:  https://github.com/brinkqiang/dmlua/actions/workflows/mac.yml "mac build status"
 [win-badge]: https://github.com/brinkqiang/dmlua/workflows/win/badge.svg "win build status"
-[win-link]:  https://ci.appveyor.com/project/brinkqiang/dmlua "win build status"
+[win-link]:  https://github.com/brinkqiang/dmlua/actions/workflows/win.yml "win build status"
 
 ## Intro
 Lua fully automated engine, based on tolua++, support lua 5.3 | 5.4
