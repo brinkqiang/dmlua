@@ -17,12 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: lukka/get-cmake@latest
-      - uses: Sibz/github-status-action@v1
-        with:
-          authToken: ${{secrets.GITHUB_TOKEN}}
-          context: 'Test run'
-          description: 'Passed'
-          state: 'success'
 
       - name: Get current date
         id: date
@@ -46,9 +40,12 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Status
-        shell: bash
-        run: echo "done"
-
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: 'Test run'
+          description: 'Passed'
+          state: 'success'
 
   win:
     runs-on: ${{ matrix.os }}
@@ -60,13 +57,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: lukka/get-cmake@latest
-      - uses: Sibz/github-status-action@v1
-        with:
-          authToken: ${{secrets.GITHUB_TOKEN}}
-          context: 'Test run'
-          description: 'Passed'
-          state: 'success'
-
 
       - name: Get current date
         id: date
@@ -90,6 +80,10 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Status
-        shell: bash
-        run: echo "done"
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: 'Test run'
+          description: 'Passed'
+          state: 'success'
 
