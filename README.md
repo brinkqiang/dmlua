@@ -14,12 +14,12 @@ Copyright (c) 2013-2018 brinkqiang (brink.qiang@gmail.com)
 | :---------------: | :----------------: | :-----------------: |
 | ![lin-badge]      | ![osx-badge]       | ![win-badge]        |
 
-[lin-badge]: https://travis-ci.org/brinkqiang/dmlua.svg?branch=master "Travis build status"
-[lin-link]:  https://travis-ci.org/brinkqiang/dmlua "Travis build status"
-[osx-badge]: https://travis-ci.org/brinkqiang/dmlua.svg?branch=master "Travis build status"
-[osx-link]:  https://travis-ci.org/brinkqiang/dmlua "Travis build status"
-[win-badge]: https://ci.appveyor.com/api/projects/status/github/brinkqiang/dmlua?branch=master&svg=true "AppVeyor build status"
-[win-link]:  https://ci.appveyor.com/project/brinkqiang/dmlua "AppVeyor build status"
+[lin-badge]: https://github.com/brinkqiang/dmlua/workflows/linux/badge.svg "linux build status"
+[lin-link]:  https://travis-ci.org/brinkqiang/dmlua "linux build status"
+[osx-badge]: https://github.com/brinkqiang/dmlua/workflows/mac/badge.svg "mac build status"
+[osx-link]:  https://travis-ci.org/brinkqiang/dmlua "mac build status"
+[win-badge]: https://github.com/brinkqiang/dmlua/workflows/win/badge.svg "win build status"
+[win-link]:  https://ci.appveyor.com/project/brinkqiang/dmlua "win build status"
 
 ## Intro
 Lua fully automated engine, based on tolua++, support lua 5.3 | 5.4
