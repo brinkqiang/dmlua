@@ -22,7 +22,7 @@ Copyright (c) 2013-2018 brinkqiang (brink.qiang@gmail.com)
 [win-link]:  https://github.com/brinkqiang/dmlua/actions/workflows/win.yml "win build status"
 
 ## Intro
-Lua fully automated engine, based on tolua++, support lua 5.3 | 5.4
+Lua fully automated engine, based on tolua++, support lua 5.1-5.4
 ```cpp
 #include "test/role/rolemgr.h"
 #include "test/role/role.h"
