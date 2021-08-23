@@ -51,6 +51,8 @@
 #include <sys/time.h>
 #endif
 
+#include "sol/sol.hpp"
+
 TOLUA_API int tolua_interface_open( lua_State* tolua_S );
 
 inline char* tolua_SafeStrCopy( char* des, const char* src, size_t max_len )
@@ -597,7 +599,6 @@ public:
         : m_pLuaS( luaL_newstate() ), m_dwStartTime( 0 ), m_bStartTime( false )
     {
         luaL_openlibs( m_pLuaS );
-        tolua_interface_open( m_pLuaS );
         AddPath("");
     }
 
@@ -634,6 +635,8 @@ public:
         return lua_gc( m_pLuaS, LUA_GCCOUNT, 0 ) * 1024L + lua_gc( m_pLuaS,
                 LUA_GCCOUNTB, 0 );
     }
+
+    sol::state_view GetSol(){ return sol::state_view(m_pLuaS); }
 
     lua_State* GetState()
     {
@@ -691,6 +694,13 @@ public:
         lua_setfield(m_pLuaS, -3, "cpath");
     }
 
+    int AddModule(lua_CFunction f)
+    {
+        m_vecFunction.push_back(f);
+
+        return 0;
+    }
+
     bool LoadScript( const std::string& strName )
     {
         __ParserBegin();
@@ -701,6 +711,11 @@ public:
 
     bool LoadScript()
     {
+        for (auto it : m_vecFunction)
+        {
+            it(GetState());
+        }
+
         __SetSrcDirectory( !m_strSrcPath.empty() ? m_strSrcPath : __GetScriptPath() );
         __ParserBegin();
         __ParserFiles( m_strSrcPath, "" );
@@ -714,12 +729,18 @@ public:
         CDMLuaEngine oEngine;
         oEngine.SetRootPath(m_strSrcPath);
 
+        for (auto it : m_vecFunction)
+        {
+            oEngine.AddModule(it);
+        }
+
         if ( !oEngine.LoadScript() )
         {
             goto FAIL;
         }
 
         oEngine.Swap( *this );
+
         return true;
 FAIL:
         return false;
@@ -1245,10 +1266,13 @@ protected:
 
     typedef std::vector<SFileInfo> VecFileInfo;
     typedef VecFileInfo::iterator VecFileInfoIt;
+    typedef std::vector<lua_CFunction> VecFunction;
+    typedef VecFunction::iterator VecFunctionIt;
 
     VecFileInfo m_vecFileInfo;
     std::string m_strSrcPath;
     std::string m_strCwd;
+    VecFunction m_vecFunction;
     uint32_t m_dwStartTime;
     bool m_bStartTime;
 };
