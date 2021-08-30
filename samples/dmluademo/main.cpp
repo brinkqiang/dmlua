@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 #include "dmlua.h"
 #include "dmutil.h"
-#include "interface.h"
+#include "script/interface.h"
 
 #define DMLUA_TEST_COUNT 10000
 
