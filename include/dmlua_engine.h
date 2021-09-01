@@ -621,6 +621,7 @@ public:
         std::swap( m_strSrcPath, oEngine.m_strSrcPath );
         std::swap( m_strCwd, oEngine.m_strCwd );
         std::swap( m_dwStartTime, oEngine.m_dwStartTime );
+        std::swap( m_vecFunction, oEngine.m_vecFunction);
     }
 
     void RunLuagc()
@@ -666,7 +667,7 @@ public:
         return 0 == nRet ? true : false;
     }
 
-    void AddPath(const std::string& strPath)
+    void AddLuaPath(const std::string& strPath)
     {
         CLuaStateGuard oGuard(m_pLuaS, "AddPath");
 
@@ -681,7 +682,7 @@ public:
         lua_setfield(m_pLuaS, -3, "path");
     }
 
-    void AddCPath(const std::string& strPath)
+    void AddLuaCPath(const std::string& strPath)
     {
         CLuaStateGuard oGuard(m_pLuaS, "AddCPath");
 
@@ -736,7 +737,7 @@ public:
             oEngine.AddModule(it);
         }
 
-        oEngine.AddPath(m_strSrcPath);
+        oEngine.AddLuaPath(m_strSrcPath);
 
         if ( !oEngine.LoadScript() )
         {
