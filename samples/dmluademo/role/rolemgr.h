@@ -10,7 +10,7 @@
 class CRoleMgr : public TSingleton<CRoleMgr> {
     friend class TSingleton<CRoleMgr>;
 
-  protected:
+public:
     CRoleMgr();
     ~CRoleMgr();
 
