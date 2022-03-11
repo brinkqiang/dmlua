@@ -55,7 +55,7 @@ TEST(luabasetest, luabasetest)
         for (int i = 0; i < 1; ++i)
         {
             uint64_t r = oDMLuaEngine.CallT<uint64_t>("addex", 4294967295ULL,
-                         4294967295ULL);
+                4294967295ULL);
 
             if (r >= 0)
             {
@@ -119,9 +119,9 @@ TEST(luabasetest, luabasetest)
     unsigned int dwTaskID = 100;
 
     LResultINT oResult(-1);
-    oDMLuaEngine.Call("script.task.task.AcceptTask", poRole, dwTaskID, &oResult);
+    oDMLuaEngine.Call("script.task.task.AcceptTask", poRole->GetObjID(), dwTaskID, &oResult);
 
-    oDMLuaEngine.Call("script.task.task.FinishTask", poRole, dwTaskID);
+    oDMLuaEngine.Call("script.task.task.FinishTask", poRole->GetObjID(), dwTaskID);
     std::vector<std::string> vecData;
     vecData.push_back("hello");
     oDMLuaEngine.Call("script.common.test.main_vector", &vecData);
