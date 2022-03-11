@@ -21,9 +21,9 @@ IF (WIN32)
 ADD_CUSTOM_COMMAND(
     TARGET dmluademo
     PRE_BUILD
-    COMMAND tolua++ -t -n interface -o interface.cpp -H interface.h interface.pkg
+    COMMAND toluapp -t -n interface -o interface.cpp -H interface.h interface.pkg
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
-    DEPENDS tolua++
+    DEPENDS toluapp
     )
 
 ADD_CUSTOM_COMMAND(
@@ -32,6 +32,14 @@ ADD_CUSTOM_COMMAND(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
     ${CMAKE_CURRENT_SOURCE_DIR}/config/lua_dkm_debug.json
     $<TARGET_FILE_DIR:dmluademo>
+)
+
+ADD_CUSTOM_COMMAND(
+    TARGET dmluademo
+    PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    $<TARGET_FILE:toluapp>
+    ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
 )
 ENDIF(WIN32)
 
