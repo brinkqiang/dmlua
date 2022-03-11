@@ -128,6 +128,35 @@ TEST(luabasetest, luabasetest)
     oDMLuaEngine.Call("script.common.test.main");
     CRoleMgr::Instance()->ReleaseRole(poRole);
 }
+
+
+TEST(luatype, luatype) {
+    CDMLuaEngine oDMLuaEngine;
+    /// The default search path is to search the root directory with the exe program /../ relative path (because cmake will add the $BUILD_TYPE directory to the generated bin directory.)
+    /// If you need to modify to other paths, please set your own search path
+
+    std::string strScriptRootPath = DMGetRootPath();
+    oDMLuaEngine.SetRootPath(strScriptRootPath + PATH_DELIMITER_STR + ".." + PATH_DELIMITER_STR);
+
+    oDMLuaEngine.AddModule(tolua_interface_open);
+
+    if (!oDMLuaEngine.ReloadScript())
+    {
+        ASSERT_TRUE(0);
+        return;
+    }
+    char chData = 1;
+    uint16_t wData = 2;
+    uint32_t dwData = 3;
+    uint64_t qwData = 4;
+    int16_t sData = 5;
+    int32_t nData = 6;
+    int64_t llData = 7;
+    float fData = 8;
+    double dbData = 9;
+
+    oDMLuaEngine.Call("script.type.type.TypeTest", chData, wData, dwData, qwData, sData, nData, llData, fData, dbData);
+}
 //
 //TEST(luaload, luaload) {
 //    if (!CDMLuaEngine::Instance()->ReloadScript()) {
