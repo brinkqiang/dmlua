@@ -126,6 +126,7 @@ TEST(luabasetest, luabasetest)
     vecData.push_back("hello");
     oDMLuaEngine.Call("script.common.test.main_vector", &vecData);
     oDMLuaEngine.Call("script.common.test.main");
+    oDMLuaEngine.Call("script.common.clone.main");
     CRoleMgr::Instance()->ReleaseRole(poRole);
 }
 
