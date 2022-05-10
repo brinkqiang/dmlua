@@ -20,12 +20,22 @@ ExeImport("tool" "${LUA_MODULE};libtolua")
 ExeImport("samples" "${LUA_MODULE};libtolua")
 
 IF (WIN32)
+
+ADD_CUSTOM_COMMAND(
+    TARGET dmluademo
+    PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${LUA_MODULE}> ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:libtolua> ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:toluapp> ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
+
+)
+
 ADD_CUSTOM_COMMAND(
     TARGET dmluademo
     PRE_BUILD
     COMMAND toluapp.exe -t -n interface -o interface.cpp -H interface.h interface.pkg
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
-    DEPENDS toluapp
+    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script/interface.pkg
     )
 
 ADD_CUSTOM_COMMAND(
@@ -36,12 +46,4 @@ ADD_CUSTOM_COMMAND(
     $<TARGET_FILE_DIR:dmluademo>
 )
 
-ADD_CUSTOM_COMMAND(
-    TARGET dmluademo
-    PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${LUA_MODULE}> ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:libtolua> ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:toluapp> ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
-
-)
 ENDIF(WIN32)
