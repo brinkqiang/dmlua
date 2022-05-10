@@ -8,7 +8,7 @@ INCLUDE(cmake/ModuleCompileOptions.cmake)
 INCLUDE(cmake/LuaModule.cmake)
 ModuleSetCompileOptions()
 
-SET(LUA_MODULE lua54)
+SET(LUA_MODULE lua53)
 
 ADD_DEFINITIONS(-DLUA_COMPAT_MODULE -DLUA_COMPAT_APIINTCASTS)
 
@@ -23,7 +23,7 @@ IF (WIN32)
 ADD_CUSTOM_COMMAND(
     TARGET dmluademo
     PRE_BUILD
-    COMMAND toluapp -t -n interface -o interface.cpp -H interface.h interface.pkg
+    COMMAND toluapp.exe -t -n interface -o interface.cpp -H interface.h interface.pkg
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/samples/dmluademo/script
     DEPENDS toluapp
     )
@@ -45,4 +45,3 @@ ADD_CUSTOM_COMMAND(
 
 )
 ENDIF(WIN32)
-

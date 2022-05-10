@@ -150,7 +150,7 @@ TEST(luatype, luatype) {
     char chData = 1;
     uint16_t wData = 2;
     uint32_t dwData = 3;
-    uint64_t qwData = 4;
+    uint64_t qwData = 400000000000000000;
     int16_t sData = 5;
     int32_t nData = 6;
     int64_t llData = 7;
