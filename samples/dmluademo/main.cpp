@@ -60,6 +60,7 @@ TEST(luabasetest, luabasetest)
             if (r >= 0)
             {
                 std::cout << r << std::endl;
+                EXPECT_TRUE(r == 4294967295ULL * 4294967295ULL);
             }
         }
     }

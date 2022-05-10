@@ -12,6 +12,8 @@ SET(LUA_MODULE lua54)
 
 ADD_DEFINITIONS(-DLUA_COMPAT_MODULE -DLUA_COMPAT_APIINTCASTS)
 
+ShowEnvironment()
+
 LuaModuleImport("${LUA_MODULE}" "libtolua" "src/libtolua" "")
 
 ExeImport("tool" "${LUA_MODULE};libtolua")
