@@ -54,8 +54,8 @@ TEST(luabasetest, luabasetest)
     {
         for (int i = 0; i < 1; ++i)
         {
-            uint64_t r = oDMLuaEngine.CallT<uint64_t>("addex", 4294967295ULL,
-                4294967295ULL);
+            uint64_t r = oDMLuaEngine.CallT<uint64_t>("addex", 4294967295,
+                4294967295);
 
             if (r >= 0)
             {
