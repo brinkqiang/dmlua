@@ -150,12 +150,12 @@ TEST(luatype, luatype) {
     char chData = 1;
     uint16_t wData = 2;
     uint32_t dwData = 3;
-    uint64_t qwData = 400000000000000000;
+    uint64_t qwData = 12345678987654321;
     int16_t sData = 5;
     int32_t nData = 6;
     int64_t llData = 7;
     float fData = 8;
-    double dbData = 9;
+    double dbData = 12345678987654321;
 
     oDMLuaEngine.Call("script.type.type.TypeTest", chData, wData, dwData, qwData, sData, nData, llData, fData, dbData);
 }

@@ -439,38 +439,38 @@ struct LuaReader<unsigned char>
 };
 
 template <>
-struct LuaReader<short>
+struct LuaReader<int16_t>
 {
-    static inline short Read(lua_State* L, int index)
+    static inline int16_t Read(lua_State* L, int index)
     {
-        return (short)tolua_tointeger(L, index, 0);
+        return (int16_t)tolua_tointeger(L, index, 0);
     }
 };
 
 template <>
-struct LuaReader<unsigned short>
+struct LuaReader<uint16_t>
 {
-    static inline unsigned short Read(lua_State* L, int index)
+    static inline uint16_t Read(lua_State* L, int index)
     {
-        return (unsigned short)tolua_tointeger(L, index, 0);
+        return (uint16_t)tolua_tointeger(L, index, 0);
     }
 };
 
 template <>
 struct LuaReader<int>
 {
-    static inline int Read(lua_State* L, int index)
+    static inline int32_t Read(lua_State* L, int index)
     {
-        return (int)tolua_tointeger(L, index, 0);
+        return (int32_t)tolua_tointeger(L, index, 0);
     }
 };
 
 template <>
-struct LuaReader<unsigned int>
+struct LuaReader<uint32_t>
 {
-    static inline unsigned int Read(lua_State* L, int index)
+    static inline uint32_t Read(lua_State* L, int index)
     {
-        return (unsigned int)tolua_tointeger(L, index, 0);
+        return (uint32_t)tolua_tointeger(L, index, 0);
     }
 };
 
@@ -493,20 +493,20 @@ struct LuaReader<unsigned long>
 };
 
 template <>
-struct LuaReader<long long>
+struct LuaReader<int64_t>
 {
-    static inline long long Read(lua_State* L, int index)
+    static inline int64_t Read(lua_State* L, int index)
     {
-        return (long long)tolua_tointeger(L, index, 0);
+        return (int64_t)tolua_tointeger(L, index, 0);
     }
 };
 
 template <>
-struct LuaReader<unsigned long long>
+struct LuaReader<uint64_t>
 {
-    static inline unsigned long long Read(lua_State* L, int index)
+    static inline uint64_t Read(lua_State* L, int index)
     {
-        return (unsigned long long)tolua_tointeger(L, index, 0);
+        return (uint64_t)tolua_tointeger(L, index, 0);
     }
 };
 
@@ -868,15 +868,15 @@ public:
         lua_pushinteger(luaS, t);
     }
 
-    //static inline void LuaPush(lua_State* luaS, const long t)
-    //{
-    //    lua_pushinteger(luaS, t);
-    //}
+    static inline void LuaPush(lua_State* luaS, const long t)
+    {
+        lua_pushinteger(luaS, t);
+    }
 
-    //static inline void LuaPush(lua_State* luaS, const unsigned long t)
-    //{
-    //    lua_pushinteger(luaS, t);
-    //}
+    static inline void LuaPush(lua_State* luaS, const unsigned long t)
+    {
+        lua_pushinteger(luaS, t);
+    }
 
     static inline void LuaPush(lua_State* luaS, const int64_t t)
     {
@@ -1064,13 +1064,13 @@ private:
             if (nRet < 0 || nRet >= MAX_PATH)
             {
                 return "./";
-    }
+            }
 
             char* p = strrchr(path, '/');
             *(p) = '\0';
             p = strrchr(path, '/');
             *(p) = '\0';
-}
+        }
 
         return path;
 #endif

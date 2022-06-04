@@ -24,9 +24,7 @@ function clone(object, deep)
     local copy = {}
 
     for k, v in pairs(object) do
-        if deep and type(v) == 'table' then
-            v = clone(v, deep)
-        end
+        if deep and type(v) == 'table' then v = clone(v, deep) end
         copy[k] = v
     end
 
