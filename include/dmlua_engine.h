@@ -868,15 +868,15 @@ public:
         lua_pushinteger(luaS, t);
     }
 
-    static inline void LuaPush(lua_State* luaS, const long t)
-    {
-        lua_pushinteger(luaS, t);
-    }
+    //static inline void LuaPush(lua_State* luaS, const long t)
+    //{
+    //    lua_pushinteger(luaS, t);
+    //}
 
-    static inline void LuaPush(lua_State* luaS, const unsigned long t)
-    {
-        lua_pushinteger(luaS, t);
-    }
+    //static inline void LuaPush(lua_State* luaS, const unsigned long t)
+    //{
+    //    lua_pushinteger(luaS, t);
+    //}
 
     static inline void LuaPush(lua_State* luaS, const int64_t t)
     {
