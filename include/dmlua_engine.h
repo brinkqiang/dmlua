@@ -1224,7 +1224,7 @@ private:
     {
         if (eLuaCheckTime && m_bStartTime)
         {
-            unsigned int dwUseTime = GetTickCount32() - m_dwStartTime;
+            uint32_t dwUseTime = GetTickCount32() - m_dwStartTime;
 
             if (dwUseTime > eLuaCheckTime)
             {
