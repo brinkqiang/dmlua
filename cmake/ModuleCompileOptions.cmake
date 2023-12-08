@@ -37,7 +37,7 @@ macro(ModuleSetCompileOptions)
     CMAKE_POLICY(SET CMP0048 NEW)
   ENDIF()
   
-  SET (CMAKE_C_STANDARD 89)
+  SET (CMAKE_C_STANDARD 99)
   
   IF ("${CMAKE_BUILD_TYPE}" STREQUAL "")
     SET(CMAKE_BUILD_TYPE "debug")
