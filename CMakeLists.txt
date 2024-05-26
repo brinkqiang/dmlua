@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.8)
 
 PROJECT(dmlua)
 
@@ -12,8 +12,6 @@ ModuleSetWinCompilerFlags()
 SET(LUA_MODULE lua54)
 
 ADD_DEFINITIONS(-DLUA_COMPAT_MODULE -DLUA_COMPAT_APIINTCASTS)
-  
-#SET (CMAKE_C_STANDARD 89)
 
 ShowEnvironment()
 
