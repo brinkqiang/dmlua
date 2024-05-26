@@ -30,7 +30,7 @@
 
 // tolua_begin
 
-#ifdef WIN32
+#ifdef _WIN32
 static inline struct tm* localtime_r( const time_t* timep, struct tm* result )
 {
     localtime_s( result, timep );
@@ -100,7 +100,7 @@ static inline time_t DMFormatDateTime( const std::string& strTime,
 
 static bool DMIsDirectory( const char* dir_name )
 {
-#ifdef WIN32
+#ifdef _WIN32
     int ret = GetFileAttributesA( dir_name );
 
     if ( ret == -1 )
@@ -124,7 +124,7 @@ static bool DMIsDirectory( const char* dir_name )
 
 static inline bool DMCreateDirectory(const char* dir_name)
 {
-#ifdef WIN32
+#ifdef _WIN32
     int ret = mkdir(dir_name);
 #else
     int ret = mkdir(dir_name, S_IRWXU | S_IRWXG | S_IXOTH);
@@ -167,7 +167,7 @@ static inline bool DMCreateDirectories(const char* dir_name)
 
 static std::string DMGetRootPath()
 {
-#ifdef WIN32
+#ifdef _WIN32
     static char path[MAX_PATH];
     static bool first_time = true;
 
@@ -223,7 +223,7 @@ static std::string DMGetRootPath()
 
 static std::string DMGetExePath()
 {
-#ifdef WIN32
+#ifdef _WIN32
     static char path[MAX_PATH];
     static bool first_time = true;
 
