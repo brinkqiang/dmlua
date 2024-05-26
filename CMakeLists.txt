@@ -2,17 +2,18 @@ cmake_minimum_required(VERSION 3.2)
 
 PROJECT(dmlua)
 
-INCLUDE(cmake/ModuleImport.cmake)
 LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+INCLUDE(cmake/ModuleImport.cmake)
 INCLUDE(cmake/ModuleCompileOptions.cmake)
 INCLUDE(cmake/LuaModule.cmake)
 ModuleSetCompileOptions()
+ModuleSetWinCompilerFlags()
 
 SET(LUA_MODULE lua54)
 
 ADD_DEFINITIONS(-DLUA_COMPAT_MODULE -DLUA_COMPAT_APIINTCASTS)
   
-SET (CMAKE_C_STANDARD 89)
+#SET (CMAKE_C_STANDARD 89)
 
 ShowEnvironment()
 
