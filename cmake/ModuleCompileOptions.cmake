@@ -132,7 +132,7 @@ macro(ModuleSetCompileOptions)
     SET(CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} -g")
     SET(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} -g")
 
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC" )
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -D_DEBUG")
     SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g")
@@ -142,19 +142,32 @@ macro(ModuleSetCompileOptions)
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}" )
     SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
     SET(CMAKE_STATIC_LINKER_FLAGS "${CMAKE_STATIC_LINKER_FLAGS}")
-    LINK_LIBRARIES()
+
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    find_package(Threads REQUIRED)
+
+    SET(CMAKE_THREAD_LINK "")
+    if(Threads_FOUND)
+      SET(CMAKE_THREAD_LINK "Threads::Threads")
+    endif(Threads_FOUND)
+
+    LINK_LIBRARIES(${CMAKE_THREAD_LINK})
   ELSEIF (UNIX)
     MESSAGE(STATUS "Now is UNIX-like OS")
 
     SET(DMOS_NAME "lin")
 
+    CHECK_CXX_COMPILER_FLAG("-std=c++20" COMPILER_SUPPORTS_CXX20)
     CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
     CHECK_CXX_COMPILER_FLAG("-std=c++1z" COMPILER_SUPPORTS_CXX1Z)
     CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
     CHECK_CXX_COMPILER_FLAG("-std=c++1y" COMPILER_SUPPORTS_CXX1Y)
     CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
     
-    if(COMPILER_SUPPORTS_CXX17)
+    if(COMPILER_SUPPORTS_CXX20)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
+        message(STATUS "The compiler has -std=c++20 support.")
+    elseif(COMPILER_SUPPORTS_CXX17)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
         message(STATUS "The compiler has -std=c++17 support.")
     elseif(COMPILER_SUPPORTS_CXX1Z)
@@ -169,9 +182,9 @@ macro(ModuleSetCompileOptions)
     elseif(COMPILER_SUPPORTS_CXX11)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
         message(STATUS "The compiler has -std=c++11 support.")
-    else(COMPILER_SUPPORTS_CXX17)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-    endif(COMPILER_SUPPORTS_CXX17)
+    else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 or newer support. Please use a different C++ compiler.")
+    endif()
 
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wl,--rpath=./ -Wl,-rpath-link=./lib")
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -D_DEBUG")
@@ -189,7 +202,15 @@ macro(ModuleSetCompileOptions)
     SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
     SET(CMAKE_STATIC_LINKER_FLAGS "${CMAKE_STATIC_LINKER_FLAGS}")
 
-    LINK_LIBRARIES(m)
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    find_package(Threads REQUIRED)
+
+    SET(CMAKE_THREAD_LINK "")
+    if(Threads_FOUND)
+      SET(CMAKE_THREAD_LINK "Threads::Threads")
+    endif(Threads_FOUND)
+
+    LINK_LIBRARIES(m ${CMAKE_THREAD_LINK})
     FIND_PROGRAM(CCACHE_FOUND ccache)
     IF(CCACHE_FOUND)
       SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
@@ -218,12 +239,28 @@ macro(ModuleSetWinCompilerFlags)
   ENDIF (WIN32)
 endmacro(ModuleSetWinCompilerFlags)
 
+MACRO(AddInstall ModuleList)
+    message(STATUS "CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
+    message(STATUS "CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
+    message(STATUS "Install Path: ${CMAKE_INSTALL_PREFIX}/bin")
 
-MACRO(AddUninstallTarget)
-CONFIGURE_FILE(
-        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
-        "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-        IMMEDIATE @ONLY)
-ADD_CUSTOM_TARGET(uninstall
-        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
-ENDMACRO(AddUninstallTarget)
+    Message(STATUS "AddInstall ${ModuleList} ...")
+    IF (WIN32)
+        INSTALL(TARGETS ${ModuleList}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
+    ELSE(WIN32)
+        INCLUDE(GNUInstallDirs)
+        INSTALL(TARGETS ${ModuleList}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    ENDIF(WIN32)
+
+    CONFIGURE_FILE(
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+            IMMEDIATE @ONLY)
+    ADD_CUSTOM_TARGET(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+ENDMACRO(AddInstall)
