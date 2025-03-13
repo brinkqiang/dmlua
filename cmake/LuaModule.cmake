@@ -66,7 +66,7 @@ macro(LuaModuleImport LuaVersion ModuleName ModulePath DependLibs)
         )
         IF (WIN32)
             ADD_LIBRARY(${LuaVersion} SHARED ${DMLUA_SOURCES})
-            SET_TARGET_PROPERTIES(${LuaVersion} PROPERTIES COMPILE_FLAGS "-DLUA_BUILD_AS_DLL -DLUA_CORE")
+            SET_TARGET_PROPERTIES(${LuaVersion} PROPERTIES COMPILE_FLAGS "-DLUA_BUILD_AS_DLL")
             
             ADD_EXECUTABLE(lua ${LUA_SOURCES})
             TARGET_LINK_LIBRARIES(lua ${LuaVersion})
