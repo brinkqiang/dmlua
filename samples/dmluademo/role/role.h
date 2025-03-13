@@ -1,12 +1,11 @@
 #ifndef __ROLE_H_INCLUDE__
 #define __ROLE_H_INCLUDE__
 
-
 #include <map>
 #include <iostream>
+#include <string>
+#include <cstdint>
 #include "common/struct.h"
-
-/// ��������ģ��
 
 class CObj { // tolua_export
 public:
