@@ -21,6 +21,10 @@ Copyright (c) 2013-2018 brinkqiang (brink.qiang@gmail.com)
 [win-badge]: https://github.com/brinkqiang/dmlua/workflows/win/badge.svg "win build status"
 [win-link]:  https://github.com/brinkqiang/dmlua/actions/workflows/win.yml "win build status"
 
+## Doc
+
+- [deepwiki-dmlua](https://deepwiki.com/brinkqiang/dmlua)
+  
 ## Intro
 Lua fully automated engine, based on tolua++, support lua 5.1-5.4
 ```cpp
