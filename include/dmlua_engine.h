@@ -474,24 +474,6 @@ struct LuaReader<uint32_t>
     }
 };
 
-//template <>
-//struct LuaReader<long>
-//{
-//    static inline long Read(lua_State* L, int index)
-//    {
-//        return (long)tolua_tointeger(L, index, 0);
-//    }
-//};
-//
-//template <>
-//struct LuaReader<unsigned long>
-//{
-//    static inline unsigned long Read(lua_State* L, int index)
-//    {
-//        return (unsigned long)tolua_tointeger(L, index, 0);
-//    }
-//};
-
 template <>
 struct LuaReader<int64_t>
 {
